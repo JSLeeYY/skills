@@ -200,3 +200,9 @@
 具体执行方式：将 [经营管理分析与执行管理会议记录视频.mp4](/d:/DevelopmentLocation/agent%20skill/skills/word_project/2026/2026-02-26/O%26M/%E7%BB%8F%E8%90%A5%E7%AE%A1%E7%90%86%E5%88%86%E6%9E%90%E4%B8%8E%E6%89%A7%E8%A1%8C%E7%AE%A1%E7%90%86%E4%BC%9A%E8%AE%AE%E8%AE%B0%E5%BD%95%E8%A7%86%E9%A2%91.mp4) 加入 [.gitignore](/d:/DevelopmentLocation/agent%20skill/skills/.gitignore)，同时删除此前仅为该文件引入的 [.gitattributes](/d:/DevelopmentLocation/agent%20skill/skills/.gitattributes)，避免继续触发 Git LFS 上传；随后会把该视频从当前待推送提交中移出，并重写最后一条本地提交后重新执行 `git push origin main`。
 当前完成进度：已完成忽略规则和提交内容调整准备，下一步是把视频从索引和最新提交历史中剔除并重新推送。
 存在的问题与待处理事项：若远端后续还有其他服务端限制，再根据实际返回结果继续处理；当前优先目标是让“除该视频外的全部内容”成功进入目标仓库。
+
+## 记录 34
+任务内容：确认“除该 `mp4` 视频外的其余本地内容”已成功推送到 `https://github.com/JSLeeYY/skills.git`。
+具体执行方式：先执行 `git rm --cached` 将该视频从索引中移出但保留本地文件，再把它加入 [.gitignore](/d:/DevelopmentLocation/agent%20skill/skills/.gitignore)，删除 `.gitattributes`，并通过 `git commit --amend --no-edit` 将这些调整合并进最后一条全量同步提交，生成新的提交 `15bf5e9`；随后复核 `git lfs ls-files` 为空、`git status --ignored` 中该视频仅作为忽略文件存在，最后执行 `git push origin main`，远端返回 `5128e18..15bf5e9  main -> main`，推送成功。
+当前完成进度：已完成。当前远端 `JSLeeYY/skills` 已收到本地其余内容；被排除的只有该 `mp4` 视频文件，本地文件本身仍保留在原位置。
+存在的问题与待处理事项：如果后续用户还要把这个视频也纳入版本管理，需要改用支持该大文件上传策略的仓库方案，或改为仓库外附件/网盘分发；当前这个仓库里该文件已被显式忽略，不会再被普通 `git add -A` 自动纳入。
