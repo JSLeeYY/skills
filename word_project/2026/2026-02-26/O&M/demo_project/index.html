@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>执行管理与经营分析平台 - 方案一(RuoYi-Vue-Pro)</title>
+    <meta name="description" content="基于RuoYi-Vue-Pro框架的执行管理与经营分析综合管理平台">
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <style>
+        /* 差旅报销台账页面专属样式优化 */
+        #page-travel .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 28px 32px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.25);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #page-travel .page-header h1 {
+            color: #ffffff;
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            letter-spacing: 1px;
+        }
+
+        #page-travel .page-actions {
+            display: flex;
+            gap: 12px;
+            margin: 0;
+        }
+
+        #page-travel .page-actions .btn-primary {
+            background: #10b981;
+            color: #ffffff;
+            border: none;
+            padding: 11px 22px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+            cursor: pointer;
+        }
+
+        #page-travel .page-actions .btn-primary:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+
+        #page-travel .page-actions .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+            border: 1px solid #d1d5db;
+            padding: 11px 22px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        #page-travel .page-actions .btn-secondary:hover {
+            background: #e5e7eb;
+            border-color: #9ca3af;
+            transform: translateY(-2px);
+        }
+
+        #page-travel .filter-section .btn-primary {
+            background: #3b82f6;
+            color: #ffffff;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        #page-travel .filter-section .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        #page-travel .filter-section .btn-secondary {
+            background: #ffffff;
+            color: #6b7280;
+            border: 1px solid #d1d5db;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        #page-travel .filter-section .btn-secondary:hover {
+            background: #f9fafb;
+            border-color: #9ca3af;
+            color: #374151;
+            transform: translateY(-1px);
+        }
+
+        /* 确保所有弹窗关闭按钮可点击 */
+        .modal-close {
+            position: relative;
+            z-index: 999 !important;
+            pointer-events: auto !important;
+            cursor: pointer !important;
+        }
+
+        .modal-header {
+            position: relative;
+            z-index: 10;
+        }
+
+        #exportOverlay .modal-close,
+        #modalOverlay .modal-close {
+            pointer-events: auto !important;
+            cursor: pointer !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ========== Sidebar ========== -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo"><span class="logo-icon">📊</span><span class="logo-text">经营分析平台</span></div>
+            <button class="sidebar-toggle" id="sidebarToggle" title="收起侧栏">☰</button>
+        </div>
+        <nav class="nav-menu">
+            <div class="nav-group">
+                <div class="nav-group-title">全局配置</div>
+                <a class="nav-item" data-page="permission" onclick="switchPage('permission')">
+                    <span class="nav-icon">🔑</span><span class="nav-label">权限分配</span>
+                </a>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">核心业务</div>
+                <a class="nav-item active" data-page="contract" onclick="switchPage('contract')">
+                    <span class="nav-icon">📋</span><span class="nav-label">合同台账</span>
+                </a>
+                <a class="nav-item" data-page="income" onclick="switchPage('income')">
+                    <span class="nav-icon">💰</span><span class="nav-label">项目收入</span>
+                </a>
+                <a class="nav-item" data-page="execution" onclick="switchPage('execution')">
+                    <span class="nav-icon">⚙️</span><span class="nav-label">执行管理</span>
+                </a>
+                <a class="nav-item" data-page="personnel" onclick="switchPage('personnel')">
+                    <span class="nav-icon">👥</span><span class="nav-label">监理人员动态</span>
+                </a>
+                <a class="nav-item" data-page="workhour" onclick="switchPage('workhour')">
+                    <span class="nav-icon">⏱️</span><span class="nav-label">工时记录</span>
+                </a>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">财务管理</div>
+                <a class="nav-item" data-page="invoice" onclick="switchPage('invoice')">
+                    <span class="nav-icon">🧾</span><span class="nav-label">开票明细</span>
+                </a>
+                <a class="nav-item" data-page="payment" onclick="switchPage('payment')">
+                    <span class="nav-icon">💳</span><span class="nav-label">回款明细</span>
+                </a>
+                <a class="nav-item" data-page="summary" onclick="switchPage('summary')">
+                    <span class="nav-icon">📊</span><span class="nav-label">大盘透视</span>
+                </a>
+                <a class="nav-item" data-page="reminder" onclick="switchPage('reminder')">
+                    <span class="nav-icon">🔔</span><span class="nav-label">提醒设置</span>
+                </a>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">成本与利润</div>
+                <a class="nav-item" data-page="cost" onclick="switchPage('cost')">
+                    <span class="nav-icon">📉</span><span class="nav-label">动态成本核算</span>
+                </a>
+                <a class="nav-item" data-page="travel" onclick="switchPage('travel')">
+                    <span class="nav-icon">✈️</span><span class="nav-label">差旅报销台账</span>
+                </a>
+                <a class="nav-item" data-page="salary" onclick="switchPage('salary')">
+                    <span class="nav-icon">💵</span><span class="nav-label">人员工资管理</span>
+                </a>
+                <a class="nav-item" data-page="profit" onclick="switchPage('profit')">
+                    <span class="nav-icon">📈</span><span class="nav-label">利润管理</span>
+                </a>
+                <a class="nav-item" data-page="report" onclick="switchPage('report')">
+                    <span class="nav-icon">📊</span><span class="nav-label">经营数据量化</span>
+                </a>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">综合报表</div>
+                <a class="nav-item" data-page="monthly-report" onclick="switchPage('monthly-report')">
+                    <span class="nav-icon">📑</span><span class="nav-label">科研经营月报</span>
+                </a>
+            </div>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="avatar">张</div>
+                <div class="user-details">
+                    <div class="user-name">张三</div>
+                    <div class="user-role">项目经理</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ========== Main Content ========== -->
+    <main class="main-content" id="mainContent">
+        <!-- Top Header -->
+        <header class="top-header">
+            <div class="breadcrumb" id="breadcrumb"><span>核心业务</span> / <span>合同台账</span></div>
+            <div class="header-actions">
+                <button class="header-btn" onclick="exportCurrentPage()" title="导出当前页面数据">📥 导出</button>
+                <div class="notification-bell" onclick="showNotification()">🔔 <span class="badge">5</span></div>
+                <span class="header-time" id="headerTime"></span>
+            </div>
+        </header>
+
+        <!-- ==================== PAGE: 权限分配 ==================== -->
+        <div class="page" id="page-permission">
+            <div class="page-title-row">
+                <h1>项目经理权限分配</h1>
+                <div class="role-badge">支持角色：<strong>管理员</strong></div>
+            </div>
+            <div class="info-panel" id="permRulePanel" style="margin-bottom: 16px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <h3 style="margin:0;"><span style="font-size:16px;margin-right:4px;">💡</span>权限判定机制说明</h3>
+                    <button class="btn-mini btn-outline" onclick="togglePermRulePanel(this)">收起 🔼</button>
+                </div>
+                <div id="permRuleContent"
+                    style="font-size:13px;color:var(--text-secondary);margin-top:10px;line-height:1.6;">
+                    1. <strong>自动同步机制（主干道）：</strong>法定负责人的变更应在前端 <strong>PECMS系统</strong> 完成。O&M 底层台账通过匹配 ERP
+                    唯一标识，实现对合同权限的<strong>完全自动赋予与剥离</strong>（即【默认绑定】状态），此过程无需人工介入。<br>
+                    2.
+                    <strong>人工干预机制（应急车道）：</strong>本页面仅用作执行层面的<strong>“应急操作外挂”</strong>。允许针对跨账号的日常协作进行<strong>【权限追加授权（多权并存）】</strong>，或应对突发异常状况执行<strong>【特批强制解除（一键急停）】</strong>。<br>
+                    3. <strong>权限来源溯源：</strong>列表中带有 <span class="tag tag-gray"
+                        style="font-size:11px;border-color:var(--border-color);background-color:#f8f9fa;">🛡️
+                        默认绑定</span> 标签的合同由系统基于台账自动维护；带有 <span class="tag tag-blue" style="font-size:11px;">🔧
+                        人工特批</span> 标签代表由本页面特批追加。二者数据隔离，互不干涉。
+                </div>
+            </div>
+            <script>
+                function togglePermRulePanel(btn) {
+                    const content = document.getElementById('permRuleContent');
+                    if (content.style.display === 'none') {
+                        content.style.display = 'block';
+                        btn.innerHTML = '收起 🔼';
+                    } else {
+                        content.style.display = 'none';
+                        btn.innerHTML = '展开 🔽';
+                    }
+                }
+            </script>
+            <div class="filter-panel" style="margin-top: 10px;">
+                <div class="filter-row" style="margin-bottom:8px;">
+                    <div class="filter-item"><label>监理编号</label><input type="text" placeholder="请输入CI编号"></div>
+                    <div class="filter-item"><label>合同名称</label><input type="text" placeholder="模糊搜索"></div>
+                    <div class="filter-item"><label>委托方</label><input type="text" placeholder="模糊搜索"></div>
+                    <div class="filter-item"><label>制造方</label><input type="text" placeholder="模糊搜索"></div>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-item"><label>合同类型</label><select>
+                            <option>全部</option>
+                            <option>开口合同</option>
+                            <option>总价合同</option>
+                            <option>框架协议合同</option>
+                        </select></div>
+                    <div class="filter-item"><label>项目经理(默认)</label><input type="text" placeholder="输入姓名或选择"></div>
+                    <div class="filter-item"><label>授权项目经理</label><input type="text" placeholder="输入姓名或选择"></div>
+                    <div class="filter-item"><label>项目状态</label><select>
+                            <option>全部</option>
+                            <option>未开始</option>
+                            <option>进行中</option>
+                            <option>已终止</option>
+                            <option>已完成</option>
+                        </select></div>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn btn-primary" onclick="showToast('检索完成')">🔍 全局查询</button>
+                    <button class="btn btn-outline">↻ 重置</button>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="data-table" style="min-width: 1400px;">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">#</th>
+                            <th style="width: 120px;">监理编号</th>
+                            <th style="width: 160px;">合同名称</th>
+                            <th style="width: 130px;">委托方</th>
+                            <th style="width: 130px;">制造方</th>
+                            <th style="width: 100px;">合同类型</th>
+                            <th style="width: 120px; text-align:right;">监造金额(元)</th>
+                            <th style="width: 100px;">项目状态</th>
+                            <th style="width: 140px; background-color: #fafbfc;">项目经理(默认)</th>
+                            <th>授权特批名单 (手工追加)</th>
+                            <th style="width: 110px;">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>CI-2026-001</td>
+                            <td>某石化换热器监造</td>
+                            <td>中石化镇海炼化</td>
+                            <td>杭州锅炉厂</td>
+                            <td><span class="tag tag-blue">开口合同</span></td>
+                            <td style="text-align:right;">450,000</td>
+                            <td><span class="status status-active">进行中</span></td>
+                            <td style="background-color: #fafbfc;">
+                                <span style="font-weight:600; color:var(--text-color);">张三</span>
+                                <span title="PECMS自动同步，无需人工干预" style="margin-left:4px;cursor:help;">🔒</span>
+                            </td>
+                            <td>
+                                <!-- 没有手工追加 -->
+                                <span style="color:var(--text-muted); font-size:12px;">--暂无特批协作人--</span>
+                            </td>
+                            <td>
+                                <button class="btn-mini btn-primary"
+                                    style="background-color:var(--blue); border-color:var(--blue);"
+                                    onclick="showAuthTransferModal('CI-2026-001', '张三', [])">⚙️
+                                    权限管控</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>CI-2026-002</td>
+                            <td>压力容器制造监理</td>
+                            <td>国家管网</td>
+                            <td>沈鼓集团</td>
+                            <td><span class="tag tag-green">总价合同</span></td>
+                            <td style="text-align:right;">1,200,000</td>
+                            <td><span class="status status-active">进行中</span></td>
+                            <td style="background-color: #fafbfc;">
+                                <span style="font-weight:600; color:var(--danger-color);">(未绑定)</span>
+                                <span title="PECMS源头缺失或异常" style="margin-left:4px;cursor:help;">⚠️</span>
+                            </td>
+                            <td>
+                                <div style="display:inline-flex; gap:6px; flex-wrap:wrap;">
+                                    <span class="tag tag-blue"
+                                        style="font-size:12px; border-radius:12px; padding:2px 8px;">李明 <i
+                                            style="cursor:pointer; margin-left:4px;"
+                                            onclick="showConfirmDialog('确认解除 李明 对本合同的特批授权？','解除授权确认')">✖</i></span>
+                                    <span class="tag tag-blue"
+                                        style="font-size:12px; border-radius:12px; padding:2px 8px;">陈伟 <i
+                                            style="cursor:pointer; margin-left:4px;"
+                                            onclick="showConfirmDialog('确认解除 陈伟 对本合同的特批授权？','解除授权确认')">✖</i></span>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn-mini btn-primary"
+                                    style="background-color:var(--blue); border-color:var(--blue);"
+                                    onclick="showAuthTransferModal('CI-2026-002', '(未绑定)', ['李明', '陈伟'])">⚙️
+                                    权限管控</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>CI-2026-005</td>
+                            <td>管道安装监造项目</td>
+                            <td>中海油</td>
+                            <td>宝鸡钢管</td>
+                            <td><span class="tag tag-purple">框架协议合同</span></td>
+                            <td style="text-align:right;">860,000</td>
+                            <td><span class="status status-pending">未开始</span></td>
+                            <td style="background-color: #fafbfc;">
+                                <span style="font-weight:600; color:var(--text-color);">王芳</span>
+                                <span title="PECMS自动同步，无需人工干预" style="margin-left:4px;cursor:help;">🔒</span>
+                                <i style="color:var(--danger-color); cursor:pointer; font-size:12px; margin-left:8px;"
+                                    onclick="showConfirmDialog('这将强制屏蔽 王芳 针对该合同的法定查看入口，确定要执行一键急停吗？','⚠️ 高危操作：禁用默认权限')"
+                                    title="强制急停">🚫急停</i>
+                            </td>
+                            <td>
+                                <div style="display:inline-flex; gap:6px; flex-wrap:wrap;">
+                                    <span class="tag tag-blue"
+                                        style="font-size:12px; border-radius:12px; padding:2px 8px;">赵丽 <i
+                                            style="cursor:pointer; margin-left:4px;"
+                                            onclick="showConfirmDialog('确认解除 赵丽 对本合同的特批授权？','解除授权确认')">✖</i></span>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn-mini btn-primary"
+                                    style="background-color:var(--blue); border-color:var(--blue);"
+                                    onclick="showAuthTransferModal('CI-2026-005', '王芳', ['赵丽'])">⚙️ 权限管控</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination" style="margin-top: 15px;">
+                <span>共 <strong>86</strong> 条合同数据</span>
+                <div class="pagination-btns">
+                    <button class="btn-page active">1</button>
+                    <button class="btn-page">2</button>
+                    <button class="btn-page">3</button>
+                    <button class="btn-page">...</button>
+                    <button class="btn-page">10</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== PAGE: 提醒设置 ==================== -->
+        <div class="page" id="reminder-layout">
+            <div class="page-title-row" style="justify-content: flex-start;">
+                <h2 style="font-size: 18px; color: var(--text-color); margin-right: 20px;">智能到账与开票引擎 (提醒设置)</h2>
+                <div style="font-size: 13px; color: var(--text-muted); background: #fff3cd; padding: 4px 12px; border-radius: 4px; border: 1px solid #ffeeba;">
+                    <span style="color: #856404;">💡 提醒引擎机制：系统后台自动计算全量合同金额数据，当触碰或超过设置的阈值时，引擎将按设定频率自动触发<b>邮件 + 系统内信</b>双重推送。</span>
+                </div>
+            </div>
+
+            <div class="filter-panel" style="margin-top: 15px;">
+                <div class="filter-row">
+                    <div class="filter-item"><label>合同编号</label><input type="text" placeholder="请输入..."></div>
+                    <div class="filter-item"><label>业务类型</label><select>
+                            <option>全部</option>
+                            <option>单笔开票提醒</option>
+                            <option>单笔回款提醒</option>
+                            <option>利润预警提醒</option>
+                        </select></div>
+                    <div class="filter-item"><label>生效状态</label><select>
+                            <option>全部</option>
+                            <option selected>生效中</option>
+                            <option>已停用</option>
+                        </select></div>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn btn-primary" onclick="showToast('检索完成')">🔍 查询规则</button>
+                    <button class="btn btn-outline" style="margin-right:20px;">↻ 重置</button>
+                    <button class="btn btn-primary" style="background-color:#10b981; border-color:#10b981;" onclick="showAddReminderModal()"><span style="font-size:16px;">✛</span> 新增定制提醒</button>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">#</th>
+                            <th style="width: 140px;">提醒业务类别</th>
+                            <th style="width: 130px;">适用主体 (CI编号)</th>
+                            <th>预警触发条件核心逻辑 (白话文释义)</th>
+                            <th style="width: 130px;">轰炸提醒频率</th>
+                            <th style="width: 120px;">主要推送群组</th>
+                            <th style="width: 90px;">当前状态</th>
+                            <th style="width: 140px;">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><span class="tag tag-blue">单笔开票催交</span></td>
+                            <td>CI-2026-001</td>
+                            <td>当该单的【实际产值】＞【已开票金额】，且超期 <b>15天</b> 仍未全额开票时触发。</td>
+                            <td>每隔 <b>3天</b> 推送一次</td>
+                            <td>张三(项目经理)</td>
+                            <td><span class="status status-active">生效中</span></td>
+                            <td>
+                                <button class="btn-mini btn-outline" style="color:var(--danger-color);border-color:var(--danger-color)" onclick="showConfirmDialog('确认暂停该单的开票催交推送功能？','引擎暂停通告')">⏸ 暂停</button>
+                                <button class="btn-mini btn-outline" style="color:var(--blue);border-color:var(--blue)">⚙️ 配置</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><span class="tag tag-green">应收账款回笼</span></td>
+                            <td>CI-2026-002</td>
+                            <td>当该单的【已开票金额】＞【已回款金额】，且距离发票寄出日超 <b>30天</b> 仍未打款时触发。</td>
+                            <td><b>每天</b> 定点轰炸</td>
+                            <td>李四(财务)、项目经理</td>
+                            <td><span class="status status-active">生效中</span></td>
+                            <td>
+                                <button class="btn-mini btn-outline" style="color:var(--danger-color);border-color:var(--danger-color)">⏸ 暂停</button>
+                                <button class="btn-mini btn-outline" style="color:var(--blue);border-color:var(--blue)">⚙️ 配置</button>
+                            </td>
+                        </tr>
+                        <tr style="background-color: #fcfcfc;">
+                            <td>3</td>
+                            <td><span class="tag tag-purple">全局利润预警</span></td>
+                            <td><span class="tag" style="background-color:#eee; color:#666; font-family:monospace;">[平台兜底规则]</span></td>
+                            <td>当系统底层核算出现任何一笔合同的【实时核算净利润率】 ≤ <b>3.0%</b> 时触发。</td>
+                            <td>每隔 <b>7天</b> 循环上报</td>
+                            <td>执行总监表、全组财务</td>
+                            <td><span class="status status-pending">已全局停用</span></td>
+                            <td>
+                                <button class="btn-mini btn-outline" style="color:#10b981;border-color:#10b981">▶ 恢复运转</button>
+                                <button class="btn-mini btn-outline" style="color:var(--blue);border-color:var(--blue)">⚙️ 配置</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="pagination" style="margin-top: 15px;">
+                <span>共 <strong>3</strong> 条提醒规则设定</span>
+            </div>
+        </div>
+
+
+        <!-- ==================== PAGE: 合同台账 ==================== -->
+        <div class="page active" id="page-contract">
+            <div class="page-title-row">
+                <h1>合同台账 <small>(数据来源: PECMS)</small></h1>
+                <div class="role-badge">当前角色：<strong>项目经理</strong> — 查看分配的合同号(CI编号)数据</div>
+            </div>
+            <div class="filter-panel">
+                <div class="filter-row">
+                    <div class="filter-item"><label>合同编号</label><input type="text" placeholder="请输入CI编号"></div>
+                    <div class="filter-item"><label>合同名称</label><input type="text" placeholder="请输入"></div>
+                    <div class="filter-item"><label>设备名称</label><input type="text" placeholder="请输入"></div>
+                    <div class="filter-item"><label>委托方</label><input type="text" placeholder="请输入"></div>
+                    <div class="filter-item"><label>制造方</label><input type="text" placeholder="请输入"></div>
+                    <div class="filter-item"><label>合同类型</label><select>
+                            <option>全部</option>
+                            <option>开口合同</option>
+                            <option>总价合同</option>
+                            <option>框架协议合同</option>
+                        </select></div>
+                </div>
+                <div class="filter-row" id="contractAdvFilter" style="display:none;">
+                    <div class="filter-item"><label>项目经理</label><input type="text" placeholder="请输入"></div>
+                    <div class="filter-item"><label>合同签订时间</label><input type="date"></div>
+                    <div class="filter-item"><label>合同起始日期</label><input type="date"></div>
+                    <div class="filter-item"><label>合同终止日期</label><input type="date"></div>
+                    <div class="filter-item"><label>ERP录入情况</label><select>
+                            <option>全部</option>
+                            <option>已录入</option>
+                            <option>未录入</option>
+                        </select></div>
+                    <div class="filter-item"><label>合同状态</label><select>
+                            <option>全部</option>
+                            <option>进行中</option>
+                            <option>已完成</option>
+                            <option>已终止</option>
+                        </select></div>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn btn-primary" onclick="showToast('查询成功，已加载3条数据')">🔍 查询</button>
+                    <button class="btn btn-outline" onclick="showToast('已重置筛选条件')">↻ 重置</button>
+                    <button class="btn btn-outline" onclick="toggleAdvFilter('contractAdvFilter',this)">⚡ 高级查询</button>
+                    <button class="btn btn-success" onclick="doExport('合同台账')">📥 导出</button>
+                    <div style="margin-left:auto;">
+                        <button id="contractColPickerBtn" class="btn btn-outline"
+                            onclick="openColPicker('contractTable', contractTableColumns, 'contractColPickerBtn')"
+                            title="自定义显示列" style="display:inline-flex;align-items:center;gap:4px;">
+                            ⚙️ 列设置
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table class="data-table" id="contractTable" style="min-width:1850px;">
+                    <thead>
+                        <tr>
+                            <th style="width:40px">#</th>
+                            <th>合同编号</th>
+                            <th>合同名称</th>
+                            <th>设备名称</th>
+                            <th>委托方</th>
+                            <th>制造方</th>
+                            <th>监造金额(元)</th>
+                            <th>预给号时间</th>
+                            <th>项目经理</th>
+                            <th>合同签订时间</th>
+                            <th>合同原件返回时间</th>
+                            <th>合同起始日期</th>
+                            <th>合同终止日期</th>
+                            <th>委托方联系人</th>
+                            <th>合同类型</th>
+                            <th>合同形式</th>
+                            <th>ERP录入</th>
+                            <th>上级单位ERP唯一标识</th>
+                            <th>项目编号</th>
+                            <th>项目名称</th>
+                            <th>状态</th>
+                            <th style="min-width:200px">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><span class="link-text" onclick="showContractDetail('CI-2026-001')">CI-2026-001</span>
+                            </td>
+                            <td>某石化换热器监造</td>
+                            <td>管壳式换热器</td>
+                            <td>中国石化</td>
+                            <td>东方锅炉</td>
+                            <td class="text-right">580,000.00</td>
+                            <td>2026-01-10</td>
+                            <td>李明</td>
+                            <td>2026-01-15</td>
+                            <td>2026-01-25</td>
+                            <td>2026-01-20</td>
+                            <td>2026-12-31</td>
+                            <td>张经理</td>
+                            <td><span class="tag tag-blue">开口合同</span></td>
+                            <td>驻厂监造</td>
+                            <td>已录入</td>
+                            <td style="font-size:11px;color:var(--text-muted)">ERP-SH-001</td>
+                            <td>PRJ-001</td>
+                            <td>石化换热器A项</td>
+                            <td><span class="status status-active">进行中</span></td>
+                            <td>
+                                <button class="btn-mini btn-primary"
+                                    onclick="showContractDetail('CI-2026-001')">详情</button>
+                                <button class="btn-mini btn-warning"
+                                    onclick="showConfirmDialog('确认将合同 CI-2026-001 状态修改为已终止？','终止合同')">终止</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><span class="link-text" onclick="showContractDetail('CI-2026-002')">CI-2026-002</span>
+                            </td>
+                            <td>压力容器制造监理</td>
+                            <td>压力容器</td>
+                            <td>中国石油</td>
+                            <td>哈尔滨锅炉</td>
+                            <td class="text-right">1,200,000.00</td>
+                            <td>2026-01-05</td>
+                            <td>王芳</td>
+                            <td>2026-01-08</td>
+                            <td>2026-01-20</td>
+                            <td>2026-01-15</td>
+                            <td>2027-06-30</td>
+                            <td>刘总</td>
+                            <td><span class="tag tag-green">总价合同</span></td>
+                            <td>总价监造</td>
+                            <td>已录入</td>
+                            <td style="font-size:11px;color:var(--text-muted)">ERP-BJ-002</td>
+                            <td>PRJ-002</td>
+                            <td>石油压力容器B项</td>
+                            <td><span class="status status-active">进行中</span></td>
+                            <td>
+                                <button class="btn-mini btn-primary"
+                                    onclick="showContractDetail('CI-2026-002')">详情</button>
+                                <button class="btn-mini btn-success"
+                                    onclick="showConfirmDialog('收款金额已达合同金额，确认将合同 CI-2026-002 标记为已完成？','完成合同')">完成</button>
+                                <button class="btn-mini btn-warning"
+                                    onclick="showConfirmDialog('确认将合同 CI-2026-002 状态修改为已终止？','终止合同')">终止</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><span class="link-text" onclick="showContractDetail('CI-2026-003')">CI-2026-003</span>
+                            </td>
+                            <td>管道安装框架协议</td>
+                            <td>工业管道</td>
+                            <td>中海油</td>
+                            <td>大连重工</td>
+                            <td class="text-right">860,000.00</td>
+                            <td>2025-12-20</td>
+                            <td>陈伟</td>
+                            <td>2025-12-25</td>
+                            <td>2026-01-05</td>
+                            <td>2026-01-01</td>
+                            <td>2026-09-30</td>
+                            <td>赵主任</td>
+                            <td><span class="tag tag-purple">框架协议合同</span><span
+                                    style="font-size:10px;color:var(--text-muted);margin-left:4px"
+                                    title="框架协议合同不进入项目收入台账">⚠️不计收入</span></td>
+                            <td>框架协议</td>
+                            <td>未录入</td>
+                            <td style="font-size:11px;color:var(--text-muted)">—</td>
+                            <td>PRJ-003</td>
+                            <td>海油管道安装C项</td>
+                            <td><span class="status status-terminated">已终止</span></td>
+                            <td>
+                                <button class="btn-mini btn-primary"
+                                    onclick="showContractDetail('CI-2026-003')">详情</button>
+                                <button class="btn-mini btn-info"
+                                    onclick="showCancelTerminateDialog('CI-2026-003')">取消终止</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination">
+                <span>共 <strong>3</strong> 条记录，第 1/1 页</span>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <span style="font-size:12px">每页</span><select class="page-size">
+                        <option>10</option>
+                        <option>20</option>
+                        <option>50</option>
+                    </select><span style="font-size:12px">条</span>
+                    <div class="pagination-btns">
+                        <button class="btn-page" disabled>‹</button><button class="btn-page active">1</button><button
+                            class="btn-page" disabled>›</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== PAGE: 项目收入 ==================== -->
+        <div class="page" id="page-income">
+            <div class="page-title-row">
+                <h1>项目收入</h1>
+                <div style="display:flex; justify-content:space-between; align-items:center; flex:1; margin-left:16px;">
+                    <div class="role-badge" style="margin:0;">当前角色：<strong>项目经理 / 管理层</strong> — 填报与纠正权限可配置</div>
+                    <button class="btn btn-primary" style="background:#4b5563;border:none;"
+                        onclick="showGlobalHistoryDialog()">📜 领导层全局历史</button>
+                </div>
+            </div>
+            <!-- 计算规则展示（SRS V11 重写）-->
+            <div class="formula-panel">
+                <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;"
+                    onclick="const grid = document.getElementById('incomeFormulaGrid'); const icon = document.getElementById('incomeFormulaIcon'); if(grid.style.display==='none'){ grid.style.display='grid'; icon.style.transform='rotate(0deg)'; }else{ grid.style.display='none'; icon.style.transform='rotate(-90deg)'; }">
+                    <h3 style="margin:0;">📐 核心计算规则 <span
+                            style="font-size:11px;font-weight:400;color:var(--text-muted);margin-left:8px;">仅展示开口合同与总价合同，框架协议合同不进入本台账</span>
+                    </h3>
+                    <span id="incomeFormulaIcon" style="transition:transform 0.2s; color:var(--text-muted);">▼</span>
+                </div>
+                <div class="formula-grid" id="incomeFormulaGrid" style="margin-top:12px;">
+                    <div class="formula-card">
+                        <div class="formula-title">总产值（两种合同通用）</div>
+                        <div class="formula-body">= 已报产值 + 当月确认产值</div>
+                    </div>
+                    <div class="formula-card">
+                        <div class="formula-title">当月计划产值</div>
+                        <div class="formula-body"><strong>开口合同</strong>：系统自动计算<br>= 合同单价 ×
+                            当月工时<br><strong>总价合同</strong>：固定为 0，不展示</div>
+                    </div>
+                    <div class="formula-card">
+                        <div class="formula-title">已报产值</div>
+                        <div class="formula-body">= Σ 历史各月已确认产值之和<br>（累计值，不含当月未提交的）</div>
+                    </div>
+                    <div class="formula-card">
+                        <div class="formula-title">当月确认产值</div>
+                        <div class="formula-body"><strong>开口合同</strong>：默认=系统计算值，可修改<br>低于阈值 →
+                            产值过低审批（填原因+附件）<br><strong>总价合同</strong>：手动填写，无校验无审批</div>
+                    </div>
+                    <div class="formula-card">
+                        <div class="formula-title">已报收入</div>
+                        <div class="formula-body">基础：= 累计开票金额<br>有纠正时：= 累计开票 + 纠正剩余额度</div>
+                    </div>
+                    <div class="formula-card">
+                        <div class="formula-title">纠正剩余额度 🆕</div>
+                        <div class="formula-body">初始值 = 纠正金额<br>每次开票后自动抵扣<br>归零后纠正完成</div>
+                    </div>
+                    <div class="formula-card">
+                        <div class="formula-title">开票状态</div>
+                        <div class="formula-body">未开票：实际开票=0<br>部分开票：0&lt;金额&lt;合同金额<br>全部开票：金额=合同金额</div>
+                    </div>
+                </div>
+            </div>
+            <div class="filter-panel">
+                <div class="filter-row">
+                    <div class="filter-item"><label>合同编号</label><input type="text" placeholder="请输入CI编号"></div>
+                    <div class="filter-item"><label>合同名称</label><input type="text" placeholder="请输入"></div>
+                    <div class="filter-item"><label>委托方</label><input type="text" placeholder="请输入"></div>
+                    <div class="filter-item"><label>委托方类别</label><select>
+                            <option>全部</option>
+                            <option>中石化</option>
+                            <option>中石油</option>
+                            <option>中海油</option>
+                            <option>其他</option>
+                        </select></div>
+                    <div class="filter-item"><label>合同类型</label><select>
+                            <option>全部</option>
+                            <option>开口合同</option>
+                            <option>总价合同</option>
+                        </select></div>
+                    <div class="filter-item"><label>开票状态</label><select>
+                            <option>全部</option>
+                            <option>未开票</option>
+                            <option>部分开票</option>
+                            <option>全部开票</option>
+                        </select></div>
+                </div>
+                <div class="filter-row" id="incomeAdvFilter" style="display:none;">
+                    <div class="filter-item"><label>项目经理</label><input type="text" placeholder="请输入"></div>
+                    <div class="filter-item"><label>计划开票时间</label><input type="date"></div>
+                    <div class="filter-item"><label>实际开票时间</label><input type="date"></div>
+                    <div class="filter-item"><label>实际回款时间</label><input type="date"></div>
+                    <div class="filter-item"><label>开票总金额范围</label><input type="text" placeholder="最小~最大"></div>
+                    <div class="filter-item"><label>收款总金额范围</label><input type="text" placeholder="最小~最大"></div>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn btn-primary" onclick="showToast('查询成功')">🔍 查询</button>
+                    <button class="btn btn-outline" onclick="showToast('已重置')">↻ 重置</button>
+                    <button class="btn btn-outline" onclick="toggleAdvFilter('incomeAdvFilter',this)">⚡ 高级查询</button>
+                    <button class="btn btn-success" onclick="doExport('项目收入(自定义列)')">📥 自定义列导出</button>
+                    <div style="margin-left:auto;">
+                        <button id="incomeColPickerBtn" class="btn btn-outline"
+                            onclick="openColPicker('incomeTable', incomeTableColumns, 'incomeColPickerBtn')"
+                            title="自定义显示列" style="display:inline-flex;align-items:center;gap:4px;">
+                            ⚙️ 列设置
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table class="data-table" id="incomeTable" style="min-width:2600px;">
+                    <thead>
+                        <tr>
+                            <th style="box-sizing: border-box; width: 50px; min-width: 50px; position: sticky; left: 0; z-index: 4; background-color: #fafafa;">#</th>
+                            <th style="box-sizing: border-box; width: 120px; min-width: 120px; position: sticky; left: 50px; z-index: 4; background-color: #fafafa; box-shadow: 2px 0 4px -2px rgba(0,0,0,0.1); border-right: 1px solid var(--border-color);">合同编号</th>
+                            <th>合同名称</th>
+                            <th>委托方</th>
+                            <th>项目经理</th>
+                            <th>合同类型</th>
+                            <th>合同金额 <span class="sort-icon"
+                                    style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>总产值 <span class="sort-icon"
+                                    style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>当月计划产值 <span class="sort-icon"
+                                    style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>已报产值 <span class="sort-icon"
+                                    style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>当月确认产值 <span class="sort-icon"
+                                    style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>最新填报时间 <span class="sort-icon"
+                                    style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>已报收入 <span class="sort-icon"
+                                    style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th style="color:var(--orange)">纠正剩余额度 🆕</th>
+                            <th>当月收入 <span class="sort-icon"
+                                    style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>开票状态</th>
+                            <th>计划开票时间 <span class="sort-icon"
+                                    style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>未开票原因</th>
+                            <th>最新开票时间 <span class="sort-icon"
+                                    style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>开票总金额 <span class="sort-icon"
+                                    style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>最新收款时间 <span class="sort-icon"
+                                    style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>收款总金额 <span class="sort-icon"
+                                    style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>备注</th>
+                            <th>当月收入最新填报时间 <span class="sort-icon"
+                                    style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th style="min-width:340px">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="sticky-cell" style="box-sizing: border-box; width: 50px; min-width: 50px; left: 0;">1</td>
+                            <td class="sticky-cell" style="box-sizing: border-box; width: 120px; min-width: 120px; left: 50px; box-shadow: 2px 0 4px -2px rgba(0,0,0,0.1); border-right: 1px solid var(--border-color);">CI-2026-001</td>
+                            <td>某石化换热器监造</td>
+                            <td>中国石化</td>
+                            <td>李明</td>
+                            <td><span class="tag tag-blue">开口合同</span></td>
+                            <td class="text-right">580,000</td>
+                            <td class="text-right">336,500</td>
+                            <td class="text-right"><a href="#" onclick="showOutputDetail('CI-2026-001', '28,800')"
+                                    style="color:var(--blue);text-decoration:underline;">28,800</a></td>
+                            <td class="text-right">310,000</td>
+                            <td class="text-right">26,500</td>
+                            <td>2026-02-20</td>
+                            <td class="text-right">230,000</td>
+                            <td class="text-right" style="color:var(--orange);font-weight:600;">30,000</td>
+                            <td class="text-right">28,800</td>
+                            <td><span class="status status-pending">部分开票</span></td>
+                            <td>2026-03-15</td>
+                            <td>—</td>
+                            <td>2026-02-10</td>
+                            <td class="text-right">200,000</td>
+                            <td>2026-02-05</td>
+                            <td class="text-right">150,000</td>
+                            <td>—</td>
+                            <td>2026-02-20 14:32</td>
+                            <td>
+                                <button class="btn-mini btn-primary"
+                                    onclick="showMonthlyOutputDialog('CI-2026-001','开口合同', 28800)">📝 当月确认产值</button>
+                                <button class="btn-mini btn-warning"
+                                    onclick="showIncomeCorrectionDialog('CI-2026-001')">💱 收入纠错</button>
+                                <button class="btn-mini btn-info" onclick="showInvoiceInfoDialog('CI-2026-001')">🧾
+                                    预计开票填报</button>
+                                <button class="btn-mini btn-info" onclick="showReceiptInfoDialog('CI-2026-001')">💳
+                                    预计回款填报</button>
+                                <button class="btn-mini btn-outline" onclick="showHistoryDialog('CI-2026-001')">📜
+                                    历史</button>
+                                <button class="btn-mini btn-success"
+                                    onclick="switchPage('execution');showToast('已跳转至执行管理，按CI-2026-001筛选')">👁️
+                                    查看</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="sticky-cell" style="box-sizing: border-box; width: 50px; min-width: 50px; left: 0;">2</td>
+                            <td class="sticky-cell" style="box-sizing: border-box; width: 120px; min-width: 120px; left: 50px; box-shadow: 2px 0 4px -2px rgba(0,0,0,0.1); border-right: 1px solid var(--border-color);">CI-2026-002</td>
+                            <td>压力容器制造监理</td>
+                            <td>中国石油</td>
+                            <td>王芳</td>
+                            <td><span class="tag tag-green">总价合同</span></td>
+                            <td class="text-right">1,200,000</td>
+                            <td class="text-right">620,000</td>
+                            <td class="text-right" style="color:var(--text-muted);">—</td>
+                            <td class="text-right">500,000</td>
+                            <td class="text-right">120,000</td>
+                            <td>2026-02-15</td>
+                            <td class="text-right">500,000</td>
+                            <td class="text-right" style="color:var(--text-muted);">—</td>
+                            <td class="text-right">120,000</td>
+                            <td><span class="status status-pending">部分开票</span></td>
+                            <td>2026-04-01</td>
+                            <td>—</td>
+                            <td>2026-01-25</td>
+                            <td class="text-right">500,000</td>
+                            <td>2026-01-20</td>
+                            <td class="text-right">400,000</td>
+                            <td>—</td>
+                            <td>2026-02-15 10:20</td>
+                            <td>
+                                <button class="btn-mini btn-primary"
+                                    onclick="showMonthlyOutputDialog('CI-2026-002','总价合同', 0)">📝 当月确认产值</button>
+                                <button class="btn-mini btn-warning"
+                                    onclick="showIncomeCorrectionDialog('CI-2026-002')">💱 收入纠错</button>
+                                <button class="btn-mini btn-info" onclick="showInvoiceInfoDialog('CI-2026-002')">🧾
+                                    预计开票填报</button>
+                                <button class="btn-mini btn-info" onclick="showReceiptInfoDialog('CI-2026-002')">💳
+                                    预计回款填报</button>
+                                <button class="btn-mini btn-outline" onclick="showHistoryDialog('CI-2026-002')">📜
+                                    历史</button>
+                                <button class="btn-mini btn-success" onclick="switchPage('execution')">👁️ 查看</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination"><span>共 <strong>2</strong> 条（框架协议合同不进入收入台账）</span>
+                <div class="pagination-btns"><button class="btn-page active">1</button></div>
+            </div>
+        </div>
+
+        <!-- 后续模块页面在 pages.js 中动态注入 -->
+        <div class="page" id="page-execution"></div>
+        <div class="page" id="page-personnel"></div>
+        <div class="page" id="page-workhour"></div>
+        <div class="page" id="page-invoice"></div>
+        <div class="page" id="page-payment"></div>
+        <div class="page" id="page-summary"></div>
+        <div class="page" id="page-reminder">
+            <div class="page-title-row" style="justify-content: flex-start;">
+                <h2 style="font-size: 18px; color: var(--text-color); margin-right: 20px;">智能到账与开票引擎 (提醒设置)</h2>
+                <div style="font-size: 13px; color: var(--text-muted); background: #fff3cd; padding: 4px 12px; border-radius: 4px; border: 1px solid #ffeeba;">
+                    <span style="color: #856404;">💡 提醒引擎机制：系统后台自动计算全量合同金额数据，当触碰或超过设置的阈值时，引擎将按设定频率自动触发<b>邮件 + 系统内信</b>双重推送。</span>
+                </div>
+            </div>
+
+            <div class="filter-panel" style="margin-top: 15px;">
+                <div class="filter-row">
+                    <div class="filter-item"><label>合同编号</label><input type="text" placeholder="请输入..."></div>
+                    <div class="filter-item"><label>业务类型</label><select>
+                            <option>全部</option>
+                            <option>单笔开票提醒</option>
+                            <option>单笔回款提醒</option>
+                            <option>利润预警提醒</option>
+                        </select></div>
+                    <div class="filter-item"><label>生效状态</label><select>
+                            <option>全部</option>
+                            <option selected>生效中</option>
+                            <option>已停用</option>
+                        </select></div>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn btn-primary" onclick="showToast('检索完成')">🔍 查询规则</button>
+                    <button class="btn btn-outline" style="margin-right:20px;">↻ 重置</button>
+                    <button class="btn btn-primary" style="background-color:#10b981; border-color:#10b981;" onclick="showAddReminderModal()"><span style="font-size:16px;">✛</span> 新增定制提醒</button>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">#</th>
+                            <th style="width: 140px;">提醒业务类别</th>
+                            <th style="width: 130px;">适用主体 (CI编号)</th>
+                            <th>预警触发条件核心逻辑 (白话文释义)</th>
+                            <th style="width: 130px;">轰炸提醒频率</th>
+                            <th style="width: 120px;">主要推送群组</th>
+                            <th style="width: 90px;">当前状态</th>
+                            <th style="width: 140px;">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><span class="tag tag-blue">单笔开票催交</span></td>
+                            <td>CI-2026-001</td>
+                            <td>当该单的【实际产值】＞【已开票金额】，且超期 <b>15天</b> 仍未全额开票时触发。</td>
+                            <td>每隔 <b>3天</b> 推送一次</td>
+                            <td>张三(项目经理)</td>
+                            <td><span class="status status-active">生效中</span></td>
+                            <td>
+                                <button class="btn-mini btn-outline" style="color:var(--danger-color);border-color:var(--danger-color)" onclick="showConfirmDialog('确认暂停该单的开票催交推送功能？','引擎暂停通告')">⏸ 暂停</button>
+                                <button class="btn-mini btn-outline" style="color:var(--blue);border-color:var(--blue)">⚙️ 配置</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><span class="tag tag-green">应收账款回笼</span></td>
+                            <td>CI-2026-002</td>
+                            <td>当该单的【已开票金额】＞【已回款金额】，且距离发票寄出日超 <b>30天</b> 仍未打款时触发。</td>
+                            <td><b>每天</b> 定点轰炸</td>
+                            <td>李四(财务)、项目经理</td>
+                            <td><span class="status status-active">生效中</span></td>
+                            <td>
+                                <button class="btn-mini btn-outline" style="color:var(--danger-color);border-color:var(--danger-color)">⏸ 暂停</button>
+                                <button class="btn-mini btn-outline" style="color:var(--blue);border-color:var(--blue)">⚙️ 配置</button>
+                            </td>
+                        </tr>
+                        <tr style="background-color: #fcfcfc;">
+                            <td>3</td>
+                            <td><span class="tag tag-purple">全局利润预警</span></td>
+                            <td><span class="tag" style="background-color:#eee; color:#666; font-family:monospace;">[平台兜底规则]</span></td>
+                            <td>当系统底层核算出现任何一笔合同的【实时核算净利润率】 ≤ <b>3.0%</b> 时触发。</td>
+                            <td>每隔 <b>7天</b> 循环上报</td>
+                            <td>执行总监表、全组财务</td>
+                            <td><span class="status status-pending">已全局停用</span></td>
+                            <td>
+                                <button class="btn-mini btn-outline" style="color:#10b981;border-color:#10b981">▶ 恢复运转</button>
+                                <button class="btn-mini btn-outline" style="color:var(--blue);border-color:var(--blue)">⚙️ 配置</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="pagination" style="margin-top: 15px;">
+                <span>共 <strong>3</strong> 条提醒规则设定</span>
+            </div>
+        </div>
+        <div class="page" id="page-cost"></div>
+        <div class="page" id="page-travel">
+            <!-- 差旅报销台账 -->
+            <div class="page-header">
+                <h1>差旅报销台账</h1>
+                <div class="page-actions">
+                    <button class="btn-primary" onclick="importTravelData()">📥 导入数据</button>
+                    <button class="btn-secondary" onclick="exportTravelData()">📤 导出Excel</button>
+                    <button class="btn-primary" onclick="addTravelRecord()">➕ 新增报销单</button>
+                    <button class="btn-secondary" onclick="showTravelStats()">📊 统计分析</button>
+                </div>
+            </div>
+
+            <!-- 筛选区 -->
+            <div class="filter-section">
+                <div class="filter-row">
+                    <div class="filter-item">
+                        <label>单据编号：</label>
+                        <input type="text" id="filterRecordId" placeholder="模糊搜索">
+                    </div>
+                    <div class="filter-item">
+                        <label>人员姓名：</label>
+                        <input type="text" id="filterEmployeeName" placeholder="模糊搜索">
+                    </div>
+                    <div class="filter-item">
+                        <label>合同编号：</label>
+                        <input type="text" id="filterContractId" placeholder="模糊搜索">
+                    </div>
+                    <div class="filter-item filter-item-range">
+                        <label>金额区间：</label>
+                        <div class="range-inputs">
+                            <input type="number" id="filterAmountMin" placeholder="最小">
+                            <span class="range-separator">~</span>
+                            <input type="number" id="filterAmountMax" placeholder="最大">
+                        </div>
+                    </div>
+                    <div class="filter-item filter-actions">
+                        <label>&nbsp;</label>
+                        <div class="action-buttons">
+                            <button class="btn-primary" onclick="filterTravelData()">🔍 查询</button>
+                            <button class="btn-secondary" onclick="resetTravelFilter()">🔄 重置</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 统计卡片 -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-label">总金额</div>
+                    <div class="stat-value" id="statTotalAmount">¥0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">单据数</div>
+                    <div class="stat-value" id="statRecordCount">0条</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">报销人数</div>
+                    <div class="stat-value" id="statEmployeeCount">0人</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">平均金额</div>
+                    <div class="stat-value" id="statAvgAmount">¥0</div>
+                </div>
+            </div>
+
+            <!-- 数据表格 -->
+            <div class="table-container">
+                <table class="data-table" id="travelTable">
+                    <thead>
+                        <tr>
+                            <th width="40"><input type="checkbox" id="selectAll" onchange="toggleSelectAll()"></th>
+                            <th width="140" onclick="sortTable('recordId')">单据编号 <span class="sort-icon">⇅</span></th>
+                            <th width="100" onclick="sortTable('employeeId')">员工编号 <span class="sort-icon">⇅</span></th>
+                            <th width="80" onclick="sortTable('employeeName')">姓名 <span class="sort-icon">⇅</span></th>
+                            <th width="100" onclick="sortTable('department')">部门 <span class="sort-icon">⇅</span></th>
+                            <th width="120" onclick="sortTable('contractId')">合同编号 <span class="sort-icon">⇅</span></th>
+                            <th width="100" style="text-align:center;" onclick="sortTable('通用费用')">通用费用 <span class="sort-icon">⇅</span></th>
+                            <th width="100" style="text-align:center;" onclick="sortTable('差旅费用')">差旅费用 <span class="sort-icon">⇅</span></th>
+                            <th width="100" style="text-align:center;" onclick="sortTable('招待费用')">招待费用 <span class="sort-icon">⇅</span></th>
+                            <th width="100" style="text-align:center;" onclick="sortTable('手机费用')">手机费用 <span class="sort-icon">⇅</span></th>
+                            <th width="100" style="text-align:center;" onclick="sortTable('其他费用')">其他费用 <span class="sort-icon">⇅</span></th>
+                            <th width="120" style="text-align:center;" onclick="sortTable('total')">合计 <span class="sort-icon">⇅</span></th>
+                            <th width="100">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="travelTableBody">
+                        <!-- 数据行由JS动态生成 -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 分页 -->
+            <div class="pagination" style="display:flex;justify-content:space-between;align-items:center;padding:16px 20px;background:#fafafa;border-top:1px solid #e0e0e0;margin-top:16px;">
+                <div style="display:flex;align-items:center;gap:16px;">
+                    <span id="paginationInfo" style="font-size:13px;color:#666;">当前显示：0-0 / 共0条</span>
+                    <span id="selectedInfo" style="font-size:13px;color:#1976d2;font-weight:500;">已选择：0条</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <button class="btn-secondary btn-sm" onclick="batchDelete()" style="padding:6px 12px;font-size:13px;border-radius:4px;">批量删除</button>
+                    <button class="btn-secondary btn-sm" onclick="batchExport()" style="padding:6px 12px;font-size:13px;border-radius:4px;">批量导出</button>
+                    <div style="width:1px;height:20px;background:#ddd;margin:0 4px;"></div>
+                    <button class="btn-page" onclick="prevPage()" style="padding:6px 12px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer;font-size:13px;">‹ 上一页</button>
+                    <span id="pageNumbers" style="display:flex;gap:4px;"></span>
+                    <button class="btn-page" onclick="nextPage()" style="padding:6px 12px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer;font-size:13px;">下一页 ›</button>
+                </div>
+            </div>
+        </div>
+        <div class="page" id="page-salary"></div>
+        <div class="page" id="page-profit"></div>
+        <div class="page" id="page-report"></div>
+        <div class="page" id="page-monthly-report"></div>
+    </main>
+
+    <!-- ========== Modal Overlay ========== -->
+    <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+        <div class="modal" id="modalBox">
+            <div class="modal-header">
+                <h2 id="modalTitle">标题</h2><button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-footer" id="modalFooter"></div>
+        </div>
+    </div>
+
+    <!-- ========== Toast Container ========== -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ========== Notification Panel ========== -->
+    <div class="notification-panel" id="notificationPanel">
+        <div class="notif-header">
+            <h3>消息通知</h3><button onclick="closeNotification()">✕</button>
+        </div>
+        <div class="notif-list">
+            <div class="notif-item notif-warning">
+                <div class="notif-title">⚠️ 利润预警</div>
+                <div class="notif-desc">合同 CI-2026-003 利润为负数(-¥45,200)，请及时关注成本控制。</div>
+                <div class="notif-time">10分钟前</div>
+            </div>
+            <div class="notif-item notif-warning">
+                <div class="notif-title">⚠️ 超期提醒</div>
+                <div class="notif-desc">派单 PD-20260115-01 计划结束时间已超期3天，请及时处理。</div>
+                <div class="notif-time">1小时前</div>
+            </div>
+            <div class="notif-item notif-info">
+                <div class="notif-title">📋 开票提醒</div>
+                <div class="notif-desc">合同 CI-2026-001 已超过设定的30天未开票期限，请尽快安排开票。</div>
+                <div class="notif-time">2小时前</div>
+            </div>
+            <div class="notif-item notif-info">
+                <div class="notif-title">💳 回款提醒</div>
+                <div class="notif-desc">合同 CI-2026-002 预计回款时间已到，请确认回款进度。</div>
+                <div class="notif-time">3小时前</div>
+            </div>
+            <div class="notif-item notif-info">
+                <div class="notif-title">✅ 审批通知</div>
+                <div class="notif-desc">合同 CI-2026-003 的取消终止申请已通过审批。</div>
+                <div class="notif-time">昨天</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== Export Preview Overlay ========== -->
+    <div class="modal-overlay" id="exportOverlay" onclick="if(event.target===this)closeExport()">
+        <div class="modal" id="exportBox" style="max-width:900px">
+            <div class="modal-header">
+                <h2>📥 导出预览</h2><button class="modal-close" onclick="closeExport()">✕</button>
+            </div>
+            <div class="modal-body" id="exportBody"></div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeExport()">取消</button>
+                <button class="btn btn-success" onclick="downloadExport()">💾 下载 Excel</button>
+                <button class="btn btn-primary" onclick="downloadExport()">🖨️ 下载 PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="pages.js"></script>
+    <script src="app.js"></script>
+    <script src="app2.js"></script>
+    <script src="monthly_report.js"></script>
+</body>
+
+</html>

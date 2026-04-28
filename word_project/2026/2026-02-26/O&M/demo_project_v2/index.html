@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>经营管理系统 V2 - 交互式原型</title>
+    <meta name="description" content="基于 Operations_and_Management_SRS_V11 的全功能交互式 Vue.js 原型">
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+    <style>
+        [v-cloak] {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <!-- Toast 通知 -->
+        <div class="toast-container">
+            <div class="toast" v-for="t in toastList" :key="t.id">{{ t.msg }}</div>
+        </div>
+
+        <!-- ========== Sidebar ========== -->
+        <aside class="sidebar" :class="{ collapsed: sidebarCollapsed }" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo"><span class="logo-icon">📊</span><span class="logo-text">经营分析平台</span></div>
+                <button class="sidebar-toggle" @click="toggleSidebar" title="收起侧栏">☰</button>
+            </div>
+            <nav class="nav-menu">
+                <div class="nav-group">
+                    <div class="nav-group-title">全局配置</div>
+                    <a class="nav-item" :class="{active: currentPage==='dashboard'}" @click="switchPage('dashboard')">
+                        <span class="nav-icon">🖥️</span><span class="nav-label">领导管理大屏</span>
+                    </a>
+                    <a class="nav-item" :class="{active: currentPage==='permission'}" @click="switchPage('permission')">
+                        <span class="nav-icon">🔑</span><span class="nav-label">权限分配</span>
+                    </a>
+                </div>
+                <div class="nav-group">
+                    <div class="nav-group-title">核心业务</div>
+                    <a class="nav-item" :class="{active: currentPage==='contract'}" @click="switchPage('contract')">
+                        <span class="nav-icon">📋</span><span class="nav-label">合同台账</span>
+                    </a>
+                    <a class="nav-item" :class="{active: currentPage==='income'}" @click="switchPage('income')">
+                        <span class="nav-icon">💰</span><span class="nav-label">项目收入</span>
+                    </a>
+                    <a class="nav-item" :class="{active: currentPage==='execution'}" @click="switchPage('execution')">
+                        <span class="nav-icon">⚙️</span><span class="nav-label">执行管理</span>
+                    </a>
+                    <a class="nav-item" :class="{active: currentPage==='personnel'}" @click="switchPage('personnel')">
+                        <span class="nav-icon">👥</span><span class="nav-label">监理人员动态</span>
+                    </a>
+                    <a class="nav-item" :class="{active: currentPage==='workhour'}" @click="switchPage('workhour')">
+                        <span class="nav-icon">⏱️</span><span class="nav-label">工时记录</span>
+                    </a>
+                </div>
+                <div class="nav-group">
+                    <div class="nav-group-title">财务管理</div>
+                    <a class="nav-item" :class="{active: currentPage==='invoice'}" @click="switchPage('invoice')">
+                        <span class="nav-icon">🧾</span><span class="nav-label">开票明细</span>
+                    </a>
+                    <a class="nav-item" :class="{active: currentPage==='payment'}" @click="switchPage('payment')">
+                        <span class="nav-icon">💳</span><span class="nav-label">回款明细</span>
+                    </a>
+                    <a class="nav-item" :class="{active: currentPage==='reminder'}" @click="switchPage('reminder')">
+                        <span class="nav-icon">🔔</span><span class="nav-label">提醒设置</span>
+                    </a>
+                </div>
+                <div class="nav-group">
+                    <div class="nav-group-title">成本与利润</div>
+                    <a class="nav-item" :class="{active: currentPage==='cost'}" @click="switchPage('cost')">
+                        <span class="nav-icon">📉</span><span class="nav-label">动态成本核算</span>
+                    </a>
+                    <a class="nav-item" :class="{active: currentPage==='travel'}" @click="switchPage('travel')">
+                        <span class="nav-icon">✈️</span><span class="nav-label">差旅报销台账</span>
+                    </a>
+                    <a class="nav-item" :class="{active: currentPage==='salary'}" @click="switchPage('salary')">
+                        <span class="nav-icon">💵</span><span class="nav-label">人员工资管理</span>
+                    </a>
+                    <a class="nav-item" :class="{active: currentPage==='profit'}" @click="switchPage('profit')">
+                        <span class="nav-icon">📈</span><span class="nav-label">利润管理</span>
+                    </a>
+                    <a class="nav-item" :class="{active: currentPage==='report'}" @click="switchPage('report')">
+                        <span class="nav-icon">📊</span><span class="nav-label">经营数据量化</span>
+                    </a>
+                </div>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="avatar">管</div>
+                    <div class="user-details">
+                        <div class="user-name">管理员</div>
+                        <div class="user-role">{{ currentRole }}</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ========== Main Content (inside sidebar+main flex layout) ========== -->
+        <main class="main-content" :class="{expanded: sidebarCollapsed}" id="mainContent">
+            <!-- Top Header (inside main-content, same as V1) -->
+            <header class="top-header">
+                <div class="breadcrumb">
+                    <span>{{ currentPage === 'dashboard' ? '全局' : currentPage === 'contract' ? '核心业务' : currentPage ===
+                        'income' ? '核心业务' : currentPage === 'execution' ? '核心业务' : currentPage === 'personnel' ? '核心业务'
+                        : currentPage === 'workhour' ? '核心业务' : currentPage === 'invoice' ? '财务管理' : currentPage ===
+                        'payment' ? '财务管理' : currentPage === 'reminder' ? '财务管理' : currentPage === 'cost' ? '成本与利润' :
+                        currentPage === 'travel' ? '成本与利润' : currentPage === 'salary' ? '成本与利润' : currentPage ===
+                        'profit' ? '成本与利润' : currentPage === 'report' ? '成本与利润' : '全局配置' }}</span>
+                    / <span>{{ menus.find(m => m.key === currentPage)?.label || '' }}</span>
+                </div>
+                <div class="header-actions">
+                    <select class="role-switcher" v-model="currentRole"
+                        style="padding:5px 10px;border:1px solid var(--border-color);border-radius:4px;font-size:12px;cursor:pointer;">
+                        <option>项目经理</option>
+                        <option>财务</option>
+                        <option>管理员</option>
+                        <option>普通员工</option>
+                    </select>
+                    <div class="notification-bell" @click="showNotification=!showNotification"
+                        style="position:relative;cursor:pointer;">
+                        🔔 <span class="badge" v-if="unreadCount">{{ unreadCount }}</span>
+                    </div>
+                    <span class="header-time">{{ new Date().toLocaleString('zh-CN') }}</span>
+                </div>
+            </header>
+
+            <!-- 通知右侧抽屉面板 -->
+            <div class="notification-panel" :class="{active: showNotification}">
+                <div
+                    style="padding:16px 20px;border-bottom:1px solid var(--border-color);display:flex;justify-content:space-between;align-items:center;">
+                    <h3 style="font-size:15px;margin:0;">📬 消息通知</h3>
+                    <button style="background:none;border:none;font-size:16px;cursor:pointer;color:var(--text-muted);"
+                        @click="showNotification=false">✕</button>
+                </div>
+                <div style="padding:12px 16px;max-height:calc(100vh - 120px);overflow-y:auto;">
+                    <div v-for="n in notifications" :key="n.id" @click="markRead(n)"
+                        style="padding:12px 14px;border-radius:8px;border:1px solid var(--border-color);margin-bottom:8px;cursor:pointer;transition:all 0.2s;"
+                        :style="{ background: n.read ? 'transparent' : 'var(--blue-light)', opacity: n.read ? 0.7 : 1 }">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                            <span style="font-size:13px;font-weight:600;">{{ n.title }}</span>
+                            <span style="font-size:11px;color:var(--text-muted);">{{ n.time }}</span>
+                        </div>
+                        <div style="font-size:12px;color:var(--text-secondary);">{{ n.content }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pages Content -->
+            <div class="page-content">
+                <dashboard-page v-if="currentPage==='dashboard'" :role="currentRole" :contracts="contracts"
+                    :income-data="incomeData" :cost-data="costData" :profit-data="profitData"></dashboard-page>
+                <contract-page v-if="currentPage==='contract'" :role="currentRole" :data="contracts"></contract-page>
+                <income-page v-if="currentPage==='income'" :role="currentRole" :contracts="contracts"
+                    :data="incomeData"></income-page>
+                <execution-page v-if="currentPage==='execution'" :role="currentRole"
+                    :data="executionData"></execution-page>
+                <workhour-page v-if="currentPage==='workhour'" :role="currentRole" :data="contracts"></workhour-page>
+                <personnel-page v-if="currentPage==='personnel'" :role="currentRole" :data="contracts"></personnel-page>
+                <invoice-page v-if="currentPage==='invoice'" :role="currentRole" :data="contracts"></invoice-page>
+                <payment-page v-if="currentPage==='payment'" :role="currentRole" :data="contracts"></payment-page>
+                <reminder-page v-if="currentPage==='reminder'" :role="currentRole"></reminder-page>
+                <travel-page v-if="currentPage==='travel'" :role="currentRole"></travel-page>
+                <salary-page v-if="currentPage==='salary'" :role="currentRole"></salary-page>
+                <cost-page v-if="currentPage==='cost'" :role="currentRole" :data="costData"></cost-page>
+                <profit-page v-if="currentPage==='profit'" :role="currentRole" :data="profitData"></profit-page>
+                <report-page v-if="currentPage==='report'" :role="currentRole"></report-page>
+                <permission-page v-if="currentPage==='permission'" :role="currentRole"
+                    :data="contracts"></permission-page>
+            </div>
+        </main>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="components.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

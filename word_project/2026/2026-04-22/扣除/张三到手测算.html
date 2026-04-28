@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>张三到手测算</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --panel: rgba(255, 252, 246, 0.88);
+      --panel-strong: #fffaf1;
+      --ink: #1f2430;
+      --muted: #586070;
+      --line: rgba(31, 36, 48, 0.12);
+      --accent: #b55233;
+      --accent-soft: rgba(181, 82, 51, 0.12);
+      --accent-strong: #8f3d24;
+      --ok: #1f6d50;
+      --warn: #8f5e00;
+      --shadow: 0 20px 60px rgba(64, 48, 24, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(181, 82, 51, 0.12), transparent 32%),
+        radial-gradient(circle at top right, rgba(143, 94, 0, 0.10), transparent 30%),
+        linear-gradient(180deg, #fbf8f2 0%, var(--bg) 100%);
+    }
+
+    .page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 32px auto;
+      display: grid;
+      gap: 20px;
+    }
+
+    .hero,
+    .panel {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+      border-radius: 24px;
+    }
+
+    .hero {
+      overflow: hidden;
+      position: relative;
+      padding: 28px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -60px -80px auto;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(181, 82, 51, 0.18), transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    .hero p {
+      margin: 12px 0 0;
+      max-width: 760px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 20px;
+    }
+
+    .panel {
+      padding: 24px;
+    }
+
+    .panel h2 {
+      margin: 0 0 16px;
+      font-size: 20px;
+    }
+
+    .subtext {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field label {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .field input {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(31, 36, 48, 0.12);
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--ink);
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+    }
+
+    .field input:focus {
+      border-color: rgba(181, 82, 51, 0.55);
+      box-shadow: 0 0 0 4px rgba(181, 82, 51, 0.12);
+      transform: translateY(-1px);
+    }
+
+    .hint {
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .scenarios {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .scenario {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.56);
+      display: grid;
+      gap: 12px;
+      transition: transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+    }
+
+    .scenario:has(input:checked) {
+      border-color: rgba(181, 82, 51, 0.45);
+      background: rgba(255, 248, 242, 0.96);
+      transform: translateY(-1px);
+    }
+
+    .scenario-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .scenario-head input {
+      accent-color: var(--accent);
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      flex: none;
+    }
+
+    .scenario-title {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .scenario-desc {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .scenario-rate {
+      font-size: 13px;
+      color: var(--accent-strong);
+      background: var(--accent-soft);
+      padding: 4px 8px;
+      border-radius: 999px;
+      width: fit-content;
+    }
+
+    .result-main {
+      display: grid;
+      gap: 18px;
+    }
+
+    .money-card {
+      background: linear-gradient(140deg, rgba(181, 82, 51, 0.10), rgba(255, 255, 255, 0.82));
+      border: 1px solid rgba(181, 82, 51, 0.16);
+      border-radius: 22px;
+      padding: 22px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .money-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -20px -50px auto;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(181, 82, 51, 0.16), transparent 64%);
+      pointer-events: none;
+    }
+
+    .money-card .label {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-strong);
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .money-card .value {
+      position: relative;
+      z-index: 1;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .money-card .note {
+      position: relative;
+      z-index: 1;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .steps {
+      display: grid;
+      gap: 12px;
+    }
+
+    .step {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+    }
+
+    .step .name {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .step .amount {
+      font-weight: 700;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .compare-card {
+      border-radius: 18px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: var(--panel-strong);
+    }
+
+    .compare-card h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .compare-card .big {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+
+    .compare-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 13px;
+    }
+
+    .footnote {
+      padding: 18px 20px;
+      border-radius: 18px;
+      background: rgba(143, 94, 0, 0.08);
+      color: #5d4b1d;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 920px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid,
+      .compare-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="badge">单文件 HTML · 张三到手测算</div>
+      <h1>输入价钱，直接算出张三能拿多少钱</h1>
+      <p>
+        计算口径按你提供的材料整理：A 给 B 一笔总金额，B 先扣点，再把剩余金额公对公打给 C；
+        C 只扣正常税费，不额外扣管理费，税后全部转给张三。
+      </p>
+    </section>
+
+    <section class="grid">
+      <div class="panel">
+        <h2>参数设置</h2>
+        <p class="subtext">默认值来自材料中的估算口径：B 扣 20%，C 小规模综合税负约 4%，一般纳税人综合税负约 9%。</p>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="totalAmount">总价 / A 给 B 的金额（元）</label>
+            <input id="totalAmount" type="number" min="0" step="1000" value="1000000">
+            <div class="hint">示例：1000000 代表 100 万</div>
+          </div>
+
+          <div class="field">
+            <label for="bRate">B 扣点比例（%）</label>
+            <input id="bRate" type="number" min="0" max="100" step="0.1" value="20">
+            <div class="hint">材料默认：20%</div>
+          </div>
+
+          <div class="field">
+            <label for="smallRate">小规模综合税负（%）</label>
+            <input id="smallRate" type="number" min="0" max="100" step="0.1" value="4">
+            <div class="hint">材料默认：约 4%</div>
+          </div>
+
+          <div class="field">
+            <label for="generalRate">一般纳税人综合税负（%）</label>
+            <input id="generalRate" type="number" min="0" max="100" step="0.1" value="9">
+            <div class="hint">材料默认：约 9%</div>
+          </div>
+        </div>
+
+        <div class="scenarios">
+          <label class="scenario">
+            <div class="scenario-head">
+              <input type="radio" name="scenario" value="small" checked>
+              <div>
+                <div class="scenario-title">按小规模纳税人口径计算</div>
+                <div class="scenario-desc">材料里标注为“最现实、最常用结果”，默认使用这一项做最终到手数。</div>
+              </div>
+            </div>
+            <div class="scenario-rate">默认综合税负：4%</div>
+          </label>
+
+          <label class="scenario">
+            <div class="scenario-head">
+              <input type="radio" name="scenario" value="general">
+              <div>
+                <div class="scenario-title">按一般纳税人口径计算</div>
+                <div class="scenario-desc">材料里标注为“保守估算”，税负更高，到手金额更低。</div>
+              </div>
+            </div>
+            <div class="scenario-rate">默认综合税负：9%</div>
+          </label>
+        </div>
+      </div>
+
+      <div class="panel result-main">
+        <div class="money-card">
+          <div class="label" id="selectedScenarioLabel">当前结果</div>
+          <div class="value" id="finalTakeHome">¥0.00</div>
+          <div class="note" id="summaryText">张三最终到手金额会随着左侧输入实时更新。</div>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="name">A 给 B 的总金额</div>
+            <div class="amount" id="stepTotal">¥0.00</div>
+          </div>
+          <div class="step">
+            <div class="name">B 扣点金额</div>
+            <div class="amount" id="stepBDeduction">¥0.00</div>
+          </div>
+          <div class="step">
+            <div class="name">B 转给 C 的金额</div>
+            <div class="amount" id="stepToC">¥0.00</div>
+          </div>
+          <div class="step">
+            <div class="name" id="stepTaxLabel">C 税费</div>
+            <div class="amount" id="stepTax">¥0.00</div>
+          </div>
+          <div class="step">
+            <div class="name">张三最终到手</div>
+            <div class="amount" id="stepTakeHome">¥0.00</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>两种口径对比</h2>
+      <p class="subtext">如果你还没确认 C 公司是小规模还是一般纳税人，可以先看两种结果，再决定按哪种口径谈。</p>
+
+      <div class="compare-grid">
+        <article class="compare-card">
+          <h3>小规模纳税人口径</h3>
+          <div class="big" id="smallTakeHome">¥0.00</div>
+          <p id="smallDetail">C 收款后按小规模综合税负估算，税后全部转给张三。</p>
+        </article>
+
+        <article class="compare-card">
+          <h3>一般纳税人口径</h3>
+          <div class="big" id="generalTakeHome">¥0.00</div>
+          <p id="generalDetail">C 收款后按一般纳税人综合税负估算，税后全部转给张三。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="footnote">
+      说明：本页是按你提供材料中的“估算口径”做的快速测算工具，不是税务意见书。
+      若 C 公司实际纳税身份、可抵扣成本、开票税率或优惠政策不同，张三最终到手金额会跟着变化。
+    </section>
+  </main>
+
+  <script>
+    const money = new Intl.NumberFormat("zh-CN", {
+      style: "currency",
+      currency: "CNY",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+
+    const amountInWan = new Intl.NumberFormat("zh-CN", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+
+    const totalAmountInput = document.getElementById("totalAmount");
+    const bRateInput = document.getElementById("bRate");
+    const smallRateInput = document.getElementById("smallRate");
+    const generalRateInput = document.getElementById("generalRate");
+
+    const selectedScenarioLabel = document.getElementById("selectedScenarioLabel");
+    const finalTakeHome = document.getElementById("finalTakeHome");
+    const summaryText = document.getElementById("summaryText");
+    const stepTotal = document.getElementById("stepTotal");
+    const stepBDeduction = document.getElementById("stepBDeduction");
+    const stepToC = document.getElementById("stepToC");
+    const stepTaxLabel = document.getElementById("stepTaxLabel");
+    const stepTax = document.getElementById("stepTax");
+    const stepTakeHome = document.getElementById("stepTakeHome");
+    const smallTakeHome = document.getElementById("smallTakeHome");
+    const generalTakeHome = document.getElementById("generalTakeHome");
+    const smallDetail = document.getElementById("smallDetail");
+    const generalDetail = document.getElementById("generalDetail");
+
+    function safeNumber(value) {
+      const parsed = Number(value);
+      if (!Number.isFinite(parsed) || parsed < 0) {
+        return 0;
+      }
+      return parsed;
+    }
+
+    function calcTakeHome(total, bRate, taxRate) {
+      const bDeduction = total * (bRate / 100);
+      const toC = total - bDeduction;
+      const tax = toC * (taxRate / 100);
+      const takeHome = toC - tax;
+
+      return { bDeduction, toC, tax, takeHome };
+    }
+
+    function currentScenario() {
+      const checked = document.querySelector("input[name='scenario']:checked");
+      return checked ? checked.value : "small";
+    }
+
+    function update() {
+      const total = safeNumber(totalAmountInput.value);
+      const bRate = safeNumber(bRateInput.value);
+      const smallRate = safeNumber(smallRateInput.value);
+      const generalRate = safeNumber(generalRateInput.value);
+
+      const small = calcTakeHome(total, bRate, smallRate);
+      const general = calcTakeHome(total, bRate, generalRate);
+      const scenario = currentScenario();
+      const selected = scenario === "general" ? general : small;
+      const selectedTaxRate = scenario === "general" ? generalRate : smallRate;
+      const selectedName = scenario === "general" ? "一般纳税人口径" : "小规模纳税人口径";
+
+      selectedScenarioLabel.textContent = "当前结果 · " + selectedName;
+      finalTakeHome.textContent = money.format(selected.takeHome);
+      summaryText.textContent =
+        "按 " + selectedName + " 估算，B 扣点后转给 C " +
+        money.format(selected.toC) + "，C 扣税 " + money.format(selected.tax) +
+        "，张三最终到手约 " + amountInWan.format(selected.takeHome / 10000) + " 万。";
+
+      stepTotal.textContent = money.format(total);
+      stepBDeduction.textContent = money.format(selected.bDeduction);
+      stepToC.textContent = money.format(selected.toC);
+      stepTaxLabel.textContent = "C 税费（" + selectedTaxRate.toFixed(1).replace(/\.0$/, "") + "%）";
+      stepTax.textContent = money.format(selected.tax);
+      stepTakeHome.textContent = money.format(selected.takeHome);
+
+      smallTakeHome.textContent = money.format(small.takeHome);
+      generalTakeHome.textContent = money.format(general.takeHome);
+
+      smallDetail.textContent =
+        "B 扣点后转给 C " + money.format(small.toC) +
+        "，按 " + smallRate.toFixed(1).replace(/\.0$/, "") + "% 综合税负估算，税后张三到手约 " +
+        amountInWan.format(small.takeHome / 10000) + " 万。";
+
+      generalDetail.textContent =
+        "B 扣点后转给 C " + money.format(general.toC) +
+        "，按 " + generalRate.toFixed(1).replace(/\.0$/, "") + "% 综合税负估算，税后张三到手约 " +
+        amountInWan.format(general.takeHome / 10000) + " 万。";
+    }
+
+    [
+      totalAmountInput,
+      bRateInput,
+      smallRateInput,
+      generalRateInput,
+      ...document.querySelectorAll("input[name='scenario']")
+    ].forEach((el) => {
+      el.addEventListener("input", update);
+      el.addEventListener("change", update);
+    });
+
+    update();
+  </script>
+</body>
+</html>

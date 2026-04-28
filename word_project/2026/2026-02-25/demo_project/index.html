@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>执行管理与经营分析平台 - 方案一(RuoYi-Vue-Pro)</title>
+    <meta name="description" content="基于RuoYi-Vue-Pro框架的执行管理与经营分析综合管理平台">
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+
+<body>
+    <!-- ========== Sidebar ========== -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo"><span class="logo-icon">📊</span><span class="logo-text">经营分析平台</span></div>
+            <button class="sidebar-toggle" id="sidebarToggle" title="收起侧栏">☰</button>
+        </div>
+        <nav class="nav-menu">
+            <div class="nav-group">
+                <div class="nav-group-title">全局配置</div>
+                <a class="nav-item" data-page="permission" onclick="switchPage('permission')">
+                    <span class="nav-icon">🔑</span><span class="nav-label">权限分配</span>
+                </a>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">核心业务</div>
+                <a class="nav-item active" data-page="contract" onclick="switchPage('contract')">
+                    <span class="nav-icon">📋</span><span class="nav-label">合同台账</span>
+                </a>
+                <a class="nav-item" data-page="income" onclick="switchPage('income')">
+                    <span class="nav-icon">💰</span><span class="nav-label">项目收入</span>
+                </a>
+                <a class="nav-item" data-page="execution" onclick="switchPage('execution')">
+                    <span class="nav-icon">⚙️</span><span class="nav-label">执行管理</span>
+                </a>
+                <a class="nav-item" data-page="personnel" onclick="switchPage('personnel')">
+                    <span class="nav-icon">👥</span><span class="nav-label">监理人员动态</span>
+                </a>
+                <a class="nav-item" data-page="workhour" onclick="switchPage('workhour')">
+                    <span class="nav-icon">⏱️</span><span class="nav-label">工时记录</span>
+                </a>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">财务管理</div>
+                <a class="nav-item" data-page="invoice" onclick="switchPage('invoice')">
+                    <span class="nav-icon">🧾</span><span class="nav-label">开票明细</span>
+                </a>
+                <a class="nav-item" data-page="payment" onclick="switchPage('payment')">
+                    <span class="nav-icon">💳</span><span class="nav-label">回款明细</span>
+                </a>
+                <a class="nav-item" data-page="reminder" onclick="switchPage('reminder')">
+                    <span class="nav-icon">🔔</span><span class="nav-label">提醒设置</span>
+                </a>
+            </div>
+            <div class="nav-group">
+                <div class="nav-group-title">成本与利润</div>
+                <a class="nav-item" data-page="cost" onclick="switchPage('cost')">
+                    <span class="nav-icon">📉</span><span class="nav-label">动态成本核算</span>
+                </a>
+                <a class="nav-item" data-page="travel" onclick="switchPage('travel')">
+                    <span class="nav-icon">✈️</span><span class="nav-label">差旅报销台账</span>
+                </a>
+                <a class="nav-item" data-page="salary" onclick="switchPage('salary')">
+                    <span class="nav-icon">💵</span><span class="nav-label">人员工资管理</span>
+                </a>
+                <a class="nav-item" data-page="profit" onclick="switchPage('profit')">
+                    <span class="nav-icon">📈</span><span class="nav-label">利润管理</span>
+                </a>
+                <a class="nav-item" data-page="report" onclick="switchPage('report')">
+                    <span class="nav-icon">📊</span><span class="nav-label">经营数据量化</span>
+                </a>
+            </div>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="avatar">张</div>
+                <div class="user-details">
+                    <div class="user-name">张三</div>
+                    <div class="user-role">项目经理</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ========== Main Content ========== -->
+    <main class="main-content" id="mainContent">
+        <!-- Top Header -->
+        <header class="top-header">
+            <div class="breadcrumb" id="breadcrumb"><span>核心业务</span> / <span>合同台账</span></div>
+            <div class="header-actions">
+                <button class="header-btn" onclick="exportCurrentPage()" title="导出当前页面数据">📥 导出</button>
+                <div class="notification-bell" onclick="showNotification()">🔔 <span class="badge">5</span></div>
+                <span class="header-time" id="headerTime"></span>
+            </div>
+        </header>
+
+        <!-- ==================== PAGE: 权限分配 ==================== -->
+        <div class="page" id="page-permission">
+            <div class="page-title-row">
+                <h1>项目经理权限分配</h1>
+                <div class="role-badge">支持角色：<strong>管理员</strong></div>
+            </div>
+            <div class="permission-layout">
+                <div class="perm-left">
+                    <h3>项目经理列表</h3>
+                    <div style="margin-bottom:12px"><input type="text" placeholder="🔍 搜索项目经理..."
+                            style="width:100%;padding:8px 10px;border:1px solid var(--border-color);border-radius:6px;font-size:13px;">
+                    </div>
+                    <div class="perm-list">
+                        <div class="perm-item active" onclick="selectPM(this,'李明')">
+                            <div class="avatar-sm">李</div><span>李明</span><span class="perm-count">3个合同</span>
+                        </div>
+                        <div class="perm-item" onclick="selectPM(this,'王芳')">
+                            <div class="avatar-sm">王</div><span>王芳</span><span class="perm-count">2个合同</span>
+                        </div>
+                        <div class="perm-item" onclick="selectPM(this,'陈伟')">
+                            <div class="avatar-sm">陈</div><span>陈伟</span><span class="perm-count">4个合同</span>
+                        </div>
+                        <div class="perm-item" onclick="selectPM(this,'赵丽')">
+                            <div class="avatar-sm">赵</div><span>赵丽</span><span class="perm-count">1个合同</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="perm-right">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+                        <h3>已分配合同 - <span id="pmName" style="color:var(--blue)">李明</span></h3>
+                        <button class="btn btn-primary" onclick="openModal('分配合同',buildAssignContractForm())">➕
+                            分配合同</button>
+                    </div>
+                    <div class="perm-contracts" id="pmContracts">
+                        <div class="perm-contract-item"><span
+                                style="font-weight:600">CI-2026-001</span><span>某石化换热器监造</span><span
+                                class="tag tag-blue">人工日</span><span>¥580,000</span><button class="btn-mini btn-danger"
+                                onclick="showConfirmDialog('确定取消分配该合同给李明？','取消分配')">取消分配</button></div>
+                        <div class="perm-contract-item"><span
+                                style="font-weight:600">CI-2026-003</span><span>压力容器制造监理</span><span
+                                class="tag tag-green">总价</span><span>¥1,200,000</span><button
+                                class="btn-mini btn-danger"
+                                onclick="showConfirmDialog('确定取消分配该合同给李明？','取消分配')">取消分配</button></div>
+                        <div class="perm-contract-item"><span
+                                style="font-weight:600">CI-2026-005</span><span>管道安装监造项目</span><span
+                                class="tag tag-purple">人工日计算总价</span><span>¥860,000</span><button
+                                class="btn-mini btn-danger"
+                                onclick="showConfirmDialog('确定取消分配该合同给李明？','取消分配')">取消分配</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== PAGE: 合同台账 ==================== -->
+        <div class="page active" id="page-contract">
+            <div class="page-title-row">
+                <h1>合同台账 <small>(数据来源: PECMS)</small></h1>
+                <div class="role-badge">当前角色：<strong>项目经理</strong> — 查看分配的合同号(CI编号)数据</div>
+            </div>
+            <div class="filter-panel">
+                <div class="filter-row">
+                    <div class="filter-item"><label>监理编号</label><input type="text" placeholder="请输入CI编号"></div>
+                    <div class="filter-item"><label>合同名称</label><input type="text" placeholder="请输入"></div>
+                    <div class="filter-item"><label>设备名称</label><input type="text" placeholder="请输入"></div>
+                    <div class="filter-item"><label>委托方</label><input type="text" placeholder="请输入"></div>
+                    <div class="filter-item"><label>制造方</label><input type="text" placeholder="请输入"></div>
+                    <div class="filter-item"><label>合同形式</label><select>
+                            <option>全部</option>
+                            <option>人工日</option>
+                            <option>总价</option>
+                            <option>人工日计算总价</option>
+                        </select></div>
+                </div>
+                <div class="filter-row" id="contractAdvFilter" style="display:none;">
+                    <div class="filter-item"><label>项目负责人</label><input type="text" placeholder="请输入"></div>
+                    <div class="filter-item"><label>合同签订时间</label><input type="date"></div>
+                    <div class="filter-item"><label>合同起始日期</label><input type="date"></div>
+                    <div class="filter-item"><label>合同终止日期</label><input type="date"></div>
+                    <div class="filter-item"><label>ERP录入情况</label><select>
+                            <option>全部</option>
+                            <option>已录入</option>
+                            <option>未录入</option>
+                        </select></div>
+                    <div class="filter-item"><label>合同状态</label><select>
+                            <option>全部</option>
+                            <option>进行中</option>
+                            <option>已完成</option>
+                            <option>已终止</option>
+                        </select></div>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn btn-primary" onclick="showToast('查询成功，已加载3条数据')">🔍 查询</button>
+                    <button class="btn btn-outline" onclick="showToast('已重置筛选条件')">↻ 重置</button>
+                    <button class="btn btn-outline" onclick="toggleAdvFilter('contractAdvFilter',this)">⚡ 高级查询</button>
+                    <button class="btn btn-success" onclick="doExport('合同台账')">📥 导出</button>
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table class="data-table" id="contractTable">
+                    <thead>
+                        <tr>
+                            <th style="width:40px">#</th>
+                            <th>监理编号</th>
+                            <th>合同名称</th>
+                            <th>设备名称</th>
+                            <th>委托方</th>
+                            <th>制造方</th>
+                            <th>监造金额(元)</th>
+                            <th>预给号时间</th>
+                            <th>项目负责人</th>
+                            <th>合同签订时间</th>
+                            <th>合同原件返回时间</th>
+                            <th>合同起始日期</th>
+                            <th>合同终止日期</th>
+                            <th>委托方联系人</th>
+                            <th>合同形式</th>
+                            <th>ERP录入</th>
+                            <th>项目编号</th>
+                            <th>项目名称</th>
+                            <th>状态</th>
+                            <th style="min-width:200px">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><span class="link-text" onclick="showContractDetail('CI-2026-001')">CI-2026-001</span>
+                            </td>
+                            <td>某石化换热器监造</td>
+                            <td>管壳式换热器</td>
+                            <td>中国石化</td>
+                            <td>东方锅炉</td>
+                            <td class="text-right">580,000.00</td>
+                            <td>2026-01-10</td>
+                            <td>李明</td>
+                            <td>2026-01-15</td>
+                            <td>2026-01-25</td>
+                            <td>2026-01-20</td>
+                            <td>2026-12-31</td>
+                            <td>张经理</td>
+                            <td><span class="tag tag-blue">人工日</span></td>
+                            <td>已录入</td>
+                            <td>PRJ-001</td>
+                            <td>石化换热器A项</td>
+                            <td><span class="status status-active">进行中</span></td>
+                            <td>
+                                <button class="btn-mini btn-primary"
+                                    onclick="showContractDetail('CI-2026-001')">详情</button>
+                                <button class="btn-mini btn-warning"
+                                    onclick="showConfirmDialog('确认将合同 CI-2026-001 状态修改为已终止？','终止合同')">终止</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><span class="link-text" onclick="showContractDetail('CI-2026-002')">CI-2026-002</span>
+                            </td>
+                            <td>压力容器制造监理</td>
+                            <td>压力容器</td>
+                            <td>中国石油</td>
+                            <td>哈尔滨锅炉</td>
+                            <td class="text-right">1,200,000.00</td>
+                            <td>2026-01-05</td>
+                            <td>王芳</td>
+                            <td>2026-01-08</td>
+                            <td>2026-01-20</td>
+                            <td>2026-01-15</td>
+                            <td>2027-06-30</td>
+                            <td>刘总</td>
+                            <td><span class="tag tag-green">总价</span></td>
+                            <td>已录入</td>
+                            <td>PRJ-002</td>
+                            <td>石油压力容器B项</td>
+                            <td><span class="status status-active">进行中</span></td>
+                            <td>
+                                <button class="btn-mini btn-primary"
+                                    onclick="showContractDetail('CI-2026-002')">详情</button>
+                                <button class="btn-mini btn-success"
+                                    onclick="showConfirmDialog('收款金额已达合同金额，确认将合同 CI-2026-002 标记为已完成？','完成合同')">完成</button>
+                                <button class="btn-mini btn-warning"
+                                    onclick="showConfirmDialog('确认将合同 CI-2026-002 状态修改为已终止？','终止合同')">终止</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><span class="link-text" onclick="showContractDetail('CI-2026-003')">CI-2026-003</span>
+                            </td>
+                            <td>管道安装监造项目</td>
+                            <td>工业管道</td>
+                            <td>中海油</td>
+                            <td>大连重工</td>
+                            <td class="text-right">860,000.00</td>
+                            <td>2025-12-20</td>
+                            <td>陈伟</td>
+                            <td>2025-12-25</td>
+                            <td>2026-01-05</td>
+                            <td>2026-01-01</td>
+                            <td>2026-09-30</td>
+                            <td>赵主任</td>
+                            <td><span class="tag tag-purple">人工日计算总价</span></td>
+                            <td>未录入</td>
+                            <td>PRJ-003</td>
+                            <td>海油管道安装C项</td>
+                            <td><span class="status status-terminated">已终止</span></td>
+                            <td>
+                                <button class="btn-mini btn-primary"
+                                    onclick="showContractDetail('CI-2026-003')">详情</button>
+                                <button class="btn-mini btn-info"
+                                    onclick="showCancelTerminateDialog('CI-2026-003')">取消终止</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination">
+                <span>共 <strong>3</strong> 条记录，第 1/1 页</span>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <span style="font-size:12px">每页</span><select class="page-size">
+                        <option>10</option>
+                        <option>20</option>
+                        <option>50</option>
+                    </select><span style="font-size:12px">条</span>
+                    <div class="pagination-btns">
+                        <button class="btn-page" disabled>‹</button><button class="btn-page active">1</button><button
+                            class="btn-page" disabled>›</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== PAGE: 项目收入 ==================== -->
+        <div class="page" id="page-income">
+            <div class="page-title-row">
+                <h1>项目收入</h1>
+                <div style="display:flex; justify-content:space-between; align-items:center; flex:1; margin-left:16px;">
+                    <div class="role-badge" style="margin:0;">当前角色：<strong>合同负责人 / 管理层</strong> — 填报与纠正权限可配置</div>
+                    <button class="btn btn-primary" style="background:#4b5563;border:none;" onclick="showGlobalHistoryDialog()">📜 领导层全局历史</button>
+                </div>
+            </div>
+            <!-- 计算规则展示 -->
+            <div class="formula-panel">
+                <h3>📐 核心计算规则</h3>
+                <div class="formula-grid">
+                    <div class="formula-card">
+                        <div class="formula-title">总产值</div>
+                        <div class="formula-body">人工日: Σ(合同单价×实际工时)<br>人工日计算总价: 同上<br>总价合同: =已报收入</div>
+                    </div>
+                    <div class="formula-card">
+                        <div class="formula-title">当月产值</div>
+                        <div class="formula-body">人工日: 当月工时×合同单价<br>总价(未结束): (已报收入÷总工时)×30<br>总价(已结束): (总收入÷总工时)×30
+                        </div>
+                    </div>
+                    <div class="formula-card">
+                        <div class="formula-title">确认总产值</div>
+                        <div class="formula-body">= Σ当月确认产值累加<br>(三种合同类型一致)</div>
+                    </div>
+                    <div class="formula-card">
+                        <div class="formula-title">当月确认产值</div>
+                        <div class="formula-body">人工日/人工日总价: 按时间区间填写，带出系统值，误差大走审批流(阈值字典配置)<br>总价: 直接填写(无系统计算)</div>
+                    </div>
+                    <div class="formula-card">
+                        <div class="formula-title">已报收入</div>
+                        <div class="formula-body">默认: 开票金额合计<br>纠正后: 开票金额+当月收入(需后期抵冲)</div>
+                    </div>
+                    <div class="formula-card">
+                        <div class="formula-title">开票状态</div>
+                        <div class="formula-body">未开票: 实际开票=0<br>部分开票: 0&lt;金额&lt;合同金额<br>全部开票: 金额=合同金额<br>人工时: "定期据实结算"
+                        </div>
+                    </div>
+                    <div class="formula-card">
+                        <div class="formula-title">工时分配规则</div>
+                        <div class="formula-body"><strong>产值</strong>: 多项目时不平均分，每个项目记录全部工时<br><strong>成本</strong>:
+                            按同一时段项目叠加数平均分
+                        </div>
+                    </div>
+                    <div class="formula-card">
+                        <div class="formula-title">合同状态联动</div>
+                        <div class="formula-body">合同"已完成"时：若已报收入未达合同金额,<br>系统自动补齐已报收入
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="filter-panel">
+                <div class="filter-row">
+                    <div class="filter-item"><label>监理编号</label><input type="text" placeholder="请输入"></div>
+                    <div class="filter-item"><label>合同名称</label><input type="text" placeholder="请输入"></div>
+                    <div class="filter-item"><label>委托方</label><input type="text" placeholder="请输入"></div>
+                    <div class="filter-item"><label>委托方类别</label><select>
+                            <option>全部</option>
+                            <option>中石化</option>
+                            <option>中石油</option>
+                            <option>中海油</option>
+                            <option>其他</option>
+                        </select></div>
+                    <div class="filter-item"><label>合同类型</label><select>
+                            <option>全部</option>
+                            <option>人工日</option>
+                            <option>总价</option>
+                            <option>人工日计算总价</option>
+                        </select></div>
+                    <div class="filter-item"><label>开票状态</label><select>
+                            <option>全部</option>
+                            <option>未开票</option>
+                            <option>部分开票</option>
+                            <option>全部开票</option>
+                            <option>人工时定期据实结算</option>
+                        </select></div>
+                </div>
+                <div class="filter-row" id="incomeAdvFilter" style="display:none;">
+                    <div class="filter-item"><label>合同负责人</label><input type="text" placeholder="请输入"></div>
+                    <div class="filter-item"><label>计划开票时间</label><input type="date"></div>
+                    <div class="filter-item"><label>实际开票时间</label><input type="date"></div>
+                    <div class="filter-item"><label>实际回款时间</label><input type="date"></div>
+                    <div class="filter-item"><label>开票总金额范围</label><input type="text" placeholder="最小~最大"></div>
+                    <div class="filter-item"><label>收款总金额范围</label><input type="text" placeholder="最小~最大"></div>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn btn-primary" onclick="showToast('查询成功')">🔍 查询</button>
+                    <button class="btn btn-outline" onclick="showToast('已重置')">↻ 重置</button>
+                    <button class="btn btn-outline" onclick="toggleAdvFilter('incomeAdvFilter',this)">⚡ 高级查询</button>
+                    <button class="btn btn-success" onclick="doExport('项目收入(自定义列)')">📥 自定义列导出</button>
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>监理编号</th>
+                            <th>合同名称</th>
+                            <th>委托方</th>
+                            <th>合同负责人</th>
+                            <th>合同类型</th>
+                            <th>合同金额 <span class="sort-icon" style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>总产值 <span class="sort-icon" style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>当月产值 <span class="sort-icon" style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>确认总产值 <span class="sort-icon" style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>当月确认产值 <span class="sort-icon" style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>最新填报时间 <span class="sort-icon" style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>已报收入 <span class="sort-icon" style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>当月收入 <span class="sort-icon" style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>开票状态</th>
+                            <th>计划开票时间 <span class="sort-icon" style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>未开票原因</th>
+                            <th>最新开票时间 <span class="sort-icon" style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>开票总金额 <span class="sort-icon" style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>最新收款时间 <span class="sort-icon" style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>收款总金额 <span class="sort-icon" style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th>备注</th>
+                            <th>当月收入最新填报时间 <span class="sort-icon" style="color:var(--text-muted);cursor:pointer;font-size:10px">↕</span></th>
+                            <th style="min-width:340px">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>CI-2026-001</td>
+                            <td>某石化换热器监造</td>
+                            <td>中国石化</td>
+                            <td>李明</td>
+                            <td><span class="tag tag-blue">人工日</span></td>
+                            <td class="text-right">580,000</td>
+                            <td class="text-right">338,800</td>
+                            <td class="text-right">28,800</td>
+                            <td class="text-right">310,000</td>
+                            <td class="text-right">26,500</td>
+                            <td>2026-02-20</td>
+                            <td class="text-right">200,000</td>
+                            <td class="text-right">28,800</td>
+                            <td><span class="status status-pending">部分开票</span></td>
+                            <td>2026-03-15</td>
+                            <td>—</td>
+                            <td>2026-02-10</td>
+                            <td class="text-right">200,000</td>
+                            <td>2026-02-05</td>
+                            <td class="text-right">150,000</td>
+                            <td>—</td>
+                            <td>2026-02-20 14:32</td>
+                            <td>
+                                <button class="btn-mini btn-primary"
+                                    onclick="showMonthlyOutputDialog('CI-2026-001','人工日')">📝 当月确认产值</button>
+                                <button class="btn-mini btn-warning" onclick="showIncomeCorrectionDialog()">💱
+                                    收入纠正</button>
+                                <button class="btn-mini btn-info" onclick="showInvoiceInfoDialog()">🧾 开票信息</button>
+                                <button class="btn-mini btn-info" onclick="showReceiptInfoDialog()">� 回款信息</button>
+                                <button class="btn-mini btn-outline" onclick="showHistoryDialog('CI-2026-001')">📜
+                                    历史</button>
+                                <button class="btn-mini btn-success"
+                                    onclick="switchPage('execution');showToast('已跳转至执行管理，按CI-2026-001筛选')">👁️
+                                    查看</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>CI-2026-002</td>
+                            <td>压力容器制造监理</td>
+                            <td>中国石油</td>
+                            <td>王芳</td>
+                            <td><span class="tag tag-green">总价</span></td>
+                            <td class="text-right">1,200,000</td>
+                            <td class="text-right">500,000</td>
+                            <td class="text-right">120,000</td>
+                            <td class="text-right">480,000</td>
+                            <td class="text-right">120,000</td>
+                            <td>2026-02-15</td>
+                            <td class="text-right">500,000</td>
+                            <td class="text-right">120,000</td>
+                            <td><span class="status status-pending">部分开票</span></td>
+                            <td>2026-04-01</td>
+                            <td>—</td>
+                            <td>2026-01-25</td>
+                            <td class="text-right">500,000</td>
+                            <td>2026-01-20</td>
+                            <td class="text-right">400,000</td>
+                            <td>—</td>
+                            <td>2026-02-15 10:20</td>
+                            <td>
+                                <button class="btn-mini btn-primary"
+                                    onclick="showMonthlyOutputDialog('CI-2026-002','总价')">📝 当月确认产值</button>
+                                <button class="btn-mini btn-warning" onclick="showIncomeCorrectionDialog()">💱
+                                    收入纠正</button>
+                                <button class="btn-mini btn-info" onclick="showInvoiceInfoDialog()">🧾 开票信息</button>
+                                <button class="btn-mini btn-info" onclick="showReceiptInfoDialog()">� 回款信息</button>
+                                <button class="btn-mini btn-outline" onclick="showHistoryDialog('CI-2026-002')">📜
+                                    历史</button>
+                                <button class="btn-mini btn-success" onclick="switchPage('execution')">👁️ 查看</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>CI-2026-003</td>
+                            <td>管道安装监造项目</td>
+                            <td>中海油</td>
+                            <td>陈伟</td>
+                            <td><span class="tag tag-purple">人工日计算总价</span></td>
+                            <td class="text-right">860,000</td>
+                            <td class="text-right">0</td>
+                            <td class="text-right">0</td>
+                            <td class="text-right">0</td>
+                            <td class="text-right">0</td>
+                            <td>—</td>
+                            <td class="text-right">0</td>
+                            <td class="text-right">0</td>
+                            <td><span class="status status-terminated">未开票</span></td>
+                            <td>—</td>
+                            <td>合同已终止</td>
+                            <td>—</td>
+                            <td class="text-right">0</td>
+                            <td>—</td>
+                            <td class="text-right">0</td>
+                            <td>合同已终止</td>
+                            <td>—</td>
+                            <td>
+                                <button class="btn-mini btn-outline" onclick="showHistoryDialog('CI-2026-003')">📜
+                                    历史</button>
+                                <button class="btn-mini btn-success" onclick="switchPage('execution')">👁️ 查看</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination"><span>共 <strong>3</strong> 条</span>
+                <div class="pagination-btns"><button class="btn-page active">1</button></div>
+            </div>
+        </div>
+
+        <!-- 后续模块页面在 pages.js 中动态注入 -->
+        <div class="page" id="page-execution"></div>
+        <div class="page" id="page-personnel"></div>
+        <div class="page" id="page-workhour"></div>
+        <div class="page" id="page-invoice"></div>
+        <div class="page" id="page-payment"></div>
+        <div class="page" id="page-reminder"></div>
+        <div class="page" id="page-cost"></div>
+        <div class="page" id="page-travel"></div>
+        <div class="page" id="page-salary"></div>
+        <div class="page" id="page-profit"></div>
+        <div class="page" id="page-report"></div>
+    </main>
+
+    <!-- ========== Modal Overlay ========== -->
+    <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+        <div class="modal" id="modalBox">
+            <div class="modal-header">
+                <h2 id="modalTitle">标题</h2><button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-footer" id="modalFooter"></div>
+        </div>
+    </div>
+
+    <!-- ========== Toast Container ========== -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ========== Notification Panel ========== -->
+    <div class="notification-panel" id="notificationPanel">
+        <div class="notif-header">
+            <h3>消息通知</h3><button onclick="closeNotification()">✕</button>
+        </div>
+        <div class="notif-list">
+            <div class="notif-item notif-warning">
+                <div class="notif-title">⚠️ 利润预警</div>
+                <div class="notif-desc">合同 CI-2026-003 利润为负数(-¥45,200)，请及时关注成本控制。</div>
+                <div class="notif-time">10分钟前</div>
+            </div>
+            <div class="notif-item notif-warning">
+                <div class="notif-title">⚠️ 超期提醒</div>
+                <div class="notif-desc">派单 PD-20260115-01 计划结束时间已超期3天，请及时处理。</div>
+                <div class="notif-time">1小时前</div>
+            </div>
+            <div class="notif-item notif-info">
+                <div class="notif-title">📋 开票提醒</div>
+                <div class="notif-desc">合同 CI-2026-001 已超过设定的30天未开票期限，请尽快安排开票。</div>
+                <div class="notif-time">2小时前</div>
+            </div>
+            <div class="notif-item notif-info">
+                <div class="notif-title">💳 回款提醒</div>
+                <div class="notif-desc">合同 CI-2026-002 预计回款时间已到，请确认回款进度。</div>
+                <div class="notif-time">3小时前</div>
+            </div>
+            <div class="notif-item notif-info">
+                <div class="notif-title">✅ 审批通知</div>
+                <div class="notif-desc">合同 CI-2026-003 的取消终止申请已通过审批。</div>
+                <div class="notif-time">昨天</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== Export Preview Overlay ========== -->
+    <div class="modal-overlay" id="exportOverlay" onclick="if(event.target===this)closeExport()">
+        <div class="modal" id="exportBox" style="max-width:900px">
+            <div class="modal-header">
+                <h2>📥 导出预览</h2><button class="modal-close" onclick="closeExport()">✕</button>
+            </div>
+            <div class="modal-body" id="exportBody"></div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeExport()">取消</button>
+                <button class="btn btn-success" onclick="downloadExport()">💾 下载 Excel</button>
+                <button class="btn btn-primary" onclick="downloadExport()">🖨️ 下载 PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="pages.js"></script>
+    <script src="app.js"></script>
+    <script src="app2.js"></script>
+</body>
+
+</html>

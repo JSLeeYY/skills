@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc -l \"d:\\\\DevelopmentLocation\\\\agent skill\\\\skills\\\\word_project\\\\2026\\\\2026-02-26\\\\O&M\\\\demo_project\\\\style.css\")"
+    ]
+  }
+}

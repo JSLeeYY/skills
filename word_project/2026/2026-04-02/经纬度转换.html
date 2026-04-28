@@ -1,0 +1,2001 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>经纬度转换</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap");
+
+    :root {
+      --bg: #f4efe5;
+      --surface: rgba(255, 250, 243, 0.76);
+      --line: rgba(56, 36, 20, 0.12);
+      --text: #25170f;
+      --muted: #6e5b4c;
+      --accent: #c2612b;
+      --accent-deep: #8c3310;
+      --teal: #1f7a74;
+      --success: #187b4d;
+      --danger: #ad3131;
+      --shadow: 0 22px 80px rgba(57, 30, 8, 0.12);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(226, 165, 87, 0.45), transparent 32%),
+        radial-gradient(circle at top right, rgba(39, 137, 130, 0.25), transparent 26%),
+        linear-gradient(145deg, #f2e7d5 0%, #f8f3ea 38%, #ece5da 100%);
+      font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      border-radius: 999px;
+      filter: blur(80px);
+      opacity: 0.55;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::before {
+      width: 280px;
+      height: 280px;
+      left: -40px;
+      top: 10%;
+      background: rgba(194, 97, 43, 0.22);
+    }
+
+    body::after {
+      width: 320px;
+      height: 320px;
+      right: -60px;
+      bottom: 4%;
+      background: rgba(31, 122, 116, 0.18);
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px 18px 54px;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      backdrop-filter: blur(22px);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius-xl);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.34), transparent 34%);
+      pointer-events: none;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 28px;
+      padding: 34px;
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 16px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(37, 23, 15, 0.06);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--teal));
+      box-shadow: 0 0 0 5px rgba(194, 97, 43, 0.08);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.3rem, 5vw, 4.25rem);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+      font-weight: 800;
+    }
+
+    .hero-desc {
+      max-width: 58ch;
+      margin: 18px 0 24px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .meta-pill {
+      min-width: 148px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(37, 23, 15, 0.08);
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .meta-pill strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .meta-pill span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 330px;
+      border-radius: 24px;
+      border: 1px solid rgba(37, 23, 15, 0.08);
+      background:
+        radial-gradient(circle at 18% 22%, rgba(194, 97, 43, 0.24), transparent 20%),
+        radial-gradient(circle at 76% 20%, rgba(31, 122, 116, 0.24), transparent 18%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(246, 237, 224, 0.56));
+      display: grid;
+      place-items: center;
+      isolation: isolate;
+    }
+
+    .hero-visual::before,
+    .hero-visual::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(37, 23, 15, 0.08);
+      animation: floatPulse 8s ease-in-out infinite;
+    }
+
+    .hero-visual::before {
+      width: 190px;
+      height: 190px;
+      background: rgba(255, 255, 255, 0.36);
+    }
+
+    .hero-visual::after {
+      width: 280px;
+      height: 280px;
+      animation-duration: 11s;
+    }
+
+    .radar {
+      position: relative;
+      width: min(72%, 290px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at center, rgba(194, 97, 43, 0.25), transparent 22%),
+        linear-gradient(140deg, rgba(31, 122, 116, 0.14), rgba(194, 97, 43, 0.14));
+      border: 1px solid rgba(37, 23, 15, 0.08);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.34);
+      overflow: hidden;
+    }
+
+    .radar::before,
+    .radar::after {
+      content: "";
+      position: absolute;
+      inset: 10%;
+      border-radius: 50%;
+      border: 1px dashed rgba(37, 23, 15, 0.16);
+    }
+
+    .radar::after {
+      inset: 28%;
+      border-style: solid;
+      opacity: 0.7;
+    }
+
+    .scan {
+      position: absolute;
+      inset: -20%;
+      background: conic-gradient(from 0deg, transparent 0deg, transparent 275deg, rgba(31, 122, 116, 0.42) 360deg);
+      animation: rotate 5.8s linear infinite;
+      transform-origin: center;
+      mix-blend-mode: multiply;
+    }
+
+    .pin {
+      position: absolute;
+      inset: 50% auto auto 50%;
+      width: 26px;
+      height: 26px;
+      margin-left: -13px;
+      margin-top: -13px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+      box-shadow: 0 0 0 10px rgba(194, 97, 43, 0.12);
+      z-index: 1;
+    }
+
+    .pin::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 7px;
+      height: 7px;
+      margin-left: -3.5px;
+      margin-top: -3.5px;
+      border-radius: 50%;
+      background: #fffaf2;
+    }
+
+    .floating-note {
+      position: absolute;
+      right: 22px;
+      bottom: 22px;
+      width: min(260px, 70%);
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.68);
+      border: 1px solid rgba(37, 23, 15, 0.09);
+      box-shadow: 0 12px 30px rgba(56, 36, 20, 0.08);
+      backdrop-filter: blur(18px);
+    }
+
+    .floating-note strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    .floating-note span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 22px;
+      margin-top: 22px;
+    }
+
+    .panel {
+      padding: 28px;
+    }
+
+    .section-kicker {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .section-desc {
+      margin: 12px 0 0;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .provider-switch {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+      padding: 8px;
+      border-radius: 20px;
+      background: rgba(37, 23, 15, 0.06);
+    }
+
+    .provider-btn {
+      position: relative;
+      border: 0;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: transparent;
+      text-align: left;
+      color: var(--text);
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .provider-btn strong {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+
+    .provider-btn span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .provider-btn.active {
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(253, 242, 232, 0.88));
+      box-shadow: 0 12px 24px rgba(56, 36, 20, 0.1);
+      transform: translateY(-1px);
+    }
+
+    .provider-btn:focus-visible,
+    .chip:focus-visible,
+    .action-btn:focus-visible,
+    .copy-btn:focus-visible {
+      outline: 2px solid rgba(31, 122, 116, 0.5);
+      outline-offset: 2px;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .field {
+      display: grid;
+      gap: 10px;
+    }
+
+    .field-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: baseline;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .field-label span {
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 12px;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      border: 1px solid rgba(37, 23, 15, 0.14);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--text);
+      padding: 16px 18px;
+      font: inherit;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .field textarea {
+      min-height: 178px;
+      resize: vertical;
+      line-height: 1.75;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: rgba(31, 122, 116, 0.42);
+      box-shadow: 0 0 0 5px rgba(31, 122, 116, 0.08);
+      transform: translateY(-1px);
+    }
+
+    .mono {
+      font-family: "IBM Plex Mono", "Consolas", monospace;
+      letter-spacing: -0.02em;
+    }
+
+    .active-key-hint {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: linear-gradient(145deg, rgba(194, 97, 43, 0.08), rgba(31, 122, 116, 0.08));
+      border: 1px solid rgba(37, 23, 15, 0.08);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .active-key-hint strong {
+      color: var(--text);
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip {
+      border: 1px solid rgba(37, 23, 15, 0.1);
+      background: rgba(255, 255, 255, 0.68);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font: inherit;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .chip:hover,
+    .action-btn:hover,
+    .copy-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .chip.provider-chip {
+      background: rgba(255, 255, 255, 0.56);
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .action-btn,
+    .copy-btn {
+      border: 0;
+      padding: 14px 20px;
+      border-radius: 16px;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 700;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+    }
+
+    .action-btn.primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+      color: #fff7f2;
+      box-shadow: 0 18px 30px rgba(140, 51, 16, 0.24);
+    }
+
+    .action-btn.secondary,
+    .copy-btn {
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--text);
+      border: 1px solid rgba(37, 23, 15, 0.12);
+    }
+
+    .action-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .notes-grid {
+      display: grid;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .note-card {
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.54);
+      border: 1px solid rgba(37, 23, 15, 0.08);
+    }
+
+    .note-card strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+
+    .note-card p,
+    .note-card li {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .note-card ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .type-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .type-block {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(37, 23, 15, 0.08);
+    }
+
+    .type-block .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(37, 23, 15, 0.06);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .type-block strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 16px;
+    }
+
+    .type-block p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .results-wrap {
+      margin-top: 22px;
+      padding: 28px;
+    }
+
+    .results-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .status-strip {
+      margin-top: 18px;
+      padding: 15px 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(37, 23, 15, 0.08);
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .status-strip.busy {
+      background: linear-gradient(145deg, rgba(194, 97, 43, 0.1), rgba(31, 122, 116, 0.08));
+      color: var(--text);
+    }
+
+    .status-strip.success {
+      background: rgba(24, 123, 77, 0.08);
+      color: #1f5f42;
+    }
+
+    .status-strip.error {
+      background: rgba(173, 49, 49, 0.08);
+      color: #8b2b2b;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .placeholder {
+      display: grid;
+      place-items: center;
+      min-height: 220px;
+      border-radius: 24px;
+      border: 1px dashed rgba(37, 23, 15, 0.14);
+      background: rgba(255, 255, 255, 0.4);
+      text-align: center;
+      padding: 26px;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    .result-card {
+      padding: 22px;
+      border-radius: 24px;
+      border: 1px solid rgba(37, 23, 15, 0.08);
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.78), rgba(248, 242, 234, 0.62));
+      box-shadow: 0 18px 42px rgba(56, 36, 20, 0.08);
+    }
+
+    .result-card.error-card {
+      background: linear-gradient(145deg, rgba(255, 245, 245, 0.92), rgba(255, 251, 251, 0.76));
+    }
+
+    .result-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .result-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+
+    .result-badge.amap {
+      background: rgba(31, 122, 116, 0.1);
+      color: #145c57;
+    }
+
+    .result-badge.baidu {
+      background: rgba(194, 97, 43, 0.12);
+      color: #8c3310;
+    }
+
+    .result-title {
+      margin: 16px 0 10px;
+      font-size: 22px;
+      line-height: 1.35;
+      letter-spacing: -0.03em;
+      word-break: break-word;
+    }
+
+    .result-address {
+      color: var(--muted);
+      line-height: 1.8;
+      word-break: break-word;
+    }
+
+    .result-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .result-meta-item {
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(37, 23, 15, 0.06);
+    }
+
+    .result-meta-item strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .result-meta-item span {
+      display: block;
+      font-size: 14px;
+      line-height: 1.6;
+      word-break: break-word;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .tag {
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(37, 23, 15, 0.06);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .poi-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .poi-item {
+      padding: 13px 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(37, 23, 15, 0.06);
+    }
+
+    .poi-item strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .poi-item span {
+      display: block;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 13px;
+      word-break: break-word;
+    }
+
+    .error-title {
+      color: var(--danger);
+    }
+
+    .history-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .history-item {
+      display: grid;
+      gap: 4px;
+      padding: 14px 15px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.56);
+      border: 1px solid rgba(37, 23, 15, 0.07);
+    }
+
+    .history-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .history-item strong {
+      font-size: 14px;
+      line-height: 1.6;
+      word-break: break-word;
+    }
+
+    .history-item span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+      word-break: break-word;
+    }
+
+    .footer-note {
+      margin-top: 22px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes floatPulse {
+      0%,
+      100% {
+        transform: translateY(0px) scale(1);
+      }
+      50% {
+        transform: translateY(-10px) scale(1.02);
+      }
+    }
+
+    @media (max-width: 1050px) {
+      .hero,
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 280px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        padding: 18px 14px 34px;
+      }
+
+      .hero,
+      .panel,
+      .results-wrap {
+        padding: 22px;
+      }
+
+      .provider-switch,
+      .type-grid,
+      .result-meta {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-meta {
+        flex-direction: column;
+      }
+
+      .floating-note {
+        position: static;
+        width: 100%;
+        margin-top: 18px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero card">
+      <div class="hero-copy">
+        <p class="eyebrow">Reverse Geocoding Studio</p>
+        <h1>经纬度转换</h1>
+        <p class="hero-desc">
+          现在这页不只支持把百度坐标或高德坐标转成具体地址，也支持把结构化地址反查成经纬度。
+          整个工具仍然只有一个 <span class="mono">HTML</span> 文件，界面、样式、逻辑全部写在里面。
+        </p>
+        <div class="hero-meta">
+          <div class="meta-pill">
+            <strong>双向</strong>
+            <span>支持正向与逆向地理编码</span>
+          </div>
+          <div class="meta-pill">
+            <strong>批量</strong>
+            <span>支持多行输入连续转换</span>
+          </div>
+          <div class="meta-pill">
+            <strong>自动识别</strong>
+            <span>坐标顺序异常会自动纠正</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="radar">
+          <div class="scan"></div>
+          <div class="pin"></div>
+        </div>
+        <div class="floating-note">
+          <strong>输入格式</strong>
+          <span>默认按“经度,纬度”输入，例如：<span class="mono">116.404,39.915</span></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <div class="card panel">
+        <p class="section-kicker">Conversion Setup</p>
+        <h2 class="section-title">转换设置</h2>
+        <p class="section-desc">
+          先选转换模式，再选地图服务并填写对应密钥，最后输入坐标或地址。页面会自动保存你填过的密钥到本地浏览器，方便下次继续使用。
+        </p>
+
+        <div class="provider-switch" id="modeSwitch">
+          <button class="provider-btn active" data-mode="reverse" type="button">
+            <strong>经纬度转地址</strong>
+            <span>逆地理编码，输入坐标返回具体地址</span>
+          </button>
+          <button class="provider-btn" data-mode="forward" type="button">
+            <strong>地址转经纬度</strong>
+            <span>地理编码，输入地址返回经纬度</span>
+          </button>
+        </div>
+
+        <div class="provider-switch" id="providerSwitch">
+          <button class="provider-btn active" data-provider="amap" type="button">
+            <strong>高德坐标</strong>
+            <span>适合高德地图服务与 GCJ-02 坐标体系</span>
+          </button>
+          <button class="provider-btn" data-provider="baidu" type="button">
+            <strong>百度坐标</strong>
+            <span>适合百度地图服务与 BD-09 坐标体系</span>
+          </button>
+        </div>
+
+        <div class="form-grid">
+          <label class="field">
+            <div class="field-label">
+              <strong>高德 Web 服务 Key</strong>
+              <span>仅切到高德坐标时必须</span>
+            </div>
+            <input id="amapKey" type="text" placeholder="请输入高德 Web 服务 Key">
+          </label>
+
+          <label class="field">
+            <div class="field-label">
+              <strong>百度 AK</strong>
+              <span>仅切到百度坐标时必须</span>
+            </div>
+            <input id="baiduKey" type="text" placeholder="请输入百度地图 AK">
+          </label>
+
+          <div class="active-key-hint" id="activeKeyHint">
+            <span>当前模式：<strong>经纬度转地址</strong>，当前服务：<strong>高德地图</strong>，将使用 <strong>高德 Web 服务 Key</strong> 发起请求。</span>
+            <span class="mono">GCJ-02</span>
+          </div>
+
+          <label class="field">
+            <div class="field-label">
+              <strong id="inputLabel">经纬度输入</strong>
+              <span id="inputHint">可一次输入多行，每行一个坐标</span>
+            </div>
+            <textarea id="mainInput" class="mono" placeholder="示例：
+116.397499,39.908722
+121.473701,31.230416"></textarea>
+          </label>
+
+          <label class="field hidden" id="cityField">
+            <div class="field-label">
+              <strong>城市限定</strong>
+              <span>地址转坐标时可选，能提升匹配精度</span>
+            </div>
+            <input id="cityInput" type="text" placeholder="例如：北京、上海、深圳">
+          </label>
+
+          <div class="field">
+            <div class="field-label">
+              <strong>快捷示例</strong>
+              <span>点击可自动填入</span>
+            </div>
+            <div class="chip-row">
+              <button class="chip" type="button" id="currentExampleBtn">当前示例</button>
+              <button class="chip" type="button" id="batchExampleBtn">批量示例</button>
+              <button class="chip" type="button" id="clearHistoryBtn">清空最近记录</button>
+            </div>
+          </div>
+
+          <div class="action-row">
+            <button class="action-btn primary" type="button" id="convertBtn">开始转换</button>
+            <button class="action-btn secondary" type="button" id="clearBtn">清空输入</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <p class="section-kicker">Guide & History</p>
+        <h2 class="section-title">坐标说明</h2>
+        <p class="section-desc">
+          你最需要注意的是平台来源和坐标体系。高德与百度本身不是同一个坐标体系，做逆地理编码时选错类型会直接导致地址偏移；做正向地理编码时建议补充城市限定提高精度。
+        </p>
+
+        <div class="notes-grid">
+          <div class="type-grid">
+            <div class="type-block">
+              <span class="badge">高德 / GCJ-02</span>
+              <strong>高德地图服务</strong>
+              <p>支持高德逆地理编码和地理编码。逆向时适合 GCJ-02 坐标，正向时可直接把中文地址转成经纬度。</p>
+            </div>
+            <div class="type-block">
+              <span class="badge">百度 / BD-09</span>
+              <strong>百度地图服务</strong>
+              <p>支持百度逆地理编码和地理编码。逆向时适合 BD-09 坐标，正向时适合百度地址解析场景。</p>
+            </div>
+          </div>
+
+          <div class="note-card">
+            <strong>使用顺序</strong>
+            <ul>
+              <li>先选“经纬度转地址”或“地址转经纬度”。</li>
+              <li>再确认你使用的是百度服务还是高德服务，并填写对应密钥。</li>
+              <li>逆向时按“经度,纬度”输入；正向时一行一个地址，必要时补充城市限定。</li>
+            </ul>
+          </div>
+
+          <div class="note-card">
+            <strong>本地说明</strong>
+            <p>密钥和最近记录仅保存在你当前浏览器本地，不会写到其他文件里。如果接口被平台限制，可改成在本地服务器环境打开这个页面再试。</p>
+          </div>
+
+          <div class="note-card">
+            <strong>最近记录</strong>
+            <div class="history-list" id="historyList">
+              <div class="history-item">
+                <div class="history-head">
+                  <span>暂无记录</span>
+                  <span class="mono">--</span>
+                </div>
+                <strong>转换过的地址会显示在这里</strong>
+                <span>方便你快速回看最近处理过的坐标。</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card results-wrap">
+      <div class="results-head">
+        <div>
+          <p class="section-kicker">Results</p>
+          <h2 class="section-title">转换结果</h2>
+          <p class="section-desc">逆向时返回结构化地址；正向时返回经纬度和匹配信息；失败时会明确显示原因。</p>
+        </div>
+        <button class="copy-btn hidden" type="button" id="copyAllBtn">复制全部结果</button>
+      </div>
+
+      <div class="status-strip" id="statusStrip">等待输入。页面现在支持“经纬度转地址”和“地址转经纬度”两种模式。</div>
+
+      <div class="results-grid" id="resultsGrid">
+        <div class="placeholder">
+          <div>
+            <strong>还没有结果</strong>
+            <div>选好转换模式和地图服务，填入密钥与内容后，点击“开始转换”。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">
+      单文件页面名称：<span class="mono">经纬度转换.html</span>
+      <br>
+      解析逻辑基于高德地理/逆地理编码和百度地理/逆地理编码接口。
+    </p>
+  </div>
+
+  <script>
+    const STORAGE_KEYS = {
+      amapKey: "lnglat-converter-amap-key",
+      baiduKey: "lnglat-converter-baidu-key",
+      history: "lnglat-converter-history"
+    };
+
+    const MODE_CONFIG = {
+      reverse: {
+        id: "reverse",
+        label: "经纬度转地址",
+        actionText: "逆地理编码",
+        inputLabel: "经纬度输入",
+        inputHint: "可一次输入多行，每行一个坐标",
+        copyLabel: "复制全部地址"
+      },
+      forward: {
+        id: "forward",
+        label: "地址转经纬度",
+        actionText: "地理编码",
+        inputLabel: "地址输入",
+        inputHint: "可一次输入多行，每行一个地址",
+        copyLabel: "复制全部坐标"
+      }
+    };
+
+    const EXAMPLES = {
+      amap: {
+        reverse: {
+          single: "116.397499,39.908722",
+          batch: [
+            "116.397499,39.908722",
+            "121.473701,31.230416",
+            "113.264385,23.129112"
+          ],
+          placeholder: "示例：\n116.397499,39.908722\n121.473701,31.230416"
+        },
+        forward: {
+          single: "北京市东城区天安门",
+          batch: [
+            "北京市东城区天安门",
+            "上海市黄浦区外滩18号",
+            "广州市天河区花城大道89号"
+          ],
+          city: "北京",
+          placeholder: "示例：\n北京市东城区天安门\n上海市黄浦区外滩18号"
+        }
+      },
+      baidu: {
+        reverse: {
+          single: "116.404000,39.915000",
+          batch: [
+            "116.404000,39.915000",
+            "121.480237,31.236305",
+            "113.271431,23.135336"
+          ],
+          placeholder: "示例：\n116.404000,39.915000\n121.480237,31.236305"
+        },
+        forward: {
+          single: "北京市东城区天安门",
+          batch: [
+            "北京市东城区天安门",
+            "上海市黄浦区南京东路299号",
+            "深圳市南山区科技园"
+          ],
+          city: "北京",
+          placeholder: "示例：\n北京市东城区天安门\n上海市黄浦区南京东路299号"
+        }
+      }
+    };
+
+    const PROVIDERS = {
+      amap: {
+        id: "amap",
+        label: "高德地图服务",
+        short: "高德",
+        coordType: "GCJ-02",
+        keyLabel: "高德 Web 服务 Key",
+        reverse: {
+          buildUrl({ key, lng, lat }) {
+            const params = new URLSearchParams({
+              key,
+              location: `${lng.toFixed(6)},${lat.toFixed(6)}`,
+              radius: "500",
+              extensions: "all",
+              roadlevel: "0",
+              output: "JSON"
+            });
+            return `https://restapi.amap.com/v3/geocode/regeo?${params.toString()}`;
+          },
+          parseResponse(data) {
+            if (!data || data.status !== "1") {
+              throw new Error(data && data.info ? data.info : "高德接口返回失败");
+            }
+
+            const regeocode = data.regeocode || {};
+            const addressComponent = regeocode.addressComponent || {};
+            const streetNumber = addressComponent.streetNumber || {};
+            const cityValue = Array.isArray(addressComponent.city)
+              ? ""
+              : (addressComponent.city || "");
+            const businessAreas = Array.isArray(addressComponent.businessAreas)
+              ? addressComponent.businessAreas
+              : [];
+            const pois = Array.isArray(regeocode.pois) ? regeocode.pois : [];
+
+            const formattedAddress = regeocode.formatted_address
+              || [
+                addressComponent.province,
+                cityValue,
+                addressComponent.district,
+                addressComponent.township,
+                streetNumber.street,
+                streetNumber.number
+              ].filter(Boolean).join("");
+
+            return {
+              title: formattedAddress || "未返回地址",
+              address: formattedAddress || "未返回地址",
+              semantic: streetNumber.street
+                ? `${streetNumber.street}${streetNumber.number || ""}${streetNumber.direction ? ` · ${streetNumber.direction}` : ""}`
+                : "",
+              districtText: [
+                addressComponent.province,
+                cityValue || addressComponent.province,
+                addressComponent.district
+              ].filter(Boolean).join(" / "),
+              locationType: streetNumber.location || "",
+              business: businessAreas
+                .map(item => item && item.name)
+                .filter(Boolean)
+                .slice(0, 3),
+              pois: pois.slice(0, 3).map(item => ({
+                name: item.name || "附近地点",
+                address: item.address || "暂无详细地址",
+                distance: item.distance ? `${item.distance} 米` : "距离未知"
+              }))
+            };
+          }
+        },
+        forward: {
+          buildUrl({ key, address, city }) {
+            const params = new URLSearchParams({
+              key,
+              address,
+              output: "JSON"
+            });
+            if (city) {
+              params.set("city", city);
+            }
+            return `https://restapi.amap.com/v3/geocode/geo?${params.toString()}`;
+          },
+          parseResponse(data, inputText) {
+            if (!data || data.status !== "1") {
+              throw new Error(data && data.info ? data.info : "高德接口返回失败");
+            }
+
+            const geocodes = Array.isArray(data.geocodes) ? data.geocodes : [];
+            if (!geocodes.length) {
+              throw new Error("未找到匹配坐标");
+            }
+
+            const first = geocodes[0] || {};
+            const location = String(first.location || "");
+            const [lngRaw = "", latRaw = ""] = location.split(",");
+            const lng = Number(lngRaw);
+            const lat = Number(latRaw);
+
+            if (!Number.isFinite(lng) || !Number.isFinite(lat)) {
+              throw new Error("高德未返回有效坐标");
+            }
+
+            const cityValue = Array.isArray(first.city) ? "" : (first.city || "");
+            const neighborhood = typeof first.neighborhood === "object"
+              ? (first.neighborhood.name || "")
+              : (first.neighborhood || "");
+            const building = typeof first.building === "object"
+              ? (first.building.name || "")
+              : (first.building || "");
+
+            return {
+              title: first.formatted_address || inputText || "匹配结果",
+              address: first.formatted_address || inputText || "未返回地址",
+              coords: `${lng.toFixed(6)},${lat.toFixed(6)}`,
+              semantic: [first.level, neighborhood, building].filter(Boolean).join(" / "),
+              districtText: [
+                first.province,
+                cityValue || first.province,
+                first.district,
+                first.township
+              ].filter(Boolean).join(" / "),
+              locationType: first.level || "",
+              business: [
+                first.adcode ? `adcode ${first.adcode}` : "",
+                first.level ? `级别 ${first.level}` : ""
+              ].filter(Boolean),
+              pois: []
+            };
+          }
+        }
+      },
+      baidu: {
+        id: "baidu",
+        label: "百度地图服务",
+        short: "百度",
+        coordType: "BD-09",
+        keyLabel: "百度 AK",
+        reverse: {
+          buildUrl({ key, lng, lat }) {
+            const params = new URLSearchParams({
+              ak: key,
+              location: `${lat.toFixed(6)},${lng.toFixed(6)}`,
+              output: "json",
+              pois: "1"
+            });
+            return `https://api.map.baidu.com/geocoder/v2/?${params.toString()}`;
+          },
+          parseResponse(data) {
+            if (!data || Number(data.status) !== 0) {
+              throw new Error(data && data.msg ? data.msg : "百度接口返回失败");
+            }
+
+            const result = data.result || {};
+            const addressComponent = result.addressComponent || {};
+            const pois = Array.isArray(result.pois) ? result.pois : [];
+            const business = String(result.business || "")
+              .split(",")
+              .map(item => item.trim())
+              .filter(Boolean)
+              .slice(0, 3);
+
+            return {
+              title: result.formatted_address || result.sematic_description || "未返回地址",
+              address: result.formatted_address || "未返回地址",
+              semantic: result.sematic_description || "",
+              districtText: [
+                addressComponent.province,
+                addressComponent.city,
+                addressComponent.district
+              ].filter(Boolean).join(" / "),
+              locationType: addressComponent.street
+                ? `${addressComponent.street}${addressComponent.street_number || ""}`
+                : "",
+              business,
+              pois: pois.slice(0, 3).map(item => ({
+                name: item.name || "附近地点",
+                address: item.addr || item.address || "暂无详细地址",
+                distance: item.distance ? `${item.distance} 米` : "距离未知"
+              }))
+            };
+          }
+        },
+        forward: {
+          buildUrl({ key, address, city }) {
+            const params = new URLSearchParams({
+              ak: key,
+              address,
+              output: "json"
+            });
+            if (city) {
+              params.set("city", city);
+            }
+            return `https://api.map.baidu.com/geocoding/v3/?${params.toString()}`;
+          },
+          parseResponse(data, inputText) {
+            if (!data || Number(data.status) !== 0) {
+              throw new Error(data && data.msg ? data.msg : "百度接口返回失败");
+            }
+
+            const result = data.result || {};
+            const location = result.location || {};
+            const lng = Number(location.lng);
+            const lat = Number(location.lat);
+
+            if (!Number.isFinite(lng) || !Number.isFinite(lat)) {
+              throw new Error("百度未返回有效坐标");
+            }
+
+            return {
+              title: inputText || "匹配结果",
+              address: inputText || "未返回地址",
+              coords: `${lng.toFixed(6)},${lat.toFixed(6)}`,
+              semantic: result.level || "",
+              districtText: [
+                Number(result.precise) === 1 ? "精确匹配" : "非精确匹配",
+                Number.isFinite(Number(result.confidence)) ? `置信度 ${result.confidence}` : "",
+                Number.isFinite(Number(result.comprehension)) ? `理解度 ${result.comprehension}` : ""
+              ].filter(Boolean).join(" / "),
+              locationType: result.level || "",
+              business: [
+                Number(result.precise) === 1 ? "精确返回" : "建议人工复核"
+              ],
+              pois: []
+            };
+          }
+        }
+      }
+    };
+
+    const elements = {
+      modeSwitch: document.getElementById("modeSwitch"),
+      providerSwitch: document.getElementById("providerSwitch"),
+      activeKeyHint: document.getElementById("activeKeyHint"),
+      inputLabel: document.getElementById("inputLabel"),
+      inputHint: document.getElementById("inputHint"),
+      amapKey: document.getElementById("amapKey"),
+      baiduKey: document.getElementById("baiduKey"),
+      mainInput: document.getElementById("mainInput"),
+      cityField: document.getElementById("cityField"),
+      cityInput: document.getElementById("cityInput"),
+      convertBtn: document.getElementById("convertBtn"),
+      clearBtn: document.getElementById("clearBtn"),
+      currentExampleBtn: document.getElementById("currentExampleBtn"),
+      batchExampleBtn: document.getElementById("batchExampleBtn"),
+      clearHistoryBtn: document.getElementById("clearHistoryBtn"),
+      resultsGrid: document.getElementById("resultsGrid"),
+      statusStrip: document.getElementById("statusStrip"),
+      historyList: document.getElementById("historyList"),
+      copyAllBtn: document.getElementById("copyAllBtn")
+    };
+
+    let activeProvider = "amap";
+    let activeOperation = "reverse";
+    let latestCopiedLines = [];
+
+    function init() {
+      restoreStoredValues();
+      bindEvents();
+      renderState();
+      renderHistory();
+      renderPlaceholder();
+    }
+
+    function bindEvents() {
+      elements.modeSwitch.addEventListener("click", event => {
+        const button = event.target.closest("[data-mode]");
+        if (!button) {
+          return;
+        }
+
+        activeOperation = button.dataset.mode;
+        renderState();
+        renderPlaceholder();
+        setStatus(`已切换到“${MODE_CONFIG[activeOperation].label}”模式。`, "");
+      });
+
+      elements.providerSwitch.addEventListener("click", event => {
+        const button = event.target.closest("[data-provider]");
+        if (!button) {
+          return;
+        }
+
+        activeProvider = button.dataset.provider;
+        renderState();
+        renderPlaceholder();
+        setStatus(`当前已切换到${PROVIDERS[activeProvider].short}地图服务。`, "");
+      });
+
+      elements.currentExampleBtn.addEventListener("click", () => {
+        applyExample(false);
+      });
+
+      elements.batchExampleBtn.addEventListener("click", () => {
+        applyExample(true);
+      });
+
+      elements.clearBtn.addEventListener("click", () => {
+        elements.mainInput.value = "";
+        elements.cityInput.value = "";
+        elements.mainInput.focus();
+      });
+
+      elements.clearHistoryBtn.addEventListener("click", () => {
+        localStorage.removeItem(STORAGE_KEYS.history);
+        renderHistory();
+      });
+
+      elements.copyAllBtn.addEventListener("click", async () => {
+        if (!latestCopiedLines.length) {
+          return;
+        }
+
+        const text = latestCopiedLines.join("\n");
+        try {
+          await navigator.clipboard.writeText(text);
+          setStatus(`已复制全部${activeOperation === "reverse" ? "地址" : "坐标"}。`, "success");
+        } catch (error) {
+          setStatus("复制失败，请检查浏览器是否允许剪贴板操作。", "error");
+        }
+      });
+
+      elements.convertBtn.addEventListener("click", handleConvert);
+
+      elements.amapKey.addEventListener("input", () => {
+        localStorage.setItem(STORAGE_KEYS.amapKey, elements.amapKey.value.trim());
+      });
+
+      elements.baiduKey.addEventListener("input", () => {
+        localStorage.setItem(STORAGE_KEYS.baiduKey, elements.baiduKey.value.trim());
+      });
+    }
+
+    function restoreStoredValues() {
+      elements.amapKey.value = localStorage.getItem(STORAGE_KEYS.amapKey) || "";
+      elements.baiduKey.value = localStorage.getItem(STORAGE_KEYS.baiduKey) || "";
+    }
+
+    function renderState() {
+      renderModeState();
+      renderProviderState();
+      renderInputState();
+    }
+
+    function renderModeState() {
+      Array.from(elements.modeSwitch.querySelectorAll(".provider-btn")).forEach(button => {
+        button.classList.toggle("active", button.dataset.mode === activeOperation);
+      });
+    }
+
+    function renderProviderState() {
+      Array.from(elements.providerSwitch.querySelectorAll(".provider-btn")).forEach(button => {
+        button.classList.toggle("active", button.dataset.provider === activeProvider);
+      });
+
+      const provider = PROVIDERS[activeProvider];
+      const mode = MODE_CONFIG[activeOperation];
+      elements.activeKeyHint.innerHTML = `
+        <span>当前模式：<strong>${mode.label}</strong>，当前服务：<strong>${provider.short}地图</strong>，将使用 <strong>${provider.keyLabel}</strong> 发起${mode.actionText}。</span>
+        <span class="mono">${activeOperation === "reverse" ? provider.coordType : `${provider.coordType} / GeoCode`}</span>
+      `;
+    }
+
+    function renderInputState() {
+      const mode = MODE_CONFIG[activeOperation];
+      const example = EXAMPLES[activeProvider][activeOperation];
+      const provider = PROVIDERS[activeProvider];
+
+      elements.inputLabel.textContent = mode.inputLabel;
+      elements.inputHint.textContent = mode.inputHint;
+      elements.mainInput.placeholder = example.placeholder;
+      elements.cityField.classList.toggle("hidden", activeOperation !== "forward");
+      elements.currentExampleBtn.textContent = `${provider.short}${activeOperation === "reverse" ? "坐标" : "地址"}示例`;
+      elements.batchExampleBtn.textContent = `批量${activeOperation === "reverse" ? "输入" : "地址"}示例`;
+      elements.copyAllBtn.textContent = mode.copyLabel;
+    }
+
+    function applyExample(useBatch) {
+      const example = EXAMPLES[activeProvider][activeOperation];
+      elements.mainInput.value = useBatch ? example.batch.join("\n") : example.single;
+      elements.cityInput.value = activeOperation === "forward" ? (example.city || "") : "";
+      elements.mainInput.focus();
+    }
+
+    function setStatus(message, type) {
+      elements.statusStrip.textContent = message;
+      elements.statusStrip.className = "status-strip";
+      if (type) {
+        elements.statusStrip.classList.add(type);
+      }
+    }
+
+    function getActiveKey() {
+      return activeProvider === "amap"
+        ? elements.amapKey.value.trim()
+        : elements.baiduKey.value.trim();
+    }
+
+    function getActiveHandler() {
+      return PROVIDERS[activeProvider][activeOperation];
+    }
+
+    function normalizeCoordinateLine(line) {
+      const values = line.match(/[-+]?\d+(?:\.\d+)?/g);
+      if (!values || values.length < 2) {
+        throw new Error("无法识别经纬度，请按“经度,纬度”输入");
+      }
+
+      let first = Number(values[0]);
+      let second = Number(values[1]);
+      let swapped = false;
+
+      if (Math.abs(first) <= 90 && Math.abs(second) > 90) {
+        const temp = first;
+        first = second;
+        second = temp;
+        swapped = true;
+      }
+
+      if (!Number.isFinite(first) || !Number.isFinite(second)) {
+        throw new Error("经纬度存在非数字内容");
+      }
+
+      if (Math.abs(first) > 180 || Math.abs(second) > 90) {
+        throw new Error("经纬度超出正常范围");
+      }
+
+      return {
+        lng: first,
+        lat: second,
+        swapped
+      };
+    }
+
+    function jsonp(url, callbackParam = "callback", timeout = 12000) {
+      return new Promise((resolve, reject) => {
+        const callbackName = `jsonp_${Date.now()}_${Math.random().toString(16).slice(2)}`;
+        const script = document.createElement("script");
+        let completed = false;
+
+        const timer = window.setTimeout(() => {
+          cleanup();
+          reject(new Error("请求超时，请检查网络或密钥配置"));
+        }, timeout);
+
+        function cleanup() {
+          if (completed) {
+            return;
+          }
+          completed = true;
+          window.clearTimeout(timer);
+          delete window[callbackName];
+          script.remove();
+        }
+
+        window[callbackName] = data => {
+          cleanup();
+          resolve(data);
+        };
+
+        script.onerror = () => {
+          cleanup();
+          reject(new Error("接口请求失败，请检查网络、密钥或浏览器环境"));
+        };
+
+        const separator = url.includes("?") ? "&" : "?";
+        script.src = `${url}${separator}${callbackParam}=${callbackName}`;
+        document.body.appendChild(script);
+      });
+    }
+
+    function getHistory() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEYS.history);
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function saveHistory(entry) {
+      const current = getHistory();
+      current.unshift(entry);
+      const trimmed = current.slice(0, 8);
+      localStorage.setItem(STORAGE_KEYS.history, JSON.stringify(trimmed));
+    }
+
+    function renderHistory() {
+      const history = getHistory();
+
+      if (!history.length) {
+        elements.historyList.innerHTML = `
+          <div class="history-item">
+            <div class="history-head">
+              <span>暂无记录</span>
+              <span class="mono">--</span>
+            </div>
+            <strong>最近转换结果会显示在这里</strong>
+            <span>支持同时记录“经纬度转地址”和“地址转经纬度”。</span>
+          </div>
+        `;
+        return;
+      }
+
+      elements.historyList.innerHTML = history.map(item => `
+        <div class="history-item">
+          <div class="history-head">
+            <span>${escapeHtml(item.provider)} · ${escapeHtml(item.modeLabel)}</span>
+            <span>${escapeHtml(item.time)}</span>
+          </div>
+          <strong>${escapeHtml(item.output)}</strong>
+          <span>${escapeHtml(item.input)}</span>
+        </div>
+      `).join("");
+    }
+
+    function renderPlaceholder() {
+      const mode = MODE_CONFIG[activeOperation];
+      elements.resultsGrid.innerHTML = `
+        <div class="placeholder">
+          <div>
+            <strong>还没有结果</strong>
+            <div>当前是“${mode.label}”模式。选好地图服务，填入密钥和内容后，点击“开始转换”。</div>
+          </div>
+        </div>
+      `;
+      latestCopiedLines = [];
+      elements.copyAllBtn.classList.add("hidden");
+    }
+
+    function renderErrorCard(item) {
+      return `
+        <article class="result-card error-card">
+          <div class="result-top">
+            <span class="result-badge ${item.providerId}">${escapeHtml(item.providerLabel)} · ${escapeHtml(item.modeLabel)}</span>
+            <span class="mono">${escapeHtml(item.referenceText)}</span>
+          </div>
+          <h3 class="result-title error-title">转换失败</h3>
+          <div class="result-address">${escapeHtml(item.error)}</div>
+          <div class="result-meta">
+            <div class="result-meta-item">
+              <strong>输入值</strong>
+              <span>${escapeHtml(item.originalLine)}</span>
+            </div>
+            <div class="result-meta-item">
+              <strong>说明</strong>
+              <span>${escapeHtml(item.errorHint)}</span>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderReverseCard(item) {
+      const businessTags = item.data.business || [];
+      const poiList = item.data.pois || [];
+
+      return `
+        <article class="result-card">
+          <div class="result-top">
+            <span class="result-badge ${item.providerId}">${escapeHtml(item.providerLabel)} · ${escapeHtml(item.modeLabel)}</span>
+            <span class="mono">${escapeHtml(item.coords)}</span>
+          </div>
+          <h3 class="result-title">${escapeHtml(item.data.title)}</h3>
+          <div class="result-address">${escapeHtml(item.data.address)}</div>
+          <div class="result-meta">
+            <div class="result-meta-item">
+              <strong>行政区</strong>
+              <span>${escapeHtml(item.data.districtText || "未返回")}</span>
+            </div>
+            <div class="result-meta-item">
+              <strong>定位描述</strong>
+              <span>${escapeHtml(item.data.semantic || item.data.locationType || "未返回")}</span>
+            </div>
+            <div class="result-meta-item">
+              <strong>坐标</strong>
+              <span class="mono">${escapeHtml(item.coords)}</span>
+            </div>
+            <div class="result-meta-item">
+              <strong>纠正状态</strong>
+              <span>${item.swapped ? "已自动把“纬度,经度”纠正为“经度,纬度”" : "未做自动纠正"}</span>
+            </div>
+          </div>
+          ${businessTags.length ? `
+            <div class="tag-list">
+              ${businessTags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}
+            </div>
+          ` : ""}
+          ${poiList.length ? `
+            <div class="poi-list">
+              ${poiList.map(poi => `
+                <div class="poi-item">
+                  <strong>${escapeHtml(poi.name)}</strong>
+                  <span>${escapeHtml(poi.address)}</span>
+                  <span>${escapeHtml(poi.distance)}</span>
+                </div>
+              `).join("")}
+            </div>
+          ` : ""}
+        </article>
+      `;
+    }
+
+    function renderForwardCard(item) {
+      const businessTags = item.data.business || [];
+
+      return `
+        <article class="result-card">
+          <div class="result-top">
+            <span class="result-badge ${item.providerId}">${escapeHtml(item.providerLabel)} · ${escapeHtml(item.modeLabel)}</span>
+            <span class="mono">${escapeHtml(item.data.coords)}</span>
+          </div>
+          <h3 class="result-title">${escapeHtml(item.data.title)}</h3>
+          <div class="result-address">${escapeHtml(item.data.address)}</div>
+          <div class="result-meta">
+            <div class="result-meta-item">
+              <strong>输出坐标</strong>
+              <span class="mono">${escapeHtml(item.data.coords)}</span>
+            </div>
+            <div class="result-meta-item">
+              <strong>匹配说明</strong>
+              <span>${escapeHtml(item.data.semantic || item.data.locationType || "未返回")}</span>
+            </div>
+            <div class="result-meta-item">
+              <strong>行政区 / 质量</strong>
+              <span>${escapeHtml(item.data.districtText || "未返回")}</span>
+            </div>
+            <div class="result-meta-item">
+              <strong>输入地址</strong>
+              <span>${escapeHtml(item.originalLine)}</span>
+            </div>
+          </div>
+          ${businessTags.length ? `
+            <div class="tag-list">
+              ${businessTags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}
+            </div>
+          ` : ""}
+        </article>
+      `;
+    }
+
+    function renderResults(items) {
+      if (!items.length) {
+        renderPlaceholder();
+        return;
+      }
+
+      latestCopiedLines = items
+        .filter(item => item.ok)
+        .map(item => item.operation === "reverse" ? item.data.address : item.data.coords);
+
+      elements.copyAllBtn.classList.toggle("hidden", latestCopiedLines.length === 0);
+
+      elements.resultsGrid.innerHTML = items.map(item => {
+        if (!item.ok) {
+          return renderErrorCard(item);
+        }
+
+        return item.operation === "reverse"
+          ? renderReverseCard(item)
+          : renderForwardCard(item);
+      }).join("");
+    }
+
+    async function handleConvert() {
+      const key = getActiveKey();
+      const provider = PROVIDERS[activeProvider];
+      const mode = MODE_CONFIG[activeOperation];
+      const handler = getActiveHandler();
+      const raw = elements.mainInput.value.trim();
+      const city = elements.cityInput.value.trim();
+
+      if (!key) {
+        setStatus(`当前模式需要填写 ${provider.keyLabel}。`, "error");
+        return;
+      }
+
+      if (!raw) {
+        setStatus(`请输入至少一条${activeOperation === "reverse" ? "经纬度" : "地址"}。`, "error");
+        renderPlaceholder();
+        return;
+      }
+
+      const lines = raw
+        .split(/\r?\n/)
+        .map(line => line.trim())
+        .filter(Boolean);
+
+      if (!lines.length) {
+        setStatus(`请输入至少一条有效${activeOperation === "reverse" ? "经纬度" : "地址"}。`, "error");
+        renderPlaceholder();
+        return;
+      }
+
+      elements.convertBtn.disabled = true;
+      setStatus(`正在使用${provider.short}进行${mode.actionText}，共 ${lines.length} 条。`, "busy");
+
+      const results = [];
+
+      for (let index = 0; index < lines.length; index += 1) {
+        const originalLine = lines[index];
+        try {
+          if (activeOperation === "reverse") {
+            const normalized = normalizeCoordinateLine(originalLine);
+            const coordText = `${normalized.lng.toFixed(6)},${normalized.lat.toFixed(6)}`;
+            setStatus(`正在处理第 ${index + 1} / ${lines.length} 条坐标：${coordText}`, "busy");
+            const data = await jsonp(handler.buildUrl({
+              key,
+              lng: normalized.lng,
+              lat: normalized.lat
+            }));
+            const parsed = handler.parseResponse(data, originalLine);
+
+            results.push({
+              ok: true,
+              operation: activeOperation,
+              modeLabel: mode.label,
+              providerId: provider.id,
+              providerLabel: provider.short,
+              coords: coordText,
+              referenceText: coordText,
+              swapped: normalized.swapped,
+              originalLine,
+              data: parsed
+            });
+
+            saveHistory({
+              provider: provider.short,
+              modeLabel: mode.label,
+              input: coordText,
+              output: parsed.address,
+              time: new Date().toLocaleString("zh-CN")
+            });
+          } else {
+            setStatus(`正在处理第 ${index + 1} / ${lines.length} 条地址：${originalLine}`, "busy");
+            const data = await jsonp(handler.buildUrl({
+              key,
+              address: originalLine,
+              city
+            }));
+            const parsed = handler.parseResponse(data, originalLine);
+
+            results.push({
+              ok: true,
+              operation: activeOperation,
+              modeLabel: mode.label,
+              providerId: provider.id,
+              providerLabel: provider.short,
+              coords: parsed.coords,
+              referenceText: parsed.coords,
+              swapped: false,
+              originalLine,
+              data: parsed
+            });
+
+            saveHistory({
+              provider: provider.short,
+              modeLabel: mode.label,
+              input: originalLine,
+              output: parsed.coords,
+              time: new Date().toLocaleString("zh-CN")
+            });
+          }
+        } catch (error) {
+          let referenceText = originalLine;
+          let swapped = false;
+          let errorHint = "请检查输入内容、坐标类型或密钥配置";
+
+          if (activeOperation === "reverse") {
+            try {
+              const normalized = normalizeCoordinateLine(originalLine);
+              referenceText = `${normalized.lng.toFixed(6)},${normalized.lat.toFixed(6)}`;
+              swapped = normalized.swapped;
+              errorHint = swapped
+                ? "检测到纬度在前，已自动纠正后仍失败"
+                : "请检查坐标类型、密钥或浏览器环境";
+            } catch (parseError) {
+              referenceText = originalLine;
+              errorHint = "坐标格式无法识别，请按“经度,纬度”输入";
+            }
+          } else {
+            errorHint = city
+              ? `已带城市限定“${city}”查询，仍未成功`
+              : "可尝试补充更完整地址或填写城市限定";
+          }
+
+          results.push({
+            ok: false,
+            operation: activeOperation,
+            modeLabel: mode.label,
+            providerId: provider.id,
+            providerLabel: provider.short,
+            coords: "",
+            referenceText,
+            swapped,
+            originalLine,
+            errorHint,
+            error: error.message || "转换失败"
+          });
+        }
+      }
+
+      renderResults(results);
+      renderHistory();
+      elements.convertBtn.disabled = false;
+
+      const successCount = results.filter(item => item.ok).length;
+      if (successCount) {
+        setStatus(`${mode.label}完成：成功 ${successCount} 条，失败 ${results.length - successCount} 条。`, "success");
+      } else {
+        setStatus(`${mode.label}完成，但没有成功结果。请检查输入内容、密钥或浏览器环境。`, "error");
+      }
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    init();
+  </script>
+</body>
+</html>

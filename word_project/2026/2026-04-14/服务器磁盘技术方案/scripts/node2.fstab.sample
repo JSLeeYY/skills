@@ -1,0 +1,3 @@
+UUID=<NODE2_PART_UUID>  /filedata/node2  ext4  defaults,noatime,nodiratime  0 2
+/filedata/node2/mysql/mysql3308   /opt/mysql/mydata/3308/data   none  bind  0 0
+/filedata/node2/mysql/weaver3306  /usr/local/weaver_mysql/data  none  bind  0 0

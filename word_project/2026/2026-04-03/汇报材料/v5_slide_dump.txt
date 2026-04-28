@@ -1,0 +1,678 @@
+===== slide 1 =====
+[3] Rounded Rectangle 3: 一期建设方案 V5
+[4] TextBox 4: 监造信息化系统甲方汇报
+[5] TextBox 5: 聚焦一期建设范围、核心流程和模块关系。
+[6] Rounded Rectangle 6: 汇报范围
+[7] Rounded Rectangle 7: • 业务全景与模块关系
+• 主链流程与支撑模块
+• 一期建设边界
+[8] TextBox 8: 版本：甲方留存版
+
+===== slide 2 =====
+[2] TextBox 2: 业务全景总览
+[3] TextBox 3: 按 5 个阶段展示系统范围，一期聚焦主链流程和关键支撑能力。
+[4] Rounded Rectangle 4: 2
+[5] Rounded Rectangle 6: 基础建模阶段
+[6] Rounded Rectangle 7: 核心动作：建立体系文件底座、合同物资台账、监造任务责任链。
+[7] Rounded Rectangle 8: 执行准备阶段
+[8] Rounded Rectangle 9: 核心动作：完成策划编制、供方文件审核、质量计划和 W/R/H 点生效。
+[9] Rounded Rectangle 10: 监督执行阶段
+[10] Rounded Rectangle 11: 核心动作：开展日常监督、专项监督、巡查、问题处理、抽查复验、日报周报。
+[11] Rounded Rectangle 12: 交付收口阶段
+[12] Rounded Rectangle 13: 核心动作：完工总结、验收、放行、质量追溯。
+[13] Rounded Rectangle 14: 管理支撑阶段
+[14] Rounded Rectangle 15: 核心动作：统计分析、预警、可视化、工日、二维码、签名、OCR、视频、付款、培训。
+[15] Rounded Rectangle 16: 模块口径：主链 15 个，一期支撑 10 个，二期增强 2 个。
+
+===== slide 3 =====
+[2] TextBox 2: 模块关系总图
+[3] TextBox 3: 主链按业务先后展开，支撑模块按挂载方式接入。
+[4] Rounded Rectangle 4: 3
+[5] Rounded Rectangle 6: 体系文件
+[7] Rounded Rectangle 8: 物资采购
+[9] Rounded Rectangle 10: 任务分配
+[11] Rounded Rectangle 12: 策划管理
+[13] Rounded Rectangle 14: 供方文件审核
+[15] Rounded Rectangle 16: 质量计划标准建立
+[16] Rounded Rectangle 17: 监造过程监督和执行
+日常监督 / 专项监督 / 见证执行 / 2 天内佐证回传 / 异常项触发问题
+[17] Rounded Rectangle 18: 监造巡查管理
+[19] Rounded Rectangle 20: 监造质量问题处理
+[21] Rounded Rectangle 22: 抽查复验管理
+[23] Rounded Rectangle 24: 监造记录
+[25] Rounded Rectangle 26: 监造完工管理
+[27] Rounded Rectangle 28: 监造验收
+[29] Rounded Rectangle 30: 监造放行
+[31] Rounded Rectangle 32: 质量追溯
+[32] Rounded Rectangle 33: 支撑模块：统计分析、风险预警、可视化、工日、二维码、签名、OCR、视频、付款、培训。
+
+===== slide 4 =====
+[2] TextBox 2: 01 体系文件管理
+[3] TextBox 3: 核心模块流程与职责。
+[4] Rounded Rectangle 4: 4
+[5] Rounded Rectangle 6: 基础建模阶段
+[6] Rounded Rectangle 7: 步骤1
+按类型规划目录
+[8] Rounded Rectangle 9: 步骤2
+上传技术文件/标准/法规
+[10] Rounded Rectangle 11: 步骤3
+审核发布并编码归档
+[12] Rounded Rectangle 13: 步骤4
+审批通过质量计划收录标准库
+[14] Rounded Rectangle 15: 步骤5
+策划与质量计划后续复用
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本页保留流程、功能按钮、参与角色和上下游关系，详细规则按实施阶段需求确认。
+[17] Rounded Rectangle 18: 功能按钮
+[18] Rounded Rectangle 19: 按钮：新建目录 / 上传文件 / 提交审核 / 预览 / 下载
+[19] Rounded Rectangle 20: 参与角色
+[20] Rounded Rectangle 21: 角色：监造管理部门、监造工程师、审查人/总监
+[21] Rounded Rectangle 22: 模块关系 / 触发来源 / 输出去向
+[22] Rounded Rectangle 23: 来源：外部法规标准、技术资料、已审批质量计划
+去向：策划管理、供方文件审核、质量计划标准建立
+先后关系：先立统一依据，再做策划和质量计划。
+
+===== slide 5 =====
+[2] TextBox 2: 02 物资采购管理
+[3] TextBox 3: 核心模块流程与职责。
+[4] Rounded Rectangle 4: 5
+[5] Rounded Rectangle 6: 基础建模阶段
+[6] Rounded Rectangle 7: 步骤1
+创建合同并录入唯一字段
+[8] Rounded Rectangle 9: 步骤2
+在“物资维护”入口建物资
+[10] Rounded Rectangle 11: 步骤3
+批量导入/增删改并留痕
+[12] Rounded Rectangle 13: 步骤4
+维护状态并查询导出打印
+[14] Rounded Rectangle 15: 步骤5
+完结归档并向监造模块同步
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本页保留流程、功能按钮、参与角色和上下游关系，详细规则按实施阶段需求确认。
+[17] Rounded Rectangle 18: 功能按钮
+[18] Rounded Rectangle 19: 按钮：新建合同 / 物资维护 / 导入 / 导出 / 归档
+[19] Rounded Rectangle 20: 参与角色
+[20] Rounded Rectangle 21: 角色：项目负责人/采购员、监造管理部门
+[21] Rounded Rectangle 22: 模块关系 / 触发来源 / 输出去向
+[22] Rounded Rectangle 23: 来源：采购合同、供应商信息、合同变更信息
+去向：任务分配管理、监造验收、监造放行、质量追溯
+先后关系：先建合同和物资台账，再做任务分配。
+
+===== slide 6 =====
+[2] TextBox 2: 03 任务分配管理
+[3] TextBox 3: 核心模块流程与职责。
+[4] Rounded Rectangle 4: 6
+[5] Rounded Rectangle 6: 基础建模阶段
+[6] Rounded Rectangle 7: 步骤1
+创建项目并配置属性
+[8] Rounded Rectangle 9: 步骤2
+编制任务并绑定采购包/供应商
+[10] Rounded Rectangle 11: 步骤3
+项目负责人指定监理人员
+[12] Rounded Rectangle 13: 步骤4
+审批通过后自动下放文件权限
+[14] Rounded Rectangle 15: 步骤5
+人员变更时走交接并自动流转权限
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本页保留流程、功能按钮、参与角色和上下游关系，详细规则按实施阶段需求确认。
+[17] Rounded Rectangle 18: 功能按钮
+[18] Rounded Rectangle 19: 按钮：新建项目 / 分配任务 / 提交审批 / 发起变更 / 交接确认
+[19] Rounded Rectangle 20: 参与角色
+[20] Rounded Rectangle 21: 角色：监造管理部门、项目负责人/采购员、监造工程师、审查人/总监
+[21] Rounded Rectangle 22: 模块关系 / 触发来源 / 输出去向
+[22] Rounded Rectangle 23: 来源：项目立项信息、合同物资台账、采购包与供应商信息
+去向：策划管理、监造过程监督和执行、培训与考试
+先后关系：任务未审批通过，后续策划和现场执行不能合法启动。
+
+===== slide 7 =====
+[2] TextBox 2: 04 策划管理
+[3] TextBox 3: 核心模块流程与职责。
+[4] Rounded Rectangle 4: 7
+[5] Rounded Rectangle 6: 执行准备阶段
+[6] Rounded Rectangle 7: 步骤1
+校验任务状态为“待策划”
+[8] Rounded Rectangle 9: 步骤2
+绑定归属采购包
+[10] Rounded Rectangle 11: 步骤3
+按封面/主体/检试验计划编制
+[12] Rounded Rectangle 13: 步骤4
+项目负责人初审+管理部门终审
+[14] Rounded Rectangle 15: 步骤5
+升版迭代并归档历史版本
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本页保留流程、功能按钮、参与角色和上下游关系，详细规则按实施阶段需求确认。
+[17] Rounded Rectangle 18: 功能按钮
+[18] Rounded Rectangle 19: 按钮：新建策划 / 保存草稿 / 提交审批 / 升版 / 查看历史版本
+[19] Rounded Rectangle 20: 参与角色
+[20] Rounded Rectangle 21: 角色：监造工程师、审查人/总监、监造管理部门
+[21] Rounded Rectangle 22: 模块关系 / 触发来源 / 输出去向
+[22] Rounded Rectangle 23: 来源：已审批监造任务、采购包资料、体系文件标准库
+去向：供方文件审核、质量计划标准建立、电子签名
+先后关系：策划未生效，后续供方审核和质控点确认口径不完整。
+
+===== slide 8 =====
+[2] TextBox 2: 05 供方文件审核
+[3] TextBox 3: 核心模块流程与职责。
+[4] Rounded Rectangle 4: 8
+[5] Rounded Rectangle 6: 执行准备阶段
+[6] Rounded Rectangle 7: 步骤1
+供应商选择采购包提交文件
+[8] Rounded Rectangle 9: 步骤2
+系统绑定任务/采购包/供方信息
+[10] Rounded Rectangle 11: 步骤3
+监理在线审查并填写意见
+[12] Rounded Rectangle 13: 步骤4
+驳回补正或提交审批
+[14] Rounded Rectangle 15: 步骤5
+版本留存并衔接质量计划确认
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本页保留流程、功能按钮、参与角色和上下游关系，详细规则按实施阶段需求确认。
+[17] Rounded Rectangle 18: 功能按钮
+[18] Rounded Rectangle 19: 按钮：上传资料 / 填写意见 / 提交审批 / 退回补正 / 查看版本
+[19] Rounded Rectangle 20: 参与角色
+[20] Rounded Rectangle 21: 角色：供应商/制造厂、监造工程师、审查人/总监、监造管理部门
+[21] Rounded Rectangle 22: 模块关系 / 触发来源 / 输出去向
+[22] Rounded Rectangle 23: 来源：供应商质量计划文件、资质材料、采购包附件、技术标准
+去向：质量计划标准建立、图文识别信息抓取、二期防造假管理
+先后关系：先把供方资料审核受控，再让质量计划正式生效。
+
+===== slide 9 =====
+[2] TextBox 2: 06 质量计划标准建立
+[3] TextBox 3: 核心模块流程与职责。
+[4] Rounded Rectangle 4: 9
+[5] Rounded Rectangle 6: 执行准备阶段
+[6] Rounded Rectangle 7: 步骤1
+供应商创建母/子/分计划
+[8] Rounded Rectangle 9: 步骤2
+标注 W/R/H 质控点
+[10] Rounded Rectangle 11: 步骤3
+监理+监造双线审批并签章
+[12] Rounded Rectangle 13: 步骤4
+系统按工序生成见证点清单
+[14] Rounded Rectangle 15: 步骤5
+生效后按版本持续维护
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本页保留流程、功能按钮、参与角色和上下游关系，详细规则按实施阶段需求确认。
+[17] Rounded Rectangle 18: 功能按钮
+[18] Rounded Rectangle 19: 按钮：新建计划 / 标注质控点 / 提交审批 / 生成清单 / 升版
+[19] Rounded Rectangle 20: 参与角色
+[20] Rounded Rectangle 21: 角色：供应商/制造厂、监造工程师、监造管理部门、审查人/总监
+[21] Rounded Rectangle 22: 模块关系 / 触发来源 / 输出去向
+[22] Rounded Rectangle 23: 来源：供方文件审核结果、体系文件标准库、采购包及物资工序信息
+去向：监造过程监督和执行、监造验收、监造记录
+先后关系：质控点未生效，后续见证、专项监督和验收依据都不成立。
+
+===== slide 10 =====
+[2] TextBox 2: 07 监造过程监督和执行
+[3] TextBox 3: 核心模块流程与职责。
+[4] Rounded Rectangle 4: 10
+[5] Rounded Rectangle 6: 监督执行阶段
+[6] Rounded Rectangle 7: 步骤1
+选择执行中的监造任务
+[8] Rounded Rectangle 9: 步骤2
+按日填报日常监督日志
+[10] Rounded Rectangle 11: 步骤3
+按质量计划发起专项监督/见证
+[12] Rounded Rectangle 13: 步骤4
+2 天内回传佐证材料
+[14] Rounded Rectangle 15: 步骤5
+异常项联动质量问题和统计
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本页保留流程、功能按钮、参与角色和上下游关系，详细规则按实施阶段需求确认。
+[17] Rounded Rectangle 18: 功能按钮
+[18] Rounded Rectangle 19: 按钮：填报日志 / 发起监督 / 上传附件 / 提交记录 / 更新进度
+[19] Rounded Rectangle 20: 参与角色
+[20] Rounded Rectangle 21: 角色：监造工程师、供应商/制造厂、监造管理部门
+[21] Rounded Rectangle 22: 模块关系 / 触发来源 / 输出去向
+[22] Rounded Rectangle 23: 来源：已生效监造任务、质量计划、W/R/H 见证点、现场生产数据
+去向：监造巡查管理、监造质量问题处理、抽查复验管理、监造记录
+先后关系：这是主生产区，后续巡查、问题、抽查和记录都从这里持续取数或被这里触发。
+
+===== slide 11 =====
+[2] TextBox 2: 08 监造巡查管理
+[3] TextBox 3: 核心模块流程与职责。
+[4] Rounded Rectangle 4: 11
+[5] Rounded Rectangle 6: 监督执行阶段
+[6] Rounded Rectangle 7: 步骤1
+依据任务创建或变更巡查计划
+[8] Rounded Rectangle 9: 步骤2
+逐级审批后实施巡查
+[10] Rounded Rectangle 11: 步骤3
+巡查结束自动生成报告
+[12] Rounded Rectangle 13: 步骤4
+生成行动项并判定是否质量问题
+[14] Rounded Rectangle 15: 步骤5
+全部关闭后本次巡查办结
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本页保留流程、功能按钮、参与角色和上下游关系，详细规则按实施阶段需求确认。
+[17] Rounded Rectangle 18: 功能按钮
+[18] Rounded Rectangle 19: 按钮：新建巡查 / 提交审批 / 生成报告 / 分派行动项 / 关闭
+[19] Rounded Rectangle 20: 参与角色
+[20] Rounded Rectangle 21: 角色：监造工程师、监造管理部门、供应商/制造厂、审查人/总监
+[21] Rounded Rectangle 22: 模块关系 / 触发来源 / 输出去向
+[22] Rounded Rectangle 23: 来源：执行中的监造任务、现场巡查安排、监督记录
+去向：监造质量问题处理、监造记录、风险预警
+先后关系：巡查是监督执行的重要支路，行动项可直接回流到问题闭环和风险预警。
+
+===== slide 12 =====
+[2] TextBox 2: 09 监造质量问题处理
+[3] TextBox 3: 核心模块流程与职责。
+[4] Rounded Rectangle 4: 12
+[5] Rounded Rectangle 6: 监督执行阶段
+[6] Rounded Rectangle 7: 步骤1
+从业务记录页快捷建单或手动建单
+[8] Rounded Rectangle 9: 步骤2
+按单据类型进入审批流
+[10] Rounded Rectangle 11: 步骤3
+系统推送供应商整改并要求回传佐证
+[12] Rounded Rectangle 13: 步骤4
+监造复核合格/不合格
+[14] Rounded Rectangle 15: 步骤5
+单据和源业务记录同步关闭或退回重整
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本页保留流程、功能按钮、参与角色和上下游关系，详细规则按实施阶段需求确认。
+[17] Rounded Rectangle 18: 功能按钮
+[18] Rounded Rectangle 19: 按钮：快捷建单 / 提交审批 / 发送整改 / 复核 / 关闭
+[19] Rounded Rectangle 20: 参与角色
+[20] Rounded Rectangle 21: 角色：监造工程师、供应商/制造厂、审查人/总监、监造管理部门
+[21] Rounded Rectangle 22: 模块关系 / 触发来源 / 输出去向
+[22] Rounded Rectangle 23: 来源：巡视检查、专项监督、见证执行、监造验收、监造放行等业务记录
+去向：风险预警、监造记录、统计分析、质量追溯
+先后关系：该模块贯穿监督执行和交付收口阶段，接收多源问题并回写源业务。
+
+===== slide 13 =====
+[2] TextBox 2: 10 抽查复验管理
+[3] TextBox 3: 核心模块流程与职责。
+[4] Rounded Rectangle 4: 13
+[5] Rounded Rectangle 6: 监督执行阶段
+[6] Rounded Rectangle 7: 步骤1
+创建抽验任务并绑定任务/采购包/合同
+[8] Rounded Rectangle 9: 步骤2
+指定抽验物项、检查人员、时限
+[10] Rounded Rectangle 11: 步骤3
+在线录入检查细节和结果判定
+[12] Rounded Rectangle 13: 步骤4
+上传图片/文件并提出整改建议
+[14] Rounded Rectangle 15: 步骤5
+系统自动生成抽验复查台账
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本页保留流程、功能按钮、参与角色和上下游关系，详细规则按实施阶段需求确认。
+[17] Rounded Rectangle 18: 功能按钮
+[18] Rounded Rectangle 19: 按钮：新建抽验 / 录入结果 / 上传附件 / 提交建议 / 查看报表
+[19] Rounded Rectangle 20: 参与角色
+[20] Rounded Rectangle 21: 角色：监造工程师、项目负责人/采购员、供应商/制造厂
+[21] Rounded Rectangle 22: 模块关系 / 触发来源 / 输出去向
+[22] Rounded Rectangle 23: 来源：监造任务、物资采购包、合同基本信息、抽验要求
+去向：监造质量问题处理、统计分析、监造记录
+先后关系：抽查复验和巡查并列服务监督执行，结果既可能触发质量问题，也会进入统计报表。
+
+===== slide 14 =====
+[2] TextBox 2: 11 监造记录（日 / 周 / 月报）
+[3] TextBox 3: 核心模块流程与职责。
+[4] Rounded Rectangle 4: 14
+[5] Rounded Rectangle 6: 监督执行阶段
+[6] Rounded Rectangle 7: 步骤1
+按任务/采购包创建日报周报月报
+[8] Rounded Rectangle 9: 步骤2
+自动抓取日志/专项监督/问题/行动项
+[10] Rounded Rectangle 11: 步骤3
+监理编辑补充照片与说明
+[12] Rounded Rectangle 13: 步骤4
+监理编制-负责人审核-管理部门审核
+[14] Rounded Rectangle 15: 步骤5
+批准后固化电子档案
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本页保留流程、功能按钮、参与角色和上下游关系，详细规则按实施阶段需求确认。
+[17] Rounded Rectangle 18: 功能按钮
+[18] Rounded Rectangle 19: 按钮：新建日报 / 自动汇总 / 提交审批 / 打印 / 归档
+[19] Rounded Rectangle 20: 参与角色
+[20] Rounded Rectangle 21: 角色：监造工程师、审查人/总监、监造管理部门
+[21] Rounded Rectangle 22: 模块关系 / 触发来源 / 输出去向
+[22] Rounded Rectangle 23: 来源：日志、专项监督、质量问题、巡查行动项、抽验结果
+去向：监造完工管理、统计分析、可视化管理
+先后关系：该模块负责把执行阶段分散数据汇总成正式报告和电子档案。
+
+===== slide 15 =====
+[2] TextBox 2: 12 监造完工管理
+[3] TextBox 3: 核心模块流程与职责。
+[4] Rounded Rectangle 4: 15
+[5] Rounded Rectangle 6: 交付收口阶段
+[6] Rounded Rectangle 7: 步骤1
+质量计划完成后发起完工总结
+[8] Rounded Rectangle 9: 步骤2
+系统自动关联合同并汇总全生命周期数据
+[10] Rounded Rectangle 11: 步骤3
+监理编辑补充修正初稿
+[12] Rounded Rectangle 13: 步骤4
+提交负责人和管理部门审查
+[14] Rounded Rectangle 15: 步骤5
+批准后自动生成完工报告
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本页保留流程、功能按钮、参与角色和上下游关系，详细规则按实施阶段需求确认。
+[17] Rounded Rectangle 18: 功能按钮
+[18] Rounded Rectangle 19: 按钮：发起总结 / 编辑初稿 / 提交审查 / 生成报告 / 归档
+[19] Rounded Rectangle 20: 参与角色
+[20] Rounded Rectangle 21: 角色：监造工程师、审查人/总监、监造管理部门
+[21] Rounded Rectangle 22: 模块关系 / 触发来源 / 输出去向
+[22] Rounded Rectangle 23: 来源：监造记录、见证点执行、质量问题、抽查复验、验收准备数据
+去向：监造验收、可视化管理、质量追溯
+先后关系：先形成正式总结和报告，再组织预验收和放行判断。
+
+===== slide 16 =====
+[2] TextBox 2: 13 监造验收
+[3] TextBox 3: 核心模块流程与职责。
+[4] Rounded Rectangle 4: 16
+[5] Rounded Rectangle 6: 交付收口阶段
+[6] Rounded Rectangle 7: 步骤1
+创建预验收遗留项
+[8] Rounded Rectangle 9: 步骤2
+跟踪整改进度并上传佐证
+[10] Rounded Rectangle 11: 步骤3
+遗留项关闭后组织正式验收
+[12] Rounded Rectangle 13: 步骤4
+监造人员创建质量放行单并走审核
+[14] Rounded Rectangle 15: 步骤5
+系统统计一次合格率和验收结果
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本页保留流程、功能按钮、参与角色和上下游关系，详细规则按实施阶段需求确认。
+[17] Rounded Rectangle 18: 功能按钮
+[18] Rounded Rectangle 19: 按钮：新建遗留项 / 提交关闭 / 发起验收 / 上传附件 / 查看统计
+[19] Rounded Rectangle 20: 参与角色
+[20] Rounded Rectangle 21: 角色：监造工程师、供应商/制造厂、监造管理部门、审查人/总监
+[21] Rounded Rectangle 22: 模块关系 / 触发来源 / 输出去向
+[22] Rounded Rectangle 23: 来源：完工总结、质量计划执行结果、遗留问题整改信息
+去向：监造放行、质量追溯、统计分析
+先后关系：验收先关遗留项，再形成放行依据；结果还要反哺统计与追溯。
+
+===== slide 17 =====
+[2] TextBox 2: 14 监造放行
+[3] TextBox 3: 核心模块流程与职责。
+[4] Rounded Rectangle 4: 17
+[5] Rounded Rectangle 6: 交付收口阶段
+[6] Rounded Rectangle 7: 步骤1
+供应商提交放行申请
+[8] Rounded Rectangle 9: 步骤2
+系统自动生成申请单号并推送待办
+[10] Rounded Rectangle 11: 步骤3
+监造查看申请和附件并审查
+[12] Rounded Rectangle 13: 步骤4
+编制放行单并提交审批
+[14] Rounded Rectangle 15: 步骤5
+审批通过后通知供应商发货
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本页保留流程、功能按钮、参与角色和上下游关系，详细规则按实施阶段需求确认。
+[17] Rounded Rectangle 18: 功能按钮
+[18] Rounded Rectangle 19: 按钮：发起放行 / 上传佐证 / 编制放行单 / 提交审批 / 通知发货
+[19] Rounded Rectangle 20: 参与角色
+[20] Rounded Rectangle 21: 角色：供应商/制造厂、监造工程师、审查人/总监
+[21] Rounded Rectangle 22: 模块关系 / 触发来源 / 输出去向
+[22] Rounded Rectangle 23: 来源：供应商放行申请、监造验收结果、质量放行单
+去向：质量追溯、付款台账
+先后关系：这是交付收口阶段的最终业务动作之一，审批通过后影响追溯与经营。
+
+===== slide 18 =====
+[2] TextBox 2: 15 质量追溯
+[3] TextBox 3: 核心模块流程与职责。
+[4] Rounded Rectangle 4: 18
+[5] Rounded Rectangle 6: 交付收口阶段
+[6] Rounded Rectangle 7: 步骤1
+输入采购物项编号或模糊条件
+[8] Rounded Rectangle 9: 步骤2
+聚合合同/供应商/问题/验收/放行数据
+[10] Rounded Rectangle 11: 步骤3
+按时间轴展示全流程节点
+[12] Rounded Rectangle 13: 步骤4
+打开关联文件与问题记录
+[14] Rounded Rectangle 15: 步骤5
+导出追溯结果用于复盘或追责
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本页保留流程、功能按钮、参与角色和上下游关系，详细规则按实施阶段需求确认。
+[17] Rounded Rectangle 18: 功能按钮
+[18] Rounded Rectangle 19: 按钮：联查 / 查看节点 / 下载文件 / 导出追溯结果 / 回溯定位
+[19] Rounded Rectangle 20: 参与角色
+[20] Rounded Rectangle 21: 角色：监造工程师、监造管理部门、项目负责人/采购员
+[21] Rounded Rectangle 22: 模块关系 / 触发来源 / 输出去向
+[22] Rounded Rectangle 23: 来源：合同物资台账、质量问题、监造验收、监造放行、监造记录
+去向：统计分析、可视化管理、甲方追责与复盘
+先后关系：主链最终收口模块，前面所有业务数据只有形成追溯闭环，系统价值才完整。
+
+===== slide 19 =====
+[2] TextBox 2: S01 数据统计及质量趋势分析
+[3] TextBox 3: 支撑模块挂载到主链关键节点。
+[4] Rounded Rectangle 4: 19
+[5] Rounded Rectangle 6: 管理支撑阶段
+[6] Rounded Rectangle 7: 步骤1
+汇总执行数据
+[8] Rounded Rectangle 9: 步骤2
+按维度分类统计
+[10] Rounded Rectangle 11: 步骤3
+生成趋势图/对比图
+[12] Rounded Rectangle 13: 步骤4
+点击图表下钻明细
+[14] Rounded Rectangle 15: 步骤5
+导出分析报表
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本模块按一期范围挂载到对应业务节点，详细配置在实施阶段确认。
+[17] Rounded Rectangle 18: 挂载节点 / 触发 / 按钮 / 输出
+[18] Rounded Rectangle 19: 挂载节点：监造记录、抽查复验管理、监造质量问题处理、质量追溯
+触发时机：日报汇总后、问题闭环后、抽验完成后
+功能按钮：查看统计图 / 切换维度 / 导出报表
+输出结果：趋势图、合同质量分析报表
+参与角色：监造管理部门、监造工程师、项目负责人/采购员
+
+===== slide 20 =====
+[2] TextBox 2: S02 产品进度跟踪及风险预警
+[3] TextBox 3: 支撑模块挂载到主链关键节点。
+[4] Rounded Rectangle 4: 20
+[5] Rounded Rectangle 6: 管理支撑阶段
+[6] Rounded Rectangle 7: 步骤1
+归集质量相关数据
+[8] Rounded Rectangle 9: 步骤2
+配置预警阈值
+[10] Rounded Rectangle 11: 步骤3
+自动或手动触发预警
+[12] Rounded Rectangle 13: 步骤4
+首页弹窗展示
+[14] Rounded Rectangle 15: 步骤5
+问题关闭后解除预警
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本模块按一期范围挂载到对应业务节点，详细配置在实施阶段确认。
+[17] Rounded Rectangle 18: 挂载节点 / 触发 / 按钮 / 输出
+[18] Rounded Rectangle 19: 挂载节点：监造过程监督和执行、监造质量问题处理、监造验收
+触发时机：计划超时、整改超期、关键节点异常
+功能按钮：查看预警 / 解除预警 / 预警配置
+输出结果：风险预警清单、闭环记录
+参与角色：监造管理部门、监造工程师、项目负责人/采购员
+
+===== slide 21 =====
+[2] TextBox 2: S04 可视化管理
+[3] TextBox 3: 支撑模块挂载到主链关键节点。
+[4] Rounded Rectangle 4: 21
+[5] Rounded Rectangle 6: 管理支撑阶段
+[6] Rounded Rectangle 7: 步骤1
+汇总 KPI 指标
+[8] Rounded Rectangle 9: 步骤2
+生成总览卡片
+[10] Rounded Rectangle 11: 步骤3
+按供应商/委托方切换维度
+[12] Rounded Rectangle 13: 步骤4
+钻取到清单页
+[14] Rounded Rectangle 15: 步骤5
+查看异常预警汇总
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本模块按一期范围挂载到对应业务节点，详细配置在实施阶段确认。
+[17] Rounded Rectangle 18: 挂载节点 / 触发 / 按钮 / 输出
+[18] Rounded Rectangle 19: 挂载节点：监造记录、质量问题、见证点、验收放行
+触发时机：首页查看、领导汇报、阶段总结
+功能按钮：查看总览 / 钻取清单 / 切换维度
+输出结果：KPI 总览、异常概览
+参与角色：监造管理部门、监造工程师、项目负责人/采购员
+
+===== slide 22 =====
+[2] TextBox 2: S05 日常工作量化管理
+[3] TextBox 3: 支撑模块挂载到主链关键节点。
+[4] Rounded Rectangle 4: 22
+[5] Rounded Rectangle 6: 管理支撑阶段
+[6] Rounded Rectangle 7: 步骤1
+定义工作项与基准工日
+[8] Rounded Rectangle 9: 步骤2
+任务完成后自动计入工日
+[10] Rounded Rectangle 11: 步骤3
+支持手工补录临时工作
+[12] Rounded Rectangle 13: 步骤4
+异常数据提醒并审核
+[14] Rounded Rectangle 15: 步骤5
+按人/时间/合同统计工日
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本模块按一期范围挂载到对应业务节点，详细配置在实施阶段确认。
+[17] Rounded Rectangle 18: 挂载节点 / 触发 / 按钮 / 输出
+[18] Rounded Rectangle 19: 挂载节点：监造过程监督和执行、抽查复验管理、监造记录、监造验收
+触发时机：提交监督记录后、手工补录时
+功能按钮：录入工日 / 提交审核 / 查看统计
+输出结果：个人/团队工日台账
+参与角色：监造管理部门、监造工程师
+
+===== slide 23 =====
+[2] TextBox 2: S06 产品二维码
+[3] TextBox 3: 支撑模块挂载到主链关键节点。
+[4] Rounded Rectangle 4: 23
+[5] Rounded Rectangle 6: 管理支撑阶段
+[6] Rounded Rectangle 7: 步骤1
+抓取合同包核心数据
+[8] Rounded Rectangle 9: 步骤2
+审批通过后生成二维码
+[10] Rounded Rectangle 11: 步骤3
+信息变更时生成新版本
+[12] Rounded Rectangle 13: 步骤4
+旧码扫码提示失效
+[14] Rounded Rectangle 15: 步骤5
+按规则下载二维码
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本模块按一期范围挂载到对应业务节点，详细配置在实施阶段确认。
+[17] Rounded Rectangle 18: 挂载节点 / 触发 / 按钮 / 输出
+[18] Rounded Rectangle 19: 挂载节点：物资采购管理、质量追溯、监造验收
+触发时机：审批通过后、版本更新后
+功能按钮：生成二维码 / 下载 / 查看版本
+输出结果：二维码图片、版本记录
+参与角色：监造管理部门、监造工程师、项目负责人/采购员
+
+===== slide 24 =====
+[2] TextBox 2: S07 电子签名
+[3] TextBox 3: 支撑模块挂载到主链关键节点。
+[4] Rounded Rectangle 4: 24
+[5] Rounded Rectangle 6: 管理支撑阶段
+[6] Rounded Rectangle 7: 步骤1
+个人中心上传电子签名
+[8] Rounded Rectangle 9: 步骤2
+审批节点调用签名
+[10] Rounded Rectangle 11: 步骤3
+完成签章确认
+[12] Rounded Rectangle 13: 步骤4
+记录签章人和时间
+[14] Rounded Rectangle 15: 步骤5
+供后续审计追溯
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本模块按一期范围挂载到对应业务节点，详细配置在实施阶段确认。
+[17] Rounded Rectangle 18: 挂载节点 / 触发 / 按钮 / 输出
+[18] Rounded Rectangle 19: 挂载节点：策划管理、供方文件审核、质量计划标准建立、监造放行
+触发时机：审批提交时、签章确认时
+功能按钮：上传签名 / 签章确认 / 查看签名
+输出结果：电子签章记录
+参与角色：监造工程师、审查人/总监、监造管理部门
+
+===== slide 25 =====
+[2] TextBox 2: S08 图文识别信息抓取
+[3] TextBox 3: 支撑模块挂载到主链关键节点。
+[4] Rounded Rectangle 4: 25
+[5] Rounded Rectangle 6: 管理支撑阶段
+[6] Rounded Rectangle 7: 步骤1
+建立质量标准管理库
+[8] Rounded Rectangle 9: 步骤2
+上传 PDF/图片文件
+[10] Rounded Rectangle 11: 步骤3
+按模板抽取关键字段
+[12] Rounded Rectangle 13: 步骤4
+与标准库数据比对
+[14] Rounded Rectangle 15: 步骤5
+页面提示异常值
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本模块按一期范围挂载到对应业务节点，详细配置在实施阶段确认。
+[17] Rounded Rectangle 18: 挂载节点 / 触发 / 按钮 / 输出
+[18] Rounded Rectangle 19: 挂载节点：供方文件审核、质量计划标准建立
+触发时机：上传证明文件时、上传检测报告时
+功能按钮：发起识别 / 查看字段 / 查看比对
+输出结果：OCR 结果、字段比对结果
+参与角色：监造工程师、监造管理部门
+
+===== slide 26 =====
+[2] TextBox 2: S09 视频远程识别
+[3] TextBox 3: 支撑模块挂载到主链关键节点。
+[4] Rounded Rectangle 4: 26
+[5] Rounded Rectangle 6: 管理支撑阶段
+[6] Rounded Rectangle 7: 步骤1
+接入视频采集工具
+[8] Rounded Rectangle 9: 步骤2
+实时视频监控
+[10] Rounded Rectangle 11: 步骤3
+现场语音对讲
+[12] Rounded Rectangle 13: 步骤4
+历史视频回放
+[14] Rounded Rectangle 15: 步骤5
+形成视频记录
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本模块按一期范围挂载到对应业务节点，详细配置在实施阶段确认。
+[17] Rounded Rectangle 18: 挂载节点 / 触发 / 按钮 / 输出
+[18] Rounded Rectangle 19: 挂载节点：监造过程监督和执行、监造巡查管理
+触发时机：现场监造、远程巡检、事后回看
+功能按钮：查看直播 / 语音对讲 / 回放
+输出结果：视频记录、远程监控能力
+参与角色：监造工程师、监造管理部门
+
+===== slide 27 =====
+[2] TextBox 2: S11 付款台账
+[3] TextBox 3: 支撑模块挂载到主链关键节点。
+[4] Rounded Rectangle 4: 27
+[5] Rounded Rectangle 6: 管理支撑阶段
+[6] Rounded Rectangle 7: 步骤1
+录入付款台账
+[8] Rounded Rectangle 9: 步骤2
+按角色控制数据范围
+[10] Rounded Rectangle 11: 步骤3
+按条件查询
+[12] Rounded Rectangle 13: 步骤4
+导入导出数据
+[14] Rounded Rectangle 15: 步骤5
+形成付款统计结果
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本模块按一期范围挂载到对应业务节点，详细配置在实施阶段确认。
+[17] Rounded Rectangle 18: 挂载节点 / 触发 / 按钮 / 输出
+[18] Rounded Rectangle 19: 挂载节点：物资采购管理、监造验收、监造放行
+触发时机：付款登记时、对账时、导入导出时
+功能按钮：导入 / 导出 / 查询 / 查看台账
+输出结果：付款台账、统计结果
+参与角色：项目负责人/采购员、监造管理部门
+
+===== slide 28 =====
+[2] TextBox 2: S12 培训与考试
+[3] TextBox 3: 支撑模块挂载到主链关键节点。
+[4] Rounded Rectangle 4: 28
+[5] Rounded Rectangle 6: 管理支撑阶段
+[6] Rounded Rectangle 7: 步骤1
+创建培训并上传资料
+[8] Rounded Rectangle 9: 步骤2
+记录学习进度和心得反馈
+[10] Rounded Rectangle 11: 步骤3
+创建考试并自动/人工阅卷
+[12] Rounded Rectangle 13: 步骤4
+通过后发放证书
+[14] Rounded Rectangle 15: 步骤5
+汇总培训与考试统计图表
+[15] Rounded Rectangle 16: 模块说明
+[16] Rounded Rectangle 17: 说明：本模块按一期范围挂载到对应业务节点，详细配置在实施阶段确认。
+[17] Rounded Rectangle 18: 挂载节点 / 触发 / 按钮 / 输出
+[18] Rounded Rectangle 19: 挂载节点：任务分配管理、可视化管理
+触发时机：培训开展时、考试组织时、证书发放时
+功能按钮：发布培训 / 参加考试 / 查看证书
+输出结果：培训记录、考试结果、证书
+参与角色：监造管理部门、监造工程师
+

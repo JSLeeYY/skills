@@ -1,0 +1,2 @@
+UUID=<NODE3_PART_UUID>  /filedata/node3  ext4  defaults,noatime,nodiratime  0 2
+/filedata/node3/mysql/mysql57_3603  /data/mysql57/data  none  bind  0 0

@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find \"D:\\\\DevelopmentLocation\\\\agent skill\\\\skills\\\\word_project\\\\2026\\\\2026-02-26\\\\O&M\" -type f)",
+      "Bash(ls -la \"D:\\\\DevelopmentLocation\\\\agent skill\\\\skills\\\\word_project\\\\2026\\\\2026-02-26\\\\O&M\")",
+      "mcp__thinking__sequentialthinking",
+      "Bash(wc -l \"D:\\\\DevelopmentLocation\\\\agent skill\\\\skills\\\\word_project\\\\2026\\\\2026-02-26\\\\O&M\\\\demo_project\\\\app.js\")",
+      "Bash(tail -50 \"D:\\\\DevelopmentLocation\\\\agent skill\\\\skills\\\\word_project\\\\2026\\\\2026-02-26\\\\O&M\\\\demo_project\\\\app.js\")",
+      "Bash(tail -20 \"D:\\\\DevelopmentLocation\\\\agent skill\\\\skills\\\\word_project\\\\2026\\\\2026-02-26\\\\O&M\\\\demo_project\\\\app.js\")",
+      "Bash(\"D:\\\\DevelopmentLocation\\\\agent skill\\\\skills\\\\word_project\\\\2026\\\\2026-02-26\\\\O&M\\\\需求确认签批\\\\20260312_执行管理_完整改动汇总.md\":*)",
+      "Bash(find \"D:\\\\DevelopmentLocation\\\\agent skill\\\\skills\\\\word_project\\\\2026\\\\2026-02-26\\\\O&M\\\\demo_project\" -name \"*.js\" -o -name \"*.html\")",
+      "Bash(xargs grep:*)",
+      "mcp__Playwright__browser_navigate",
+      "Bash(python -c \":*)",
+      "Bash(ls -la \"d:\\\\DevelopmentLocation\\\\agent skill\\\\skills\\\\word_project\\\\2026\\\\2026-02-26\\\\O&M\\\\demo_project/\")",
+      "Bash(grep -E \"\\\\.\\(js|html|css\\)$\")",
+      "Bash(tail -n 100 \"D:\\\\DevelopmentLocation\\\\agent skill\\\\skills\\\\word_project\\\\2026\\\\2026-02-26\\\\O&M\\\\demo_project\\\\index.html\")",
+      "Bash(wc -l \"d:\\\\DevelopmentLocation\\\\agent skill\\\\skills\\\\word_project\\\\2026\\\\2026-02-26\\\\O&M\\\\demo_project\\\\app2.js\")",
+      "Bash(tail -20 \"d:\\\\DevelopmentLocation\\\\agent skill\\\\skills\\\\word_project\\\\2026\\\\2026-02-26\\\\O&M\\\\demo_project\\\\app2.js\")"
+    ]
+  }
+}

@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全员作业状态可视化监控</title>
+    <!-- 天地图API -->
+    <script src="https://api.tianditu.gov.cn/api?v=4.0&tk=a432e332a73291da0b06966c426ff802"
+        type="text/javascript"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #6366f1;
+            --purple: #8b5cf6;
+            --cyan: #06b6d4;
+
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --bg-card-hover: #334155;
+            --border-color: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+
+            /* 打卡类型颜色 */
+            --color-supervise: #3b82f6;
+            /* 监理人员打卡 - 蓝色 */
+            --color-field: #10b981;
+            /* 外勤人员打卡 - 绿色 */
+            --color-office: #8b5cf6;
+            /* 本部人员打卡 - 紫色 */
+            --color-trip-pulse: #f59e0b;
+            /* 出差脉冲 - 琥珀色 */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* ========== 顶部导航 & 控制栏 ========== */
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: linear-gradient(135deg, rgba(15, 23, 42, .95), rgba(30, 41, 59, .95));
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .top-bar .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .top-bar .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary), var(--info));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .top-bar .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .top-bar .time-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .live-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse-live 1.5s infinite;
+            margin-right: 4px;
+        }
+
+        @keyframes pulse-live {
+
+            0%,
+            100% {
+                opacity: 1;
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, .6);
+            }
+
+            50% {
+                opacity: .8;
+                box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+            }
+        }
+
+        /* ========== 左侧统计面板 ========== */
+        .stats-panel {
+            position: fixed;
+            top: 70px;
+            left: 16px;
+            z-index: 900;
+            width: 280px;
+            max-height: calc(100vh - 360px);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: all .35s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        .stats-panel.collapsed {
+            width: 44px;
+            max-height: 44px;
+            overflow: hidden;
+            pointer-events: auto;
+        }
+
+        .stats-panel.collapsed .panel-card {
+            display: none;
+        }
+
+        /* 折叠/展开按钮 */
+        .panel-toggle-btn {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: rgba(30, 41, 59, .95);
+            backdrop-filter: blur(16px);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all .25s;
+            flex-shrink: 0;
+        }
+
+        .panel-toggle-btn:hover {
+            border-color: rgba(99, 102, 241, .4);
+            background: rgba(30, 41, 59, 1);
+        }
+
+        .panel-toggle-btn .toggle-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .panel-toggle-btn .toggle-icon {
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: transform .3s;
+        }
+
+        .stats-panel.collapsed .panel-toggle-btn {
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            justify-content: center;
+            border-radius: 10px;
+        }
+
+        .stats-panel.collapsed .panel-toggle-btn .toggle-label {
+            display: none;
+        }
+
+        .stats-panel.collapsed .panel-toggle-btn .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .stats-panel::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .stats-panel::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .stats-panel::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        .panel-card {
+            background: rgba(30, 41, 59, .92);
+            backdrop-filter: blur(16px);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all .3s ease;
+        }
+
+        .panel-card:hover {
+            border-color: rgba(99, 102, 241, .3);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, .3);
+        }
+
+        .panel-header {
+            padding: 10px 12px 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .panel-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: .3px;
+        }
+
+        /* 总览摘要卡 */
+        .overview-card {
+            padding: 10px 12px;
+        }
+
+        .overview-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .stat-item {
+            background: rgba(15, 23, 42, .6);
+            border-radius: 8px;
+            padding: 8px 4px;
+            text-align: center;
+            transition: all .25s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .stat-item:hover {
+            background: rgba(99, 102, 241, .1);
+            border-color: rgba(99, 102, 241, .3);
+            transform: translateY(-2px);
+        }
+
+        .stat-item.active {
+            background: rgba(99, 102, 241, .15);
+            border-color: var(--info);
+        }
+
+        .stat-number {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* 图例 */
+        .legend-section {
+            padding: 8px 12px;
+        }
+
+        .legend-items {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-top: 6px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all .2s;
+            border: 1px solid transparent;
+        }
+
+        .legend-item:hover {
+            background: rgba(255, 255, 255, .05);
+        }
+
+        .legend-item.active {
+            background: rgba(99, 102, 241, .12);
+            border-color: rgba(99, 102, 241, .4);
+        }
+
+        .legend-item.dimmed {
+            opacity: .35;
+        }
+
+        .legend-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .legend-dot.supervise {
+            background: var(--color-supervise);
+        }
+
+        .legend-dot.field {
+            background: var(--color-field);
+        }
+
+        .legend-dot.office {
+            background: var(--color-office);
+        }
+
+        .legend-dot.trip {
+            background: transparent;
+            border: 2px solid var(--color-trip-pulse);
+            position: relative;
+        }
+
+        .legend-dot.trip::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border: 2px solid var(--color-trip-pulse);
+            border-radius: 50%;
+            animation: trip-pulse 2s infinite;
+        }
+
+        @keyframes trip-pulse {
+            0% {
+                transform: scale(1);
+                opacity: .8;
+            }
+
+            100% {
+                transform: scale(1.8);
+                opacity: 0;
+            }
+        }
+
+        .legend-text {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .legend-count {
+            margin-left: auto;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* ===== 第一级：身份维度 ===== */
+        .identity-tabs {
+            padding: 4px 12px 8px;
+        }
+
+        .identity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .identity-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 7px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all .25s ease;
+            border: 1px solid transparent;
+            background: rgba(15, 23, 42, .5);
+        }
+
+        .identity-item:hover {
+            background: rgba(99, 102, 241, .1);
+        }
+
+        .identity-item.active {
+            background: linear-gradient(135deg, rgba(99, 102, 241, .15), rgba(99, 102, 241, .05));
+            border-color: var(--info);
+        }
+
+        .identity-name {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .identity-badge {
+            display: flex;
+            gap: 6px;
+        }
+
+        .badge {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .badge-total {
+            background: rgba(99, 102, 241, .2);
+            color: #a5b4fc;
+        }
+
+        .badge-checked {
+            background: rgba(16, 185, 129, .2);
+            color: #6ee7b7;
+        }
+
+        .badge-unchecked {
+            background: rgba(239, 68, 68, .2);
+            color: #fca5a5;
+        }
+
+        .badge-leave {
+            background: rgba(245, 158, 11, .2);
+            color: #fcd34d;
+        }
+
+        /* ===== 第二级：状态维度 ===== */
+        .status-detail {
+            padding: 0 12px 10px;
+        }
+
+        .status-bar {
+            display: flex;
+            height: 24px;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .status-bar-seg {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            color: white;
+            transition: width .6s ease;
+        }
+
+        .status-bar-seg.checked {
+            background: var(--success);
+        }
+
+        .status-bar-seg.unchecked {
+            background: var(--danger);
+        }
+
+        .status-bar-seg.leave {
+            background: var(--warning);
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+        }
+
+        .status-mini {
+            text-align: center;
+            padding: 6px 2px;
+            border-radius: 6px;
+            background: rgba(15, 23, 42, .5);
+            cursor: pointer;
+            transition: all .25s;
+            border: 1px solid transparent;
+        }
+
+        .status-mini:hover {
+            background: rgba(99, 102, 241, .1);
+        }
+
+        .status-mini.active {
+            background: rgba(99, 102, 241, .12);
+            border-color: var(--info);
+        }
+
+        .status-mini .num {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .status-mini .lbl {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* ========== 地图容器 ========== */
+        #mapContainer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+        }
+
+        /* ========== 右侧弹窗详情 ========== */
+        .detail-popup {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 900;
+            width: 340px;
+            background: rgba(30, 41, 59, .95);
+            backdrop-filter: blur(20px);
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            padding: 0;
+            display: none;
+            overflow: hidden;
+            animation: slideInRight .3s ease;
+        }
+
+        .detail-popup.show {
+            display: block;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .popup-header {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(135deg, rgba(99, 102, 241, .08), transparent);
+        }
+
+        .popup-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .popup-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-left: 12px;
+            flex: 1;
+        }
+
+        .popup-close {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            border: none;
+            background: rgba(255, 255, 255, .1);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all .2s;
+        }
+
+        .popup-close:hover {
+            background: rgba(239, 68, 68, .2);
+            color: var(--danger);
+        }
+
+        .popup-body {
+            padding: 16px 20px;
+        }
+
+        .popup-tags {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .popup-tag {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        .tag-supervise {
+            background: rgba(59, 130, 246, .2);
+            color: #93c5fd;
+        }
+
+        .tag-field {
+            background: rgba(16, 185, 129, .2);
+            color: #6ee7b7;
+        }
+
+        .tag-office {
+            background: rgba(139, 92, 246, .2);
+            color: #c4b5fd;
+        }
+
+        .tag-trip {
+            background: rgba(245, 158, 11, .2);
+            color: #fcd34d;
+        }
+
+        .popup-info-row {
+            display: flex;
+            align-items: flex-start;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, .04);
+        }
+
+        .popup-info-row:last-child {
+            border: none;
+        }
+
+        .popup-info-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            width: 80px;
+            flex-shrink: 0;
+        }
+
+        .popup-info-value {
+            font-size: 13px;
+            color: var(--text-primary);
+            flex: 1;
+        }
+
+        .flow-card {
+            margin-top: 10px;
+            padding: 12px;
+            background: rgba(245, 158, 11, .08);
+            border-radius: 10px;
+            border: 1px solid rgba(245, 158, 11, .2);
+        }
+
+        .flow-card-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #fcd34d;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ========== 底部人员列表 ========== */
+        .bottom-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 800;
+            background: rgba(15, 23, 42, .95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-color);
+            transition: height .4s cubic-bezier(.4, 0, .2, 1);
+            overflow: hidden;
+        }
+
+        .bottom-panel.collapsed {
+            height: 48px;
+        }
+
+        .bottom-panel.expanded {
+            height: 260px;
+        }
+
+        .bottom-panel.full {
+            height: calc(100vh - 70px);
+        }
+
+        .bottom-header {
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+
+        .bottom-header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .bottom-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .bottom-summary {
+            display: flex;
+            gap: 12px;
+        }
+
+        .summary-chip {
+            font-size: 12px;
+            padding: 3px 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .chip-total {
+            background: rgba(99, 102, 241, .15);
+            color: #a5b4fc;
+        }
+
+        .chip-checked {
+            background: rgba(16, 185, 129, .15);
+            color: #6ee7b7;
+        }
+
+        .chip-unchecked {
+            background: rgba(239, 68, 68, .15);
+            color: #fca5a5;
+        }
+
+        .chip-leave {
+            background: rgba(245, 158, 11, .15);
+            color: #fcd34d;
+        }
+
+        .bottom-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .ctrl-btn {
+            padding: 6px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .ctrl-btn:hover {
+            background: rgba(99, 102, 241, .1);
+            border-color: var(--info);
+            color: var(--text-primary);
+        }
+
+        .bottom-body {
+            overflow-y: auto;
+            height: calc(100% - 52px);
+        }
+
+        .bottom-body::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .bottom-body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .bottom-body::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        /* 表格 */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .data-table thead th {
+            position: sticky;
+            top: 0;
+            background: var(--bg-card);
+            padding: 10px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 12px;
+            border-bottom: 1px solid var(--border-color);
+            white-space: nowrap;
+        }
+
+        .data-table tbody tr {
+            transition: background .2s;
+            cursor: pointer;
+        }
+
+        .data-table tbody tr:hover {
+            background: rgba(99, 102, 241, .06);
+        }
+
+        .data-table tbody tr.row-highlight {
+            background: rgba(59, 130, 246, .18) !important;
+            outline: 1px solid rgba(59, 130, 246, .4);
+            outline-offset: -1px;
+        }
+
+        .data-table tbody tr.row-highlight td:first-child {
+            border-left: 3px solid var(--primary-light);
+        }
+
+        .data-table td {
+            padding: 10px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, .03);
+            white-space: nowrap;
+        }
+
+        .cell-name {
+            color: var(--primary-light);
+            font-weight: 500;
+        }
+
+        /* 状态标签 */
+        .status-tag {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .st-checked {
+            background: rgba(16, 185, 129, .15);
+            color: #6ee7b7;
+        }
+
+        .st-unchecked {
+            background: rgba(239, 68, 68, .15);
+            color: #fca5a5;
+        }
+
+        .st-leave {
+            background: rgba(245, 158, 11, .15);
+            color: #fcd34d;
+        }
+
+        .type-tag {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 500;
+        }
+
+        .tt-supervise {
+            background: rgba(59, 130, 246, .15);
+            color: #93c5fd;
+        }
+
+        .tt-field {
+            background: rgba(16, 185, 129, .15);
+            color: #6ee7b7;
+        }
+
+        .tt-office {
+            background: rgba(139, 92, 246, .15);
+            color: #c4b5fd;
+        }
+
+        .trip-badge {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 6px;
+            background: rgba(245, 158, 11, .15);
+            color: #fcd34d;
+            margin-left: 4px;
+        }
+
+        /* ========== 天地图 Marker 出差脉冲动画 ========== */
+        .marker-pulse-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 34px;
+            height: 34px;
+            margin-left: -17px;
+            margin-top: -17px;
+            border-radius: 50%;
+            border: 2px solid var(--color-trip-pulse);
+            animation: marker-pulse 2s ease-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes marker-pulse {
+            0% {
+                transform: scale(1);
+                opacity: .7;
+            }
+
+            100% {
+                transform: scale(2.5);
+                opacity: 0;
+            }
+        }
+
+        /* 隐藏天地图默认水印等 */
+        .tdt-label,
+        .tdt-attribution {
+            opacity: .3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ========== 顶部导航栏 ========== -->
+    <div class="top-bar">
+        <div class="logo">
+            <div class="logo-icon">📡</div>
+            <div class="logo-text">全员作业状态可视化监控</div>
+        </div>
+        <div class="time-info">
+            <span><span class="live-dot"></span>实时监控中</span>
+            <span id="currentTime">2026-03-03 16:32</span>
+        </div>
+    </div>
+
+    <!-- ========== 左侧统计面板 ========== -->
+    <div class="stats-panel" id="statsPanel">
+
+        <!-- 折叠/展开按钮 -->
+        <div class="panel-toggle-btn" onclick="toggleStatsPanel()">
+            <span class="toggle-label">📊 统计面板</span>
+            <span class="toggle-icon">◀</span>
+        </div>
+
+        <!-- 总览卡 -->
+        <div class="panel-card">
+            <div class="overview-card">
+                <div class="panel-title">📊 今日考勤总览</div>
+                <div class="overview-stats">
+                    <div class="stat-item" id="statTotal" onclick="filterByStatus('all')">
+                        <div class="stat-number" style="color: var(--info)" id="numTotal">186</div>
+                        <div class="stat-label">应打卡</div>
+                    </div>
+                    <div class="stat-item" id="statChecked" onclick="filterByStatus('checked')">
+                        <div class="stat-number" style="color: var(--success)" id="numChecked">152</div>
+                        <div class="stat-label">已打卡</div>
+                    </div>
+                    <div class="stat-item" id="statUnchecked" onclick="filterByStatus('unchecked')">
+                        <div class="stat-number" style="color: var(--danger)" id="numUnchecked">22</div>
+                        <div class="stat-label">未打卡</div>
+                    </div>
+                    <div class="stat-item" id="statLeave" onclick="filterByStatus('leave')">
+                        <div class="stat-number" style="color: var(--warning)" id="numLeave">12</div>
+                        <div class="stat-label">请假</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 标点图例 -->
+        <div class="panel-card">
+            <div class="legend-section">
+                <div class="panel-title">📍 标点图例</div>
+                <div class="legend-items">
+                    <div class="legend-item" id="legend-supervise" onclick="toggleLegendType('supervise')">
+                        <div class="legend-dot supervise"></div>
+                        <div class="legend-text">监理人员打卡（派单关联）</div>
+                        <div class="legend-count" id="countSupervise">89</div>
+                    </div>
+                    <div class="legend-item" id="legend-field" onclick="toggleLegendType('field')">
+                        <div class="legend-dot field"></div>
+                        <div class="legend-text">外勤打卡（非本部位置）</div>
+                        <div class="legend-count" id="countField">38</div>
+                    </div>
+                    <div class="legend-item" id="legend-office" onclick="toggleLegendType('office')">
+                        <div class="legend-dot office"></div>
+                        <div class="legend-text">本部打卡（南大苏富特）</div>
+                        <div class="legend-count" id="countOffice">25</div>
+                    </div>
+                    <div class="legend-item" id="legend-trip" onclick="toggleLegendType('trip')">
+                        <div class="legend-dot trip"></div>
+                        <div class="legend-text">出差标识（附属属性）</div>
+                        <div class="legend-count" id="countTrip">31</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第一级：身份维度 -->
+        <div class="panel-card">
+            <div class="panel-header">
+                <div class="panel-title">👥 身份维度 (第一级)</div>
+            </div>
+            <div class="identity-tabs">
+                <div class="identity-list" id="identityList">
+                    <!-- JS动态生成 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 第二级：状态维度 -->
+        <div class="panel-card">
+            <div class="panel-header">
+                <div class="panel-title">📈 状态维度 (第二级)</div>
+                <span id="level2Scope" style="font-size:11px;color:var(--info)">全部人员</span>
+            </div>
+            <div class="status-detail">
+                <div class="status-bar" id="statusBar">
+                    <!-- JS动态 -->
+                </div>
+                <div class="status-grid" id="statusGrid">
+                    <!-- JS动态 -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ========== 右侧弹窗 ========== -->
+    <div class="detail-popup" id="detailPopup">
+        <div class="popup-header">
+            <div style="display:flex;align-items:center">
+                <div class="popup-avatar" id="popupAvatar">张</div>
+                <div class="popup-name" id="popupName">张三</div>
+            </div>
+            <button class="popup-close" onclick="closePopup()">✕</button>
+        </div>
+        <div class="popup-body" id="popupBody">
+            <!-- JS动态 -->
+        </div>
+    </div>
+
+    <!-- ========== 地图 ========== -->
+    <div id="mapContainer"></div>
+
+    <!-- ========== 底部人员列表 ========== -->
+    <div class="bottom-panel expanded" id="bottomPanel">
+        <div class="bottom-header" onclick="toggleBottomPanel()">
+            <div class="bottom-header-left">
+                <div class="bottom-title">📋 人员明细列表</div>
+                <div class="bottom-summary" id="bottomSummary">
+                    <!-- JS动态 -->
+                </div>
+            </div>
+            <div class="bottom-controls">
+                <button class="ctrl-btn" onclick="event.stopPropagation();exportData()">📥 导出</button>
+                <button class="ctrl-btn" id="btnToggle" onclick="event.stopPropagation();toggleBottomPanel()">收起
+                    ▾</button>
+            </div>
+        </div>
+        <div class="bottom-body">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>姓名</th>
+                        <th>身份标签</th>
+                        <th>打卡类型</th>
+                        <th>打卡状态</th>
+                        <th>打卡时间</th>
+                        <th>出差状态</th>
+                        <th>省</th>
+                        <th>市</th>
+                        <th>区</th>
+                        <th>详细位置 / 派单任务</th>
+                        <th>打卡备注</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- JS动态 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // ===================== 模拟数据 =====================
+
+        const identityTypes = [
+            { id: 'all', name: '全部人员', should: 186, checked: 152, unchecked: 22, leave: 12 },
+            { id: 'formal', name: '正式员工', should: 72, checked: 65, unchecked: 4, leave: 3 },
+            { id: 'labor', name: '劳务人员', should: 58, checked: 45, unchecked: 10, leave: 3 },
+            { id: 'fangsheng', name: '方胜人员', should: 32, checked: 25, unchecked: 5, leave: 2 },
+            { id: 'techserv', name: '技术服务', should: 24, checked: 17, unchecked: 3, leave: 4 },
+        ];
+
+        const cities = [
+            { name: '南京', province: '江苏', city: '南京', lng: 118.796, lat: 32.060 },
+            { name: '苏州', province: '江苏', city: '苏州', lng: 120.619, lat: 31.299 },
+            { name: '无锡', province: '江苏', city: '无锡', lng: 120.312, lat: 31.491 },
+            { name: '常州', province: '江苏', city: '常州', lng: 119.974, lat: 31.811 },
+            { name: '上海', province: '上海', city: '上海', lng: 121.473, lat: 31.230 },
+            { name: '合肥', province: '安徽', city: '合肥', lng: 117.283, lat: 31.861 },
+            { name: '杭州', province: '浙江', city: '杭州', lng: 120.155, lat: 30.274 },
+            { name: '武汉', province: '湖北', city: '武汉', lng: 114.305, lat: 30.593 },
+            { name: '长沙', province: '湖南', city: '长沙', lng: 112.938, lat: 28.228 },
+            { name: '成都', province: '四川', city: '成都', lng: 104.066, lat: 30.573 },
+            { name: '重庆', province: '重庆', city: '重庆', lng: 106.551, lat: 29.563 },
+            { name: '广州', province: '广东', city: '广州', lng: 113.264, lat: 23.129 },
+            { name: '深圳', province: '广东', city: '深圳', lng: 114.057, lat: 22.543 },
+            { name: '北京', province: '北京', city: '北京', lng: 116.407, lat: 39.904 },
+            { name: '天津', province: '天津', city: '天津', lng: 117.190, lat: 39.125 },
+            { name: '西安', province: '陕西', city: '西安', lng: 108.940, lat: 34.341 },
+            { name: '济南', province: '山东', city: '济南', lng: 117.000, lat: 36.675 },
+            { name: '青岛', province: '山东', city: '青岛', lng: 120.383, lat: 36.067 },
+        ];
+
+        const familyNames = ['张', '李', '王', '刘', '陈', '杨', '赵', '黄', '周', '吴', '徐', '孙', '胡', '朱', '林', '马', '高', '郭', '何', '罗', '宋', '谢', '唐', '韩', '冯', '于', '董', '曹', '程', '邓', '蔡'];
+        const givenNames = ['伟', '芳', '敏', '静', '丽', '强', '磊', '洋', '勇', '军', '杰', '娟', '涛', '超', '秀英', '明', '亮', '桂英', '建', '华', '慧', '平', '文', '建中', '建国', '建军', '海', '志', '春', '永', '刚'];
+
+        const checkTypeList = ['supervise', 'field', 'office'];
+        const checkTypeNames = { supervise: '监理人员打卡', field: '外勤人员打卡', office: '本部人员打卡' };
+        const identityNames = { formal: '正式员工', labor: '劳务人员', fangsheng: '方胜人员', techserv: '技术服务' };
+        const statusList = ['checked', 'unchecked', 'leave'];
+        const statusNames = { checked: '已打卡', unchecked: '未打卡', leave: '请假' };
+
+        const factories = ['哈尔滨电气集团', '东方电气集团', '上海电气集团', '中国一重', '中国二重', '大连重工', '北方重工', '太原重工', '西安隆基', '金风科技', '远景能源', '明阳智能'];
+        const projects = ['中核田湾核电7号机组', '华能瑞金电厂二期', '国电泰州二期扩建', '神华国华锦能热电', '大唐南京电厂改造', '华电邹县电厂', '中广核阳江核电', '国能蚌埠发电厂', '华润海丰电厂', '三峡新能源风电', '中船重工配套项目', '国投钦州电力'];
+        const tripPurposes = ['参加项目技术交底会议', '进行设备出厂验收', '与业主方沟通项目进展', '参加质量专项检查', '进行新项目前期调研', '参加行业技术交流会', '设备故障紧急支援', '项目竣工验收'];
+        const fieldRemarks = ['外出采购检测设备', '陪同业主进行现场检查', '前往变压器制造厂巡检', '参加省公司安全培训', '前往项目部协调工作进度', '检查在建设备进展', '与供应商洽谈零部件采购', '在建设项目现场指导'];
+
+        function randomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+        function randomItem(arr) { return arr[randomInt(0, arr.length - 1)]; }
+        function randomName() { return randomItem(familyNames) + randomItem(givenNames) + (Math.random() > 0.6 ? randomItem(givenNames) : ''); }
+
+        // 南大苏富特本部坐标（南京）
+        const HQ_LOCATION = { name: '南大苏富特', province: '江苏', city: '南京', area: '栖霞区', lng: 118.914, lat: 32.108, address: '江苏省南京市栖霞区仙林大道163号南大苏富特科技创新园' };
+
+        // 生成完整人员列表
+        const allPersons = [];
+        const identityWeights = [
+            { id: 'formal', count: 72 },
+            { id: 'labor', count: 58 },
+            { id: 'fangsheng', count: 32 },
+            { id: 'techserv', count: 24 },
+        ];
+
+        let personId = 0;
+        identityWeights.forEach(iw => {
+            for (let i = 0; i < iw.count; i++) {
+                personId++;
+                const personStatus = Math.random() < 0.82 ? 'checked' : (Math.random() < 0.65 ? 'unchecked' : 'leave');
+                const checkinHour = randomInt(6, 9);
+                const checkinMin = randomInt(0, 59);
+
+                // 决定打卡类型：
+                // - 监理人员打卡（蓝色）：有派单关联，约30%
+                // - 本部人员打卡（紫色）：在南大苏富特，约25%
+                // - 外勤人员打卡（绿色）：不在南大苏富特的非监理，约45%
+                const typeRoll = Math.random();
+                let checkType, city, lng, lat, province, cityName, area, address, factory, project, remark;
+
+                if (typeRoll < 0.30) {
+                    // ========= 监理人员打卡（蓝色）=========
+                    checkType = 'supervise';
+                    city = randomItem(cities);
+                    lng = city.lng + (Math.random() - 0.5) * 0.3;
+                    lat = city.lat + (Math.random() - 0.5) * 0.3;
+                    province = city.province;
+                    cityName = city.city;
+                    area = randomItem(['鼓楼区', '建邺区', '秦淮区', '栖霞区', '江宁区', '浦口区', '开发区', '高新区', '经开区']);
+                    factory = randomItem(factories);
+                    project = randomItem(projects);
+                    remark = '';
+                    address = `${province}${cityName}${area}${randomItem(['工业路', '制造大道', '科技街'])}${randomInt(1, 200)}号 ${factory}`;
+
+                } else if (typeRoll < 0.55) {
+                    // ========= 本部人员打卡（紫色）=========
+                    // 固定在南大苏富特
+                    checkType = 'office';
+                    lng = HQ_LOCATION.lng + (Math.random() - 0.5) * 0.005; // 极小偏移模拟同一栋楼
+                    lat = HQ_LOCATION.lat + (Math.random() - 0.5) * 0.005;
+                    province = HQ_LOCATION.province;
+                    cityName = HQ_LOCATION.city;
+                    area = HQ_LOCATION.area;
+                    factory = '-';
+                    project = '本部办公';
+                    remark = '';
+                    address = HQ_LOCATION.address;
+
+                } else {
+                    // ========= 外勤人员打卡（绿色）=========
+                    // 不在南大苏富特的任何位置
+                    checkType = 'field';
+                    city = randomItem(cities);
+                    lng = city.lng + (Math.random() - 0.5) * 0.3;
+                    lat = city.lat + (Math.random() - 0.5) * 0.3;
+                    province = city.province;
+                    cityName = city.city;
+                    area = randomItem(['鼓楼区', '建邺区', '秦淮区', '江宁区', '浦口区', '雨花台区', '开发区', '高新区', '经开区']);
+                    factory = '-';
+                    project = randomItem(fieldRemarks);
+                    remark = randomItem(fieldRemarks);
+                    address = `${province}${cityName}${area}${randomItem(['XX路', 'YY大道', 'ZZ街道'])}${randomInt(1, 200)}号`;
+                }
+
+                // ========= 出差属性 =========
+                // 出差是附属属性：只有外勤和监理可以有，本部不会有出差
+                // 出差来自独立的出差申请表，打卡时关联
+                let hasTrip = false;
+                let tripPurpose = '';
+                if (checkType !== 'office' && personStatus === 'checked') {
+                    // 外勤和监理：约25%概率关联出差流程
+                    hasTrip = Math.random() < 0.25;
+                    tripPurpose = hasTrip ? randomItem(tripPurposes) : '';
+                }
+
+                allPersons.push({
+                    id: personId,
+                    name: randomName(),
+                    identity: iw.id,
+                    identityName: identityNames[iw.id],
+                    checkType: checkType,
+                    checkTypeName: checkTypeNames[checkType],
+                    status: personStatus,
+                    statusName: statusNames[personStatus],
+                    checkinTime: personStatus === 'checked' ? `${String(checkinHour).padStart(2, '0')}:${String(checkinMin).padStart(2, '0')}` : '-',
+                    hasTrip: hasTrip,
+                    tripPurpose: tripPurpose,
+                    province: province,
+                    city: cityName,
+                    area: area,
+                    lng: lng,
+                    lat: lat,
+                    factory: factory,
+                    project: project,
+                    remark: remark,
+                    address: address,
+                });
+            }
+        });
+
+        // ===================== 全局状态 =====================
+        let currentIdentity = 'all';  // 'all' 或具体身份id，支持多选
+        let selectedIdentities = new Set(); // 空集合表示全选
+        let currentStatus = 'all';
+        let selectedTypes = new Set(); // 空集合表示全选类型, 可选: supervise, field, office, trip
+        let map = null;
+        let markers = [];
+        let bottomState = 1; // 0:collapsed, 1:expanded, 2:full
+
+        // ===================== 初始化 =====================
+        window.onload = function () {
+            updateTime();
+            setInterval(updateTime, 30000);
+            renderIdentityList();
+            updateStatusDetail('all');
+            renderTable();
+            updateBottomSummary();
+            initMap();
+        };
+
+        function updateTime() {
+            const now = new Date();
+            const str = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+            document.getElementById('currentTime').textContent = str;
+        }
+
+        // ===================== 天地图 =====================
+        function initMap() {
+            const T = window.T;
+            if (!T) { console.error('天地图API未加载'); return; }
+
+            map = new T.Map('mapContainer');
+            map.centerAndZoom(new T.LngLat(116.5, 33.5), 5);
+            map.addControl(new T.Control.Zoom());
+
+            addMarkers();
+        }
+
+        function createSvgMarker(color, hasTrip) {
+            const T = window.T;
+
+            // Base SVG marker pin
+            let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="30" height="40" viewBox="0 0 30 40">
+    <defs>
+      <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:${color};stop-opacity:1"/>
+        <stop offset="100%" style="stop-color:${color};stop-opacity:0.7"/>
+      </linearGradient>
+    </defs>
+    <path d="M15 0C6.7 0 0 6.7 0 15c0 10 15 25 15 25s15-15 15-25C30 6.7 23.3 0 15 0z" fill="url(#g)" stroke="white" stroke-width="2"/>
+    <circle cx="15" cy="15" r="6" fill="white"/>`;
+
+            // 出差：增加圆环标识
+            if (hasTrip) {
+                svg += `<circle cx="15" cy="15" r="13" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="5 3" opacity="0.9"/>`;
+            }
+
+            svg += `</svg>`;
+
+            const iconUrl = `data:image/svg+xml,${encodeURIComponent(svg.trim())}`;
+            return new T.Icon({
+                iconUrl: iconUrl,
+                iconSize: new T.Point(30, 40),
+                iconAnchor: new T.Point(15, 40),
+            });
+        }
+
+        function addMarkers() {
+            const T = window.T;
+            if (!T || !map) return;
+
+            // 清除旧标记
+            markers.forEach(m => map.removeOverLay(m));
+            markers = [];
+
+            const filtered = getFilteredPersons().filter(p => p.status === 'checked');
+
+            filtered.forEach(person => {
+                const colorMap = {
+                    supervise: '#3b82f6',
+                    field: '#10b981',
+                    office: '#8b5cf6',
+                };
+                const color = colorMap[person.checkType] || '#3b82f6';
+                const icon = createSvgMarker(color, person.hasTrip);
+
+                const marker = new T.Marker(new T.LngLat(person.lng, person.lat), { icon: icon });
+
+                marker.addEventListener('click', function () {
+                    showPersonPopup(person);
+                });
+
+                map.addOverLay(marker);
+                markers.push(marker);
+            });
+
+            // 更新图例计数
+            const all = getFilteredPersons();
+            document.getElementById('countSupervise').textContent = all.filter(p => p.checkType === 'supervise' && p.status === 'checked').length;
+            document.getElementById('countField').textContent = all.filter(p => p.checkType === 'field' && p.status === 'checked').length;
+            document.getElementById('countOffice').textContent = all.filter(p => p.checkType === 'office' && p.status === 'checked').length;
+            document.getElementById('countTrip').textContent = all.filter(p => p.hasTrip && p.status === 'checked').length;
+        }
+
+        // ===================== 过滤逻辑 =====================
+        function getFilteredPersons() {
+            let list = [...allPersons];
+
+            // 身份维度多选过滤
+            if (selectedIdentities.size > 0) {
+                list = list.filter(p => selectedIdentities.has(p.identity));
+            }
+
+            // 状态维度过滤（单选）
+            if (currentStatus !== 'all') {
+                list = list.filter(p => p.status === currentStatus);
+            }
+
+            // 图例类型多选过滤
+            if (selectedTypes.size > 0) {
+                const hasTrip = selectedTypes.has('trip');
+                const checkTypes = new Set([...selectedTypes].filter(t => t !== 'trip'));
+                list = list.filter(p => {
+                    if (hasTrip && p.hasTrip) return true;
+                    if (checkTypes.size > 0 && checkTypes.has(p.checkType)) return true;
+                    return false;
+                });
+            }
+
+            return list;
+        }
+
+        function filterByIdentity(id) {
+            if (id === 'all') {
+                selectedIdentities.clear();
+            } else {
+                // 多选切换逻辑
+                if (selectedIdentities.has(id)) {
+                    selectedIdentities.delete(id);
+                } else {
+                    selectedIdentities.add(id);
+                }
+            }
+            currentIdentity = selectedIdentities.size === 0 ? 'all' : [...selectedIdentities][0];
+            currentStatus = 'all';
+
+            // 更新UI - 支持多选高亮
+            document.querySelectorAll('.identity-item').forEach(el => el.classList.remove('active'));
+            if (selectedIdentities.size === 0) {
+                document.getElementById('identity-all').classList.add('active');
+            } else {
+                selectedIdentities.forEach(sid => {
+                    const el = document.getElementById('identity-' + sid);
+                    if (el) el.classList.add('active');
+                });
+            }
+
+            const ident = identityTypes.find(i => i.id === currentIdentity);
+            document.getElementById('level2Scope').textContent = selectedIdentities.size === 0 ? '全部人员' : (selectedIdentities.size === 1 ? ident.name : `已选${selectedIdentities.size}类`);
+
+            updateOverviewNumbers();
+            updateStatusDetail(currentIdentity);
+            renderTable();
+            addMarkers();
+            updateBottomSummary();
+            clearStatusActive();
+        }
+
+        function filterByStatus(status) {
+            currentStatus = status === currentStatus ? 'all' : status;
+
+            // status-grid active state
+            document.querySelectorAll('.status-mini').forEach(el => el.classList.remove('active'));
+            if (currentStatus !== 'all') {
+                const el = document.getElementById('smini-' + currentStatus);
+                if (el) el.classList.add('active');
+            }
+
+            // overview active state
+            document.querySelectorAll('.stat-item').forEach(el => el.classList.remove('active'));
+            if (currentStatus !== 'all') {
+                const el = document.getElementById('stat' + currentStatus.charAt(0).toUpperCase() + currentStatus.slice(1));
+                if (el) el.classList.add('active');
+            }
+
+            renderTable();
+            addMarkers();
+            updateBottomSummary();
+        }
+
+        // ===== 图例多选切换 =====
+        function toggleLegendType(type) {
+            if (selectedTypes.has(type)) {
+                selectedTypes.delete(type);
+            } else {
+                selectedTypes.add(type);
+            }
+            updateLegendUI();
+            renderTable();
+            addMarkers();
+            updateBottomSummary();
+        }
+
+        function updateLegendUI() {
+            const types = ['supervise', 'field', 'office', 'trip'];
+            types.forEach(t => {
+                const el = document.getElementById('legend-' + t);
+                if (!el) return;
+                if (selectedTypes.size === 0) {
+                    // 无选中 = 全部展示，清除所有状态
+                    el.classList.remove('active', 'dimmed');
+                } else if (selectedTypes.has(t)) {
+                    el.classList.add('active');
+                    el.classList.remove('dimmed');
+                } else {
+                    el.classList.remove('active');
+                    el.classList.add('dimmed');
+                }
+            });
+        }
+
+        function clearStatusActive() {
+            document.querySelectorAll('.stat-item').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.status-mini').forEach(el => el.classList.remove('active'));
+        }
+
+        // ===================== 渲染身份列表 =====================
+        function renderIdentityList() {
+            const container = document.getElementById('identityList');
+            let html = '';
+            identityTypes.forEach(ident => {
+                const isActive = ident.id === currentIdentity ? 'active' : '';
+                html += `<div class="identity-item ${isActive}" id="identity-${ident.id}" onclick="filterByIdentity('${ident.id}')">
+      <div class="identity-name">${ident.name}</div>
+      <div class="identity-badge">
+        <span class="badge badge-total">${ident.should}</span>
+        <span class="badge badge-checked">${ident.checked}</span>
+        <span class="badge badge-unchecked">${ident.unchecked}</span>
+        <span class="badge badge-leave">${ident.leave}</span>
+      </div>
+    </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        // ===================== 更新总览数字 =====================
+        function updateOverviewNumbers() {
+            const ident = identityTypes.find(i => i.id === currentIdentity);
+            document.getElementById('numTotal').textContent = ident.should;
+            document.getElementById('numChecked').textContent = ident.checked;
+            document.getElementById('numUnchecked').textContent = ident.unchecked;
+            document.getElementById('numLeave').textContent = ident.leave;
+        }
+
+        // ===================== 更新第二级状态 =====================
+        function updateStatusDetail(identityId) {
+            const ident = identityTypes.find(i => i.id === identityId);
+            const total = ident.should;
+            const cp = Math.round(ident.checked / total * 100);
+            const up = Math.round(ident.unchecked / total * 100);
+            const lp = 100 - cp - up;
+
+            // Status bar
+            document.getElementById('statusBar').innerHTML = `
+    <div class="status-bar-seg checked" style="width:${cp}%">${cp}%</div>
+    <div class="status-bar-seg unchecked" style="width:${up}%">${up}%</div>
+    <div class="status-bar-seg leave" style="width:${lp}%">${lp}%</div>
+  `;
+
+            // Grid
+            document.getElementById('statusGrid').innerHTML = `
+    <div class="status-mini" id="smini-all" onclick="filterByStatus('all')">
+      <div class="num" style="color:var(--info)">${ident.should}</div>
+      <div class="lbl">应打卡</div>
+    </div>
+    <div class="status-mini" id="smini-checked" onclick="filterByStatus('checked')">
+      <div class="num" style="color:var(--success)">${ident.checked}</div>
+      <div class="lbl">已打卡</div>
+    </div>
+    <div class="status-mini" id="smini-unchecked" onclick="filterByStatus('unchecked')">
+      <div class="num" style="color:var(--danger)">${ident.unchecked}</div>
+      <div class="lbl">未打卡</div>
+    </div>
+    <div class="status-mini" id="smini-leave" onclick="filterByStatus('leave')">
+      <div class="num" style="color:var(--warning)">${ident.leave}</div>
+      <div class="lbl">请假</div>
+    </div>
+  `;
+        }
+
+        // ===================== 渲染底部表格 =====================
+        function renderTable() {
+            const filtered = getFilteredPersons();
+            const tbody = document.getElementById('tableBody');
+            let html = '';
+
+            filtered.forEach(p => {
+                const typeClass = p.checkType === 'supervise' ? 'tt-supervise' : (p.checkType === 'field' ? 'tt-field' : 'tt-office');
+                const statusClass = p.status === 'checked' ? 'st-checked' : (p.status === 'unchecked' ? 'st-unchecked' : 'st-leave');
+
+                html += `<tr id="row-${p.id}" onclick="showPersonPopup(allPersons[${p.id - 1}])">
+      <td><span class="cell-name">${p.name}</span></td>
+      <td>${p.identityName}</td>
+      <td><span class="type-tag ${typeClass}">${p.checkTypeName}</span></td>
+      <td><span class="status-tag ${statusClass}">${p.statusName}</span></td>
+      <td>${p.checkinTime}</td>
+      <td>${p.hasTrip ? '<span class="trip-badge">🚄 出差中</span>' : '-'}</td>
+      <td>${p.province}</td>
+      <td>${p.city}</td>
+      <td>${p.area}</td>
+      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis">${p.project}</td>
+      <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;color:var(--text-muted)">${p.remark || '-'}</td>
+    </tr>`;
+            });
+
+            tbody.innerHTML = html;
+        }
+
+        // ===================== 底部面板摘要 =====================
+        function updateBottomSummary() {
+            const filtered = getFilteredPersons();
+            const checkedCount = filtered.filter(p => p.status === 'checked').length;
+            const uncheckedCount = filtered.filter(p => p.status === 'unchecked').length;
+            const leaveCount = filtered.filter(p => p.status === 'leave').length;
+
+            document.getElementById('bottomSummary').innerHTML = `
+    <span class="summary-chip chip-total">合计 ${filtered.length} 人</span>
+    <span class="summary-chip chip-checked">已打卡 ${checkedCount}</span>
+    <span class="summary-chip chip-unchecked">未打卡 ${uncheckedCount}</span>
+    <span class="summary-chip chip-leave">请假 ${leaveCount}</span>
+  `;
+        }
+
+        // ===================== 底部面板切换 =====================
+        function toggleBottomPanel() {
+            bottomState = (bottomState + 1) % 3;
+            const panel = document.getElementById('bottomPanel');
+            const btn = document.getElementById('btnToggle');
+            panel.classList.remove('collapsed', 'expanded', 'full');
+
+            if (bottomState === 0) { panel.classList.add('collapsed'); btn.textContent = '展开 ▴'; }
+            else if (bottomState === 1) { panel.classList.add('expanded'); btn.textContent = '全屏 ▴'; }
+            else { panel.classList.add('full'); btn.textContent = '收起 ▾'; }
+        }
+
+        // ===================== 人员弹窗 =====================
+        function showPersonPopup(person) {
+            const popup = document.getElementById('detailPopup');
+            const avatarColors = { supervise: 'var(--color-supervise)', field: 'var(--color-field)', office: 'var(--color-office)' };
+
+            document.getElementById('popupAvatar').style.background = avatarColors[person.checkType] || 'var(--primary)';
+            document.getElementById('popupAvatar').textContent = person.name.charAt(0);
+            document.getElementById('popupName').textContent = person.name;
+
+            let tagsHtml = '';
+            const tagClassMap = { supervise: 'tag-supervise', field: 'tag-field', office: 'tag-office' };
+            tagsHtml += `<span class="popup-tag ${tagClassMap[person.checkType]}">${person.checkTypeName}</span>`;
+            tagsHtml += `<span class="popup-tag" style="background:rgba(255,255,255,.08);color:var(--text-secondary)">${person.identityName}</span>`;
+            if (person.hasTrip) {
+                tagsHtml += `<span class="popup-tag tag-trip">🚄 出差中</span>`;
+            }
+
+            let bodyHtml = `<div class="popup-tags">${tagsHtml}</div>`;
+
+            bodyHtml += `
+    <div class="popup-info-row"><div class="popup-info-label">打卡状态</div><div class="popup-info-value"><span class="status-tag ${person.status === 'checked' ? 'st-checked' : (person.status === 'unchecked' ? 'st-unchecked' : 'st-leave')}">${person.statusName}</span></div></div>
+    <div class="popup-info-row"><div class="popup-info-label">打卡时间</div><div class="popup-info-value">${person.checkinTime}</div></div>
+    <div class="popup-info-row"><div class="popup-info-label">当前位置</div><div class="popup-info-value">${person.address}</div></div>
+  `;
+
+            // 派单信息（监理人员）
+            if (person.checkType === 'supervise') {
+                bodyHtml += `
+      <div class="popup-info-row"><div class="popup-info-label">制造厂</div><div class="popup-info-value">${person.factory}</div></div>
+      <div class="popup-info-row"><div class="popup-info-label">派单任务</div><div class="popup-info-value">${person.project}</div></div>
+    `;
+            }
+
+            // 外勤备注（外勤人员）
+            if (person.checkType === 'field' && person.remark) {
+                bodyHtml += `
+      <div class="popup-info-row"><div class="popup-info-label">打卡备注</div><div class="popup-info-value" style="color:#6ee7b7">${person.remark}</div></div>
+    `;
+            }
+
+            // 出差流程关联（附属属性，从出差申请表关联）
+            // 只有外勤和监理可以有出差，本部不会有
+            if (person.hasTrip) {
+                const tripContext = person.checkType === 'supervise' ? '派单出差' : '外勤出差';
+                bodyHtml += `
+      <div class="flow-card">
+        <div class="flow-card-title">📋 关联出差流程（${tripContext}）</div>
+        <div class="popup-info-row"><div class="popup-info-label">数据来源</div><div class="popup-info-value" style="color:#94a3b8;font-size:11px">出差申请表 → 打卡记录关联</div></div>
+        <div class="popup-info-row"><div class="popup-info-label">出差事由</div><div class="popup-info-value">${person.tripPurpose}</div></div>
+        <div class="popup-info-row"><div class="popup-info-label">出差时间</div><div class="popup-info-value">2026-03-01 ~ 2026-03-05</div></div>
+        <div class="popup-info-row"><div class="popup-info-label">审批状态</div><div class="popup-info-value"><span class="status-tag st-checked">已审批</span></div></div>
+        <div class="popup-info-row"><div class="popup-info-label">申请内容</div><div class="popup-info-value" style="white-space:normal">${person.tripPurpose}，预计${randomInt(2, 7)}天，费用预算${randomInt(2000, 8000)}元</div></div>
+      </div>
+    `;
+            }
+
+            document.getElementById('popupBody').innerHTML = bodyHtml;
+            popup.classList.add('show');
+
+            // ===== 联动底部列表：高亮对应行并滚动到视图 =====
+            highlightTableRow(person.id);
+        }
+
+        function highlightTableRow(personId) {
+            // 清除之前的高亮
+            document.querySelectorAll('.data-table tbody tr.row-highlight').forEach(r => r.classList.remove('row-highlight'));
+
+            const row = document.getElementById('row-' + personId);
+            if (row) {
+                // 高亮行
+                row.classList.add('row-highlight');
+
+                // 确保底部面板展开
+                const panel = document.getElementById('bottomPanel');
+                if (panel.classList.contains('collapsed')) {
+                    bottomState = 1;
+                    panel.classList.remove('collapsed');
+                    panel.classList.add('expanded');
+                    document.getElementById('btnToggle').textContent = '全屏 ▴';
+                }
+
+                // 滚动到可视范围
+                setTimeout(() => {
+                    row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 200);
+            }
+        }
+
+        function closePopup() {
+            document.getElementById('detailPopup').classList.remove('show');
+        }
+
+        // ============ 左侧面板折叠/展开 ============
+        function toggleStatsPanel() {
+            const panel = document.getElementById('statsPanel');
+            panel.classList.toggle('collapsed');
+        }
+
+        function exportData() {
+            alert('导出功能：将当前筛选数据导出为 Excel 文件（演示模式）');
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>监造信息化系统甲方汇报页</title>
+  <style>
+    :root {
+      --bg: #06111f;
+      --bg-soft: #0b1728;
+      --panel: #0e2036;
+      --panel-2: #132a45;
+      --line: rgba(255, 255, 255, 0.1);
+      --text: #eef5ff;
+      --muted: #9eb1c7;
+      --accent: #53a8ff;
+      --accent-2: #63d2b1;
+      --accent-3: #ffc96b;
+      --danger: #ff8a8a;
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+      --radius: 20px;
+      --max: 1440px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(83, 168, 255, 0.15), transparent 25%),
+        radial-gradient(circle at left top, rgba(99, 210, 177, 0.12), transparent 24%),
+        linear-gradient(180deg, #06111f 0%, #081423 42%, #091726 100%);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 20px;
+      background: rgba(6, 17, 31, 0.82);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .top-nav a {
+      padding: 10px 14px;
+      font-size: 14px;
+      color: var(--muted);
+      border-radius: 999px;
+      transition: .2s ease;
+    }
+
+    .top-nav a:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .section {
+      padding: 48px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .container {
+      width: min(var(--max), 100%);
+      margin: 0 auto;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 24px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: rgba(83, 168, 255, 0.12);
+      color: #cfe7ff;
+      border: 1px solid rgba(83, 168, 255, 0.25);
+      border-radius: 999px;
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
+
+    .title {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.2;
+      letter-spacing: 0.5px;
+    }
+
+    .desc {
+      margin: 0;
+      max-width: 900px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .hero {
+      padding: 72px 24px 54px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .hero-title {
+      margin: 0 0 18px;
+      font-size: 48px;
+      line-height: 1.15;
+    }
+
+    .hero-lead {
+      margin: 0 0 26px;
+      color: #c0d0e2;
+      font-size: 18px;
+      max-width: 820px;
+    }
+
+    .panel {
+      background: linear-gradient(180deg, rgba(19, 42, 69, 0.92), rgba(11, 23, 40, 0.92));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-panel,
+    .answer-panel,
+    .summary-panel,
+    .overview-map,
+    .relation-panel,
+    .sop-panel,
+    .infra-panel,
+    .closing-panel,
+    .module-card,
+    .metric,
+    .acceptance-card,
+    .timeline-step,
+    .tag-card {
+      padding: 24px;
+    }
+
+    .hero-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100%;
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .metric {
+      background: rgba(255,255,255,0.04);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .metric-value {
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 8px;
+      color: white;
+    }
+
+    .metric-label {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .answer-list,
+    .bullet-list,
+    .mini-list,
+    .chip-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .answer-list li,
+    .bullet-list li,
+    .mini-list li {
+      position: relative;
+      padding-left: 18px;
+      margin: 10px 0;
+      color: #dce7f5;
+    }
+
+    .answer-list li::before,
+    .bullet-list li::before,
+    .mini-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-2);
+    }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+
+    .overview-stage-grid,
+    .timeline-grid,
+    .closing-grid { display: grid; gap: 18px; }
+
+    .overview-stage-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .timeline-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+    .closing-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .stage-card {
+      padding: 18px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .stage-card h3,
+    .module-card h3,
+    .acceptance-card h3,
+    .closing-panel h3,
+    .summary-panel h3,
+    .relation-panel h3,
+    .sop-panel h3,
+    .infra-panel h3 {
+      margin: 0 0 10px;
+      font-size: 21px;
+    }
+
+    .stage-card .stage-index,
+    .module-meta,
+    .small-kicker {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: var(--accent-2);
+      font-size: 12px;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+
+    .stage-card .chips,
+    .card-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .chip {
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #d6e5f7;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .overview-map svg,
+    .relation-panel svg,
+    .flow-svg svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .section-note {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .stage-block {
+      margin-top: 34px;
+    }
+
+    .stage-block:first-child {
+      margin-top: 0;
+    }
+
+    .stage-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .stage-heading h3 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .stage-summary {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .module-card {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .module-card p {
+      margin: 0;
+      color: #d7e5f5;
+      font-size: 14px;
+    }
+
+    .flow-svg {
+      padding: 12px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .module-columns {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .module-columns > div,
+    .support-grid .module-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .module-columns h4,
+    .support-card h4,
+    .acceptance-card h4,
+    .closing-card h4,
+    .tag-card h4 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      color: #dcecff;
+    }
+
+    .module-columns ul,
+    .support-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #d2e2f1;
+      font-size: 13px;
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .support-card p { margin: 0 0 8px; }
+
+    .relation-layout,
+    .sop-layout,
+    .infra-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+      background: rgba(255,255,255,0.02);
+    }
+
+    th, td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      text-align: left;
+      vertical-align: top;
+      font-size: 13px;
+    }
+
+    th {
+      color: #d7ecff;
+      background: rgba(83,168,255,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    td { color: #dce7f5; }
+
+    .tag-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .tag-card {
+      background: rgba(255,255,255,0.03);
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .tag-badge {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(99,210,177,0.14);
+      color: #c9f4ea;
+      font-size: 12px;
+    }
+
+    .timeline-step {
+      background: rgba(255,255,255,0.03);
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.05);
+      min-height: 100%;
+    }
+
+    .timeline-step strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: white;
+    }
+
+    .acceptance-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .acceptance-card {
+      background: rgba(255,255,255,0.03);
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.05);
+      min-height: 100%;
+    }
+
+    .acceptance-card p,
+    .timeline-step p,
+    .tag-card p,
+    .closing-card p,
+    .summary-panel p,
+    .relation-panel p,
+    .sop-panel p,
+    .infra-panel p {
+      margin: 0;
+      color: #d4e0ef;
+      font-size: 14px;
+    }
+
+    .closing-card {
+      background: rgba(255,255,255,0.03);
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.05);
+      padding: 20px;
+    }
+
+    .footer-line {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    @media (max-width: 1320px) {
+      .hero-grid,
+      .relation-layout,
+      .sop-layout,
+      .infra-layout,
+      .grid-2,
+      .grid-3,
+      .grid-4,
+      .overview-stage-grid,
+      .support-grid,
+      .timeline-grid,
+      .closing-grid,
+      .acceptance-grid,
+      .module-columns,
+      .tag-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-title { font-size: 40px; }
+      .title { font-size: 30px; }
+    }
+
+    @media (max-width: 900px) {
+      .section, .hero { padding: 36px 18px; }
+      .hero-title { font-size: 34px; }
+      .top-nav { justify-content: flex-start; overflow-x: auto; }
+      .top-nav a { white-space: nowrap; }
+    }
+
+    @media print {
+      body { background: #fff; color: #111; }
+      .top-nav { position: static; background: #fff; border-bottom: 1px solid #ddd; }
+      .panel, .module-card, .timeline-step, .acceptance-card, .closing-card { box-shadow: none; background: #fff; color: #111; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="top-nav">
+    <a href="#cover">首页</a>
+    <a href="#overview">业务总览</a>
+    <a href="#business-modules">模块分解</a>
+    <a href="#module-links">模块关系</a>
+    <a href="#sop">开发 SOP</a>
+    <a href="#infra">软硬件</a>
+    <a href="#closing">结论</a>
+  </nav>
+
+  <section id="cover" class="hero">
+    <div class="container hero-grid">
+      <div class="hero-panel panel">
+        <div>
+          <div class="eyebrow">甲方汇报版｜单页总览</div>
+          <h1 class="hero-title">监造信息化系统建设汇报</h1>
+          <p class="hero-lead">这不是一页“功能堆砌”，而是一页把业务怎么转系统、项目怎么落地、软硬件怎么入场验收讲清楚的汇报页。</p>
+          <ul class="answer-list">
+            <li>业务流程怎么落到系统模块</li>
+            <li>项目开发实施怎么组织</li>
+            <li>软硬件何时进场、如何验收</li>
+          </ul>
+        </div>
+        <div class="hero-metrics">
+          <div class="metric">
+            <div class="metric-value">27</div>
+            <div class="metric-label">原始需求模块全覆盖</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">10</div>
+            <div class="metric-label">开发实施 SOP 阶段</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">11</div>
+            <div class="metric-label">软硬件与保障对象</div>
+          </div>
+        </div>
+      </div>
+      <div class="answer-panel panel">
+        <div class="small-kicker">汇报重点</div>
+        <h3>这一页，甲方要看到什么</h3>
+        <ul class="bullet-list">
+          <li>先看到全局：模块不是散的，是沿着“基础建模 -> 执行准备 -> 监督执行 -> 交付收口”串起来的。</li>
+          <li>再看到细节：每个模块都落到具体动作和典型按钮，不停留在概念层。</li>
+          <li>再看到落地：项目开发有 SOP，软硬件有时机，验收有标准，责任人有分工。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="overview" class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">01｜业务全景总览</div>
+          <h2 class="title">先看整体，再看每个模块</h2>
+        </div>
+        <p class="desc">甲方先关心的是“系统到底覆盖到哪里”，所以先给一张全景图。说白了，就是先把盘子画出来，再逐块展开讲清楚。</p>
+      </div>
+      <div class="overview-stage-grid" id="overview-stage-grid"></div>
+      <div class="overview-map panel" id="overview-map"></div>
+      <div class="section-note">一句话理解：前面四个阶段是主业务链，最后一个阶段是全程侧挂的管理与支撑能力。</div>
+    </div>
+  </section>
+
+  <section id="business-modules" class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">02｜业务模块分解</div>
+          <h2 class="title">每个模块做什么，按钮落在哪里</h2>
+        </div>
+        <p class="desc">重点流程模块采用“流程图 + 功能卡”详展，支撑模块采用“能力卡”摘要展示。专业上讲是分层呈现，大白话讲就是重点的讲深，辅助的讲清。</p>
+      </div>
+      <div id="business-stage-sections"></div>
+    </div>
+  </section>
+
+  <section id="module-links" class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">03｜模块关系总图</div>
+          <h2 class="title">局部流程之外，再讲一遍全局串联关系</h2>
+        </div>
+        <p class="desc">模块卡里讲的是“这个模块前后接谁”，这里讲的是“整个系统主链怎么跑、支撑能力挂在哪”。这样领导问“你这几个模块之间怎么串”时，一页就能回答清楚。</p>
+      </div>
+      <div class="relation-layout">
+        <div class="relation-panel panel" id="relation-map"></div>
+        <div class="summary-panel panel">
+          <div class="small-kicker">关系解读</div>
+          <h3>全局逻辑只有三句话</h3>
+          <ul class="mini-list">
+            <li>基础建模阶段先把“标准、合同、任务”立起来，不然后面的动作没有对象也没有边界。</li>
+            <li>执行准备阶段把“策划、供方文件、质量计划”做实，等于先把规则和执行底稿准备好。</li>
+            <li>监督执行到交付收口阶段完成“监督、问题、记录、验收、放行、追溯”闭环，支撑模块全程提供统计、预警、识别和经营辅助。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sop" class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">04｜项目开发 SOP</div>
+          <h2 class="title">项目不是“开发完就上线”，而是按 gate 推进</h2>
+        </div>
+        <p class="desc">这里按 CMMI5 的思路讲项目推进：每个阶段谁主责、谁配合、交什么成果、过哪个 gate。说白了，就是这项目不是拍脑袋干，是有节奏、有评审、有回路地往前推。</p>
+      </div>
+      <div class="sop-layout">
+        <div class="sop-panel panel">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>阶段</th>
+                  <th>主责</th>
+                  <th>配合</th>
+                  <th>输出物</th>
+                  <th>Gate</th>
+                </tr>
+              </thead>
+              <tbody id="sop-body"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="small-kicker">项目管控能力标签</div>
+          <h3>甲方最关心的不是术语，是“有没有管住”</h3>
+          <div class="tag-grid" id="tag-grid"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="infra" class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">05｜软硬件入场与验收</div>
+          <h2 class="title">设备什么时候进、系统什么时候装、验收到哪一层算过</h2>
+        </div>
+        <p class="desc">这一块严格依据硬件清单整理，不只列设备，而是把“入场时机、责任方、交付物、验收点”都挂到一张图里。这样甲方问“什么时候上设备、什么时候能联调、什么时候能验收”时，页面上能直接回答。</p>
+      </div>
+      <div class="infra-panel panel">
+        <div class="small-kicker">入场时间轴</div>
+        <div class="timeline-grid" id="timeline-grid"></div>
+      </div>
+      <div class="infra-layout" style="margin-top: 20px;">
+        <div class="infra-panel panel">
+          <div class="small-kicker">衔接矩阵</div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>组件</th>
+                  <th>分类</th>
+                  <th>入场时机</th>
+                  <th>责任方</th>
+                  <th>交付物</th>
+                  <th>验收点</th>
+                </tr>
+              </thead>
+              <tbody id="infra-body"></tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <div class="panel" style="margin-bottom: 18px;">
+            <div class="small-kicker">对象分类</div>
+            <h3>四类对象，一次分清</h3>
+            <ul class="mini-list">
+              <li>硬件设备：平台服务器、中间件服务器、领域服务器、客户端。</li>
+              <li>基础软件：服务器操作系统、终端操作系统、达梦数据库 V8、应用系统。</li>
+              <li>安全与保障服务：安全服务、容灾备份。</li>
+              <li>网络接入方案：防火墙 / VPN 远程接入方案。</li>
+            </ul>
+          </div>
+          <div class="grid-2 acceptance-grid" id="acceptance-grid"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="closing" class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">06｜汇报收口</div>
+          <h2 class="title">最后让甲方带走的，不只是“看过”，而是“心里有数”</h2>
+        </div>
+        <p class="desc">收口不是重复前面内容，而是把三件事再压缩成一句话：业务能闭环、项目能管住、软硬件能落地。</p>
+      </div>
+      <div class="closing-grid" id="closing-grid"></div>
+      <div class="footer-line">监造信息化系统甲方汇报页｜业务全景、实施路径、软硬件时机与验收标准已在一页内打通</div>
+    </div>
+  </section>
+
+  <script>
+    const stageMeta = {
+      '基础建模阶段': '先把规则、对象和任务边界立起来。',
+      '执行准备阶段': '先把执行规则准备好，再允许进入现场动作。',
+      '监督执行阶段': '围绕生产过程持续记录、检查、整改、沉淀。',
+      '交付收口阶段': '把验收、放行、追溯和总结做成闭环。',
+      '管理支撑阶段': '全程侧挂统计、预警、识别、经营和培训能力。'
+    };
+
+    const flowModules = [
+      {
+        stage: '基础建模阶段',
+        title: '体系文件管理',
+        summary: '统一沉淀标准、法规和技术文件，给后续监造动作提供统一依据。',
+        actions: ['规划目录','上传文件','审核发布','检索引用','模板沉淀'],
+        buttons: ['新建目录','上传文件','提交审核','预览','下载'],
+        upstream: '法规标准、技术资料',
+        downstream: '策划管理、质量计划标准建立',
+        nodes: ['目录规划','资料上传','编码归档','审核发布','引用复用']
+      },
+      {
+        stage: '基础建模阶段',
+        title: '物资采购管理',
+        summary: '把合同和物资台账先建好，不然后面的任务、验收、追溯都没有主体。',
+        actions: ['创建合同','维护物资','状态更新','查询导出','归档锁定'],
+        buttons: ['新建合同','物资维护','导入','导出','归档'],
+        upstream: '采购合同、供应商信息',
+        downstream: '任务分配管理、质量追溯',
+        nodes: ['合同建档','物资绑定','状态维护','权限控制','数据复用']
+      },
+      {
+        stage: '基础建模阶段',
+        title: '任务分配管理',
+        summary: '把项目、采购包、监造任务和监理人员的责任关系一次理顺。',
+        actions: ['创建项目','拆分任务','分派人员','审批下发','交接变更'],
+        buttons: ['新建项目','分配任务','提交审批','发起变更','交接确认'],
+        upstream: '项目、采购包、合同、物资',
+        downstream: '策划管理、监造过程监督和执行',
+        nodes: ['项目建档','任务拆分','指定人员','审批下发','权限生效']
+      },
+      {
+        stage: '执行准备阶段',
+        title: '策划管理',
+        summary: '把任务要求转成一份可执行的监造策划，等于把打法先写清楚。',
+        actions: ['选择任务','绑定采购包','编制策划','分级审批','升版迭代'],
+        buttons: ['新建策划','保存草稿','提交审批','升版','查看历史版本'],
+        upstream: '已审批任务、采购包资料',
+        downstream: '供方文件审核、质量计划标准建立',
+        nodes: ['选择任务','绑定采购包','编制策划','分级审批','生效归档']
+      },
+      {
+        stage: '执行准备阶段',
+        title: '供方文件审核',
+        summary: '把供应商交上来的资料审一遍，先确认文件受控，再进入执行。',
+        actions: ['上传资料','绑定任务','填写意见','补充见证点','审批归档'],
+        buttons: ['上传资料','填写意见','提交审批','退回补正','查看版本'],
+        upstream: '供应商文件、采购包、任务',
+        downstream: '质量计划标准建立、监造过程监督和执行',
+        nodes: ['资料提交','任务绑定','在线审查','审批处理','版本留存']
+      },
+      {
+        stage: '执行准备阶段',
+        title: '质量计划标准建立',
+        summary: '把质量计划、W/R/H 点和见证责任都提前落成清单。',
+        actions: ['创建计划','分层拆解','审批确认','生成见证点','升版维护'],
+        buttons: ['新建计划','标注质控点','提交审批','生成清单','升版'],
+        upstream: '物资品类、工序、标准文件',
+        downstream: '监造过程监督和执行、监造验收',
+        nodes: ['计划创建','质控标注','双线审批','清单生成','版本管控']
+      },
+      {
+        stage: '监督执行阶段',
+        title: '监造过程监督和执行',
+        summary: '现场监督、专项监督、见证执行都在这里落记录，是整个系统的主生产区。',
+        actions: ['日志填报','专项监督','见证执行','上传佐证','进度更新'],
+        buttons: ['填报日志','发起监督','上传附件','提交记录','更新进度'],
+        upstream: '任务、质量计划、见证点',
+        downstream: '监造质量问题处理、监造记录',
+        nodes: ['选择任务','执行监督','填报记录','上传佐证','更新状态']
+      },
+      {
+        stage: '监督执行阶段',
+        title: '监造质量问题处理',
+        summary: '现场发现问题后，必须建单、整改、复核、关闭，不能只停留在口头。',
+        actions: ['创建单据','审批流转','推送整改','复核关闭','状态回写'],
+        buttons: ['快捷建单','提交审批','发送整改','复核','关闭'],
+        upstream: '巡检/见证/验收问题',
+        downstream: '监造巡查管理、监造验收、质量追溯',
+        nodes: ['问题发现','建单审批','供应商整改','监造复核','闭环回写']
+      },
+      {
+        stage: '监督执行阶段',
+        title: '监造巡查管理',
+        summary: '把周期性巡查从“去一趟现场”变成“有计划、有报告、有行动项”的动作。',
+        actions: ['创建计划','审批','执行巡查','生成行动项','关闭办结'],
+        buttons: ['新建巡查','提交审批','生成报告','分派行动项','关闭'],
+        upstream: '监造任务、巡查安排',
+        downstream: '监造质量问题处理、监造记录',
+        nodes: ['巡查计划','审批通过','执行巡查','整改跟踪','办结归档']
+      },
+      {
+        stage: '监督执行阶段',
+        title: '抽查复验管理',
+        summary: '把抽验复查结果做成有数据、有结论、有建议的台账。',
+        actions: ['创建抽验任务','录入结果','上传附件','触发整改','统计分析'],
+        buttons: ['新建抽验','录入结果','上传附件','提交建议','查看报表'],
+        upstream: '合同、物项、抽验要求',
+        downstream: '监造质量问题处理、数据统计及质量趋势分析',
+        nodes: ['创建任务','执行抽验','结果录入','整改建议','台账统计']
+      },
+      {
+        stage: '监督执行阶段',
+        title: '监造记录',
+        summary: '把日报、周报、月报自动汇总起来，形成正式档案和可追溯记录。',
+        actions: ['填报日报','汇总周月报','补充说明','提交审批','归档追溯'],
+        buttons: ['新建日报','自动汇总','提交审批','打印','归档'],
+        upstream: '日志、监督记录、问题、行动项',
+        downstream: '监造完工管理、数据统计及质量趋势分析',
+        nodes: ['填报日报','自动汇总','编辑补充','提交流程','固化归档']
+      },
+      {
+        stage: '交付收口阶段',
+        title: '监造完工管理',
+        summary: '项目做完后，不是散着结束，而是要形成正式总结和完工报告。',
+        actions: ['发起总结','系统汇总','人工修订','提交流程','生成报告'],
+        buttons: ['发起总结','编辑初稿','提交审查','生成报告','归档'],
+        upstream: '合同全生命周期监造数据',
+        downstream: '监造验收、质量追溯',
+        nodes: ['发起总结','自动汇总','编辑修订','审核批准','报告归档']
+      },
+      {
+        stage: '交付收口阶段',
+        title: '监造验收',
+        summary: '先处理遗留项，再形成正式验收和放行依据。',
+        actions: ['预验收登记','遗留项整改','正式验收','放行审核','统计分析'],
+        buttons: ['新建遗留项','提交关闭','发起验收','上传附件','查看统计'],
+        upstream: '完工成果、遗留问题',
+        downstream: '监造放行、质量追溯',
+        nodes: ['预验收','遗留整改','正式验收','放行审核','统计沉淀']
+      },
+      {
+        stage: '交付收口阶段',
+        title: '监造放行',
+        summary: '放行不是一句“可以发货”，而是供应商申请、审查、审批都留痕。',
+        actions: ['发起申请','补充资料','编制放行单','审批通过','通知发货'],
+        buttons: ['发起放行','上传佐证','编制放行单','提交审批','通知发货'],
+        upstream: '供应商申请、验收结果',
+        downstream: '质量追溯、付款台账',
+        nodes: ['供应商申请','资料审查','放行单编制','审批通过','通知发货']
+      },
+      {
+        stage: '交付收口阶段',
+        title: '质量追溯',
+        summary: '从物项编号一路倒查到生产、检测、验收和放行，形成全链路追溯。',
+        actions: ['联查检索','节点展示','文件下载','追溯报告','问题倒查'],
+        buttons: ['联查','查看节点','下载文件','导出追溯结果','回溯定位'],
+        upstream: '合同、物项、问题、验收与放行数据',
+        downstream: '数据统计及质量趋势分析、甲方追责与复盘',
+        nodes: ['输入编号','聚合数据','时间轴展示','节点查看','导出结果']
+      }
+    ];
+
+    const supportModules = [
+      {
+        stage: '管理支撑阶段',
+        title: '数据统计及质量趋势分析',
+        summary: '把执行过程中的数量、质量、状态和问题沉淀成图表和报表。',
+        hooks: ['监造记录','抽查复验管理','监造质量问题处理','质量追溯'],
+        triggers: ['日报汇总后','问题闭环后','抽验完成后'],
+        buttons: ['查看统计图','切换维度','导出报表'],
+        outputs: ['趋势图','合同质量分析报表']
+      },
+      {
+        stage: '管理支撑阶段',
+        title: '产品进度跟踪及风险预警',
+        summary: '把整改超时、进度异常、质量风险做成预警，而不是事后知道。',
+        hooks: ['监造过程监督和执行','监造质量问题处理','监造验收'],
+        triggers: ['计划超时','整改超期','关键节点异常'],
+        buttons: ['查看预警','解除预警','预警配置'],
+        outputs: ['风险预警清单']
+      },
+      {
+        stage: '管理支撑阶段',
+        title: '防造假管理',
+        summary: '对签字、印章、二维码做辅助识别，先筛出可疑项，再人工复核。',
+        hooks: ['供方文件审核','质量计划标准建立','监造验收'],
+        triggers: ['文件上传时','归档前','复核时'],
+        buttons: ['发起核验','查看检测','人工确认'],
+        outputs: ['真实性核验记录']
+      },
+      {
+        stage: '管理支撑阶段',
+        title: '可视化管理',
+        summary: '把 KPI、问题、见证点和预警做成领导一眼能懂的总览。',
+        hooks: ['监造记录','质量问题','见证点','验收放行'],
+        triggers: ['首页查看','领导汇报','阶段总结'],
+        buttons: ['查看总览','钻取清单','切换维度'],
+        outputs: ['KPI 总览','异常概览']
+      },
+      {
+        stage: '管理支撑阶段',
+        title: '日常工作量化管理',
+        summary: '把监造工作量换算成工日台账，形成可统计、可审核的数据。',
+        hooks: ['监造过程监督和执行','抽查复验管理','监造记录','监造验收'],
+        triggers: ['提交监督记录后','手工补录时'],
+        buttons: ['录入工日','提交审核','查看统计'],
+        outputs: ['个人/团队工日台账']
+      },
+      {
+        stage: '管理支撑阶段',
+        title: '产品二维码',
+        summary: '把合同包或物项的核心数据打成二维码，便于快速联查。',
+        hooks: ['物资采购管理','质量追溯','监造验收'],
+        triggers: ['审批通过后','版本更新后'],
+        buttons: ['生成二维码','下载','查看版本'],
+        outputs: ['二维码图片','版本记录']
+      },
+      {
+        stage: '管理支撑阶段',
+        title: '电子签名',
+        summary: '把审批和签发动作留成电子身份痕迹，后面审计也能追。',
+        hooks: ['策划管理','供方文件审核','质量计划标准建立','监造放行'],
+        triggers: ['审批提交时','签章确认时'],
+        buttons: ['上传签名','签章确认','查看签名'],
+        outputs: ['电子签章记录']
+      },
+      {
+        stage: '管理支撑阶段',
+        title: '图文识别信息抓取',
+        summary: '把 PDF 和图片里的关键字段自动识别出来，再和标准值比对。',
+        hooks: ['供方文件审核','防造假管理'],
+        triggers: ['上传证明文件时','上传检测报告时'],
+        buttons: ['发起识别','查看字段','查看比对'],
+        outputs: ['OCR 结果','异常提示']
+      },
+      {
+        stage: '管理支撑阶段',
+        title: '视频远程识别',
+        summary: '把现场视频接进来，做到远程看、远程讲、事后回放。',
+        hooks: ['监造过程监督和执行','监造巡查管理'],
+        triggers: ['现场监造','远程巡检','事后回看'],
+        buttons: ['查看直播','语音对讲','回放'],
+        outputs: ['视频记录','远程监控能力']
+      },
+      {
+        stage: '管理支撑阶段',
+        title: '数据信息资源库及AI识别功能',
+        summary: '把法规、标准、条文和 AI 能力挂到业务场景里，方便随查随用。',
+        hooks: ['体系文件管理','图文识别信息抓取','防造假管理'],
+        triggers: ['查询标准时','识别调用时','知识联查时'],
+        buttons: ['检索资源','查看条文','调用识别'],
+        outputs: ['法规标准资源','AI 支撑结果']
+      },
+      {
+        stage: '管理支撑阶段',
+        title: '付款台账',
+        summary: '把付款过程做成台账，并按角色控制谁看什么。',
+        hooks: ['物资采购管理','监造验收'],
+        triggers: ['付款登记时','对账时','导入导出时'],
+        buttons: ['导入','导出','查询','查看台账'],
+        outputs: ['付款台账','统计结果']
+      },
+      {
+        stage: '管理支撑阶段',
+        title: '培训与考试',
+        summary: '把培训、考试、证书和统计统一放进系统，形成能力提升闭环。',
+        hooks: ['任务分配管理','可视化管理'],
+        triggers: ['培训开展时','考试组织时','证书发放时'],
+        buttons: ['发布培训','参加考试','查看证书'],
+        outputs: ['培训记录','考试结果','证书']
+      }
+    ];
+
+    const sopStages = [
+      { title: '项目启动', owner: '甲方项目负责人、乙方项目经理', partners: '业务部门、实施、集成商', outputs: '启动纪要、责任清单、范围确认', gate: '启动评审通过' },
+      { title: '需求调研', owner: '产品经理', partners: '甲方业务部门、项目经理', outputs: '需求清单、流程梳理、边界确认', gate: '需求评审通过' },
+      { title: '方案设计', owner: '架构师、产品经理', partners: '项目经理、甲方代表', outputs: '总体方案、模块边界、软硬件建议', gate: '方案评审通过' },
+      { title: '系统设计', owner: '架构师、前后端负责人', partners: '产品经理、实施、测试', outputs: '页面设计、接口设计、数据设计、部署设计', gate: '设计评审通过' },
+      { title: '开发构建', owner: '前后端开发负责人', partners: '架构师、测试', outputs: '可运行版本、模块实现、联调接口', gate: '开发自测通过' },
+      { title: '测试验证', owner: '测试负责人', partners: '开发、产品、安全团队', outputs: '测试报告、缺陷清单、安全扫描结果', gate: '测试评审通过' },
+      { title: '部署实施', owner: '实施负责人', partners: '运维、集成商、开发', outputs: '环境部署记录、联调记录、上线方案', gate: '部署检查通过' },
+      { title: '试运行', owner: '甲方试点负责人、实施负责人', partners: '产品、测试、运维', outputs: '试运行问题清单、使用反馈、修正项', gate: '试运行评审通过' },
+      { title: '验收交付', owner: '甲方项目负责人、乙方项目经理', partners: '业务部门、测试、实施、安全团队', outputs: '验收材料、培训记录、交付清单', gate: '验收签字通过' },
+      { title: '运维优化', owner: '运维负责人', partners: '产品经理、甲方使用部门', outputs: '运维台账、优化计划、版本改进清单', gate: '进入常态运维' }
+    ];
+
+    const cmmiTags = [
+      { title: '评审关口', desc: '每个阶段都要有通过条件，不是“做完了就往后推”。' },
+      { title: '基线管理', desc: '需求、设计、测试、上线都要形成冻结版本，避免口径飘。' },
+      { title: '变更控制', desc: '新增需求、范围变化、硬件调整都要有变更入口。' },
+      { title: '配置管理', desc: '代码、文档、部署包、环境参数统一纳管。' },
+      { title: 'QA / 质量保证', desc: '关键节点不是自说自话，而是有人检查过程是否跑偏。' },
+      { title: '安全验证', desc: '上线前要做扫描、代码检测和问题整改闭环。' },
+      { title: '度量反馈', desc: '缺陷、进度、试运行问题都要沉淀，为后续优化提供依据。' }
+    ];
+
+    const infraItems = [
+      { name: '平台服务器', category: '硬件设备', timing: '项目启动后确认采购，部署实施阶段上架', owner: '甲方 / 集成商', deliverable: '到货记录、上架记录', acceptance: '配置一致、上电正常、网络联通' },
+      { name: '中间件服务器', category: '硬件设备', timing: '系统设计阶段确认用途，部署实施阶段安装中间件', owner: '乙方实施 / 集成商', deliverable: '节点部署记录', acceptance: '服务可用、节点可联通' },
+      { name: '领域服务器', category: '硬件设备', timing: '系统设计阶段确认，部署实施阶段启用', owner: '甲方 / 集成商 / 乙方实施', deliverable: '业务环境部署记录', acceptance: '存储可用、访问正常、备份策略生效' },
+      { name: '客户端', category: '硬件设备', timing: '试运行前完成配发', owner: '甲方 / 集成商', deliverable: '终端配发表', acceptance: '可登录、可填报、可审批' },
+      { name: '服务器操作系统（银河麒麟 V10）', category: '基础软件', timing: '部署实施前安装', owner: '集成商 / 乙方实施', deliverable: '系统安装记录', acceptance: '版本一致、运行稳定' },
+      { name: '终端操作系统', category: '基础软件', timing: '客户端交付前预装', owner: '集成商', deliverable: '终端系统安装记录', acceptance: '启动正常、兼容客户端' },
+      { name: '达梦数据库 V8', category: '基础软件', timing: '部署实施阶段安装配置', owner: '乙方实施 / 运维', deliverable: '安装记录、初始化记录', acceptance: '连接成功、读写正常、备份恢复通过' },
+      { name: '安全服务', category: '安全与保障服务', timing: '测试后期至上线前执行', owner: '安全团队', deliverable: '测评报告、扫描报告、整改确认单', acceptance: '问题闭环、满足要求' },
+      { name: '容灾备份', category: '安全与保障服务', timing: '试运行前完成演练', owner: '运维 / 乙方实施', deliverable: '备份策略、切换演练记录', acceptance: '恢复时效达标、切换有效' },
+      { name: '防火墙/VPN', category: '网络接入方案', timing: '部署实施阶段完成配置', owner: '集成商 / 运维', deliverable: '访问策略、VPN 配置记录', acceptance: '外部访问受控、远程接入可用' },
+      { name: '应用系统', category: '基础软件', timing: '部署实施阶段上线，试运行前联调完成', owner: '乙方实施 / 开发 / 运维', deliverable: '部署包、部署记录、联调结果', acceptance: '关键业务流程跑通' }
+    ];
+
+    const acceptanceLayers = [
+      { title: '到货验收', text: '核对数量、品牌、型号、配置、系统版本是否与清单一致。' },
+      { title: '安装验收', text: '确认服务器、数据库、中间件、应用已部署，网络与接入规则生效。' },
+      { title: '联调验收', text: '确认软硬件协同正常，关键流程和远程接入都能跑通。' },
+      { title: '业务验收', text: '确认审批、台账、追溯、报表等核心业务满足需求。' },
+      { title: '安全验收', text: '确认等保测评、代码安全检测、漏洞扫描整改完成。' }
+    ];
+
+    const timelineSteps = [
+      { title: '项目启动后', text: '明确采购责任、设备范围、环境准备边界。' },
+      { title: '方案设计/系统设计阶段', text: '确认服务器、数据库、网络安全与客户端配置。' },
+      { title: '开发后期/测试前', text: '完成基础环境部署，准备测试环境。' },
+      { title: '部署实施阶段', text: '完成服务器、数据库、中间件、应用系统联调。' },
+      { title: '试运行前', text: '完成客户端配发、安全接入、容灾与备份验证。' },
+      { title: '验收交付阶段', text: '按到货、安装、联调、业务、安全五层组织验收。' }
+    ];
+
+    const closingCards = [
+      {
+        title: '业务闭环已经讲清',
+        text: '从标准文件、合同物资、任务分配开始，到策划、监督、问题、记录、验收、放行、追溯结束，主业务链是一条完整闭环。'
+      },
+      {
+        title: '项目闭环已经讲清',
+        text: '从项目启动到运维优化，谁主责、谁配合、交什么成果、过哪个 gate，都已经对应到 SOP。'
+      },
+      {
+        title: '落地闭环已经讲清',
+        text: '设备什么时候到、系统什么时候装、什么时候联调、什么时候验收，以及谁负责，都已压缩到时间轴和矩阵里。'
+      }
+    ];
+
+    const stageOrder = ['基础建模阶段','执行准备阶段','监督执行阶段','交付收口阶段','管理支撑阶段'];
+
+    function byStage(data, stage) {
+      return data.filter(item => item.stage === stage);
+    }
+
+    function renderMiniFlow(nodes) {
+      const width = 920;
+      const height = 92;
+      const step = width / nodes.length;
+      const rects = nodes.map((node, i) => {
+        const x = i * step + 10;
+        const w = step - 20;
+        const center = x + w / 2;
+        const line = i < nodes.length - 1
+          ? `<line x1="${x + w}" y1="46" x2="${(i + 1) * step + 10}" y2="46" stroke="#63d2b1" stroke-width="2" stroke-linecap="round" />
+             <polygon points="${(i + 1) * step + 4},46 ${(i + 1) * step + 12},42 ${(i + 1) * step + 12},50" fill="#63d2b1" />`
+          : '';
+        return `
+          <g>
+            <rect x="${x}" y="16" rx="14" ry="14" width="${w}" height="58" fill="rgba(83,168,255,0.13)" stroke="rgba(83,168,255,0.56)" />
+            <text x="${center}" y="40" fill="#eaf5ff" font-size="13" text-anchor="middle">${node}</text>
+            ${line}
+          </g>`;
+      }).join('');
+      return `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="流程图">${rects}</svg>`;
+    }
+
+    function renderOverviewMap() {
+      const width = 1280;
+      const height = 320;
+      const stageRects = [
+        { x: 30, y: 30, w: 210, h: 86, color: '#53a8ff', title: '基础建模阶段' },
+        { x: 275, y: 30, w: 210, h: 86, color: '#63d2b1', title: '执行准备阶段' },
+        { x: 520, y: 30, w: 230, h: 86, color: '#ffc96b', title: '监督执行阶段' },
+        { x: 785, y: 30, w: 210, h: 86, color: '#ff9e7a', title: '交付收口阶段' },
+        { x: 250, y: 185, w: 740, h: 98, color: '#9b8cff', title: '管理支撑阶段（全程侧挂）' }
+      ];
+      const arrows = `
+        <line x1="240" y1="73" x2="275" y2="73" stroke="#63d2b1" stroke-width="3" />
+        <polygon points="275,73 263,67 263,79" fill="#63d2b1" />
+        <line x1="485" y1="73" x2="520" y2="73" stroke="#ffc96b" stroke-width="3" />
+        <polygon points="520,73 508,67 508,79" fill="#ffc96b" />
+        <line x1="750" y1="73" x2="785" y2="73" stroke="#ff9e7a" stroke-width="3" />
+        <polygon points="785,73 773,67 773,79" fill="#ff9e7a" />
+        <line x1="390" y1="118" x2="390" y2="185" stroke="#9b8cff" stroke-width="2.5" stroke-dasharray="6 6" />
+        <line x1="630" y1="118" x2="630" y2="185" stroke="#9b8cff" stroke-width="2.5" stroke-dasharray="6 6" />
+        <line x1="890" y1="118" x2="890" y2="185" stroke="#9b8cff" stroke-width="2.5" stroke-dasharray="6 6" />
+      `;
+      const blocks = stageRects.map(rect => `
+        <g>
+          <rect x="${rect.x}" y="${rect.y}" rx="18" ry="18" width="${rect.w}" height="${rect.h}" fill="rgba(255,255,255,0.04)" stroke="${rect.color}" stroke-width="2.5" />
+          <text x="${rect.x + 18}" y="${rect.y + 28}" fill="#ffffff" font-size="18">${rect.title}</text>
+        </g>
+      `).join('');
+      return `<svg viewBox="0 0 ${width} ${height}">${arrows}${blocks}</svg>`;
+    }
+
+    function renderRelationMap() {
+      const main = stageOrder.map((stage, index) => {
+        const x = 40 + index * 228;
+        return `
+          <g>
+            <rect x="${x}" y="122" rx="16" ry="16" width="196" height="76" fill="rgba(83,168,255,0.10)" stroke="rgba(83,168,255,0.6)" />
+            <text x="${x + 98}" y="152" fill="#ffffff" font-size="16" text-anchor="middle">${stage}</text>
+            <text x="${x + 98}" y="176" fill="#9eb1c7" font-size="12" text-anchor="middle">${stageMeta[stage]}</text>
+            ${index < stageOrder.length - 1 ? `<line x1="${x + 196}" y1="160" x2="${x + 228}" y2="160" stroke="#63d2b1" stroke-width="3" /><polygon points="${x + 228},160 ${x + 216},154 ${x + 216},166" fill="#63d2b1" />` : ''}
+          </g>`;
+      }).join('');
+
+      const supportTitles = supportModules.map(item => item.title);
+      const supportTop = supportTitles.slice(0, 6).map((title, i) => {
+        const x = 72 + i * 186;
+        return `
+          <g>
+            <rect x="${x}" y="16" rx="14" ry="14" width="150" height="44" fill="rgba(155,140,255,0.10)" stroke="rgba(155,140,255,0.55)" />
+            <text x="${x + 75}" y="42" fill="#eef5ff" font-size="12" text-anchor="middle">${title}</text>
+            <line x1="${x + 75}" y1="60" x2="${x + 75}" y2="122" stroke="#9b8cff" stroke-width="2" stroke-dasharray="6 6" />
+          </g>`;
+      }).join('');
+
+      const supportBottom = supportTitles.slice(6).map((title, i) => {
+        const x = 72 + i * 186;
+        return `
+          <g>
+            <rect x="${x}" y="264" rx="14" ry="14" width="150" height="44" fill="rgba(155,140,255,0.10)" stroke="rgba(155,140,255,0.55)" />
+            <text x="${x + 75}" y="290" fill="#eef5ff" font-size="12" text-anchor="middle">${title}</text>
+            <line x1="${x + 75}" y1="264" x2="${x + 75}" y2="198" stroke="#9b8cff" stroke-width="2" stroke-dasharray="6 6" />
+          </g>`;
+      }).join('');
+
+      return `<svg viewBox="0 0 1160 324">${supportTop}${main}${supportBottom}</svg>`;
+    }
+
+    function renderFlowModuleCard(module, index) {
+      return `
+        <article class="panel module-card flow-card">
+          <div class="module-meta">${String(index + 1).padStart(2, '0')}｜${module.stage}</div>
+          <h3>${module.title}</h3>
+          <p>${module.summary}</p>
+          <div class="flow-svg">${renderMiniFlow(module.nodes)}</div>
+          <div class="module-columns">
+            <div>
+              <h4>业务动作</h4>
+              <ul>${module.actions.map(x => `<li>${x}</li>`).join('')}</ul>
+            </div>
+            <div>
+              <h4>典型按钮</h4>
+              <ul>${module.buttons.map(x => `<li>${x}</li>`).join('')}</ul>
+            </div>
+            <div>
+              <h4>上下游</h4>
+              <p><strong>输入：</strong>${module.upstream}</p>
+              <p><strong>输出：</strong>${module.downstream}</p>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderSupportCard(module, index) {
+      return `
+        <article class="panel module-card support-card">
+          <div class="module-meta">S${String(index + 1).padStart(2, '0')}｜${module.stage}</div>
+          <h3>${module.title}</h3>
+          <p>${module.summary}</p>
+          <div>
+            <h4>挂载模块</h4>
+            <p>${module.hooks.join('、')}</p>
+          </div>
+          <div>
+            <h4>触发场景</h4>
+            <p>${module.triggers.join('、')}</p>
+          </div>
+          <div>
+            <h4>典型按钮</h4>
+            <p>${module.buttons.join('、')}</p>
+          </div>
+          <div>
+            <h4>输出结果</h4>
+            <p>${module.outputs.join('、')}</p>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderOverviewStages() {
+      const container = document.getElementById('overview-stage-grid');
+      container.innerHTML = stageOrder.map((stage, index) => {
+        const flow = byStage(flowModules, stage);
+        const support = byStage(supportModules, stage);
+        const list = [...flow, ...support].map(item => `<span class="chip">${item.title}</span>`).join('');
+        return `
+          <div class="stage-card panel">
+            <div class="stage-index">0${index + 1}</div>
+            <h3>${stage}</h3>
+            <p class="desc" style="font-size:13px;">${stageMeta[stage]}</p>
+            <div class="chips">${list}</div>
+          </div>
+        `;
+      }).join('');
+      document.getElementById('overview-map').innerHTML = renderOverviewMap();
+    }
+
+    function renderBusinessSections() {
+      const host = document.getElementById('business-stage-sections');
+      host.innerHTML = stageOrder.map(stage => {
+        const flow = byStage(flowModules, stage);
+        const support = byStage(supportModules, stage);
+        const flowHtml = flow.length
+          ? `<div class="grid-2">${flow.map((item, idx) => renderFlowModuleCard(item, flowModules.findIndex(x => x.title === item.title))).join('')}</div>`
+          : '';
+        const supportHtml = support.length
+          ? `<div class="support-grid">${support.map((item, idx) => renderSupportCard(item, idx)).join('')}</div>`
+          : '';
+        return `
+          <div class="stage-block">
+            <div class="stage-heading">
+              <div>
+                <h3>${stage}</h3>
+                <div class="stage-summary">${stageMeta[stage]}</div>
+              </div>
+              <div class="card-chips">
+                <span class="chip">${flow.length} 个流程型模块</span>
+                <span class="chip">${support.length} 个支撑型模块</span>
+              </div>
+            </div>
+            ${flowHtml}
+            ${supportHtml}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderSop() {
+      document.getElementById('sop-body').innerHTML = sopStages.map(item => `
+        <tr>
+          <td>${item.title}</td>
+          <td>${item.owner}</td>
+          <td>${item.partners}</td>
+          <td>${item.outputs}</td>
+          <td>${item.gate}</td>
+        </tr>
+      `).join('');
+
+      document.getElementById('tag-grid').innerHTML = cmmiTags.map(item => `
+        <div class="tag-card">
+          <span class="tag-badge">项目管控</span>
+          <h4>${item.title}</h4>
+          <p>${item.desc}</p>
+        </div>
+      `).join('');
+    }
+
+    function renderInfra() {
+      document.getElementById('timeline-grid').innerHTML = timelineSteps.map(item => `
+        <div class="timeline-step">
+          <strong>${item.title}</strong>
+          <p>${item.text}</p>
+        </div>
+      `).join('');
+
+      document.getElementById('infra-body').innerHTML = infraItems.map(item => `
+        <tr>
+          <td>${item.name}</td>
+          <td>${item.category}</td>
+          <td>${item.timing}</td>
+          <td>${item.owner}</td>
+          <td>${item.deliverable}</td>
+          <td>${item.acceptance}</td>
+        </tr>
+      `).join('');
+
+      document.getElementById('acceptance-grid').innerHTML = acceptanceLayers.map(item => `
+        <div class="acceptance-card">
+          <h3>${item.title}</h3>
+          <p>${item.text}</p>
+        </div>
+      `).join('');
+    }
+
+    function renderClosing() {
+      document.getElementById('closing-grid').innerHTML = closingCards.map(item => `
+        <div class="closing-card">
+          <h4>${item.title}</h4>
+          <p>${item.text}</p>
+        </div>
+      `).join('');
+    }
+
+    function renderRelation() {
+      document.getElementById('relation-map').innerHTML = `<div class="small-kicker">全局串联图</div><h3>主链向前走，支撑能力侧边挂</h3>${renderRelationMap()}<p class="section-note">流程区讲局部流转，关系区讲全局串联。</p>`;
+    }
+
+    renderOverviewStages();
+    renderBusinessSections();
+    renderRelation();
+    renderSop();
+    renderInfra();
+    renderClosing();
+  </script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Single MD Task Log"
+  short_description: "Keep one append-only Markdown task log"
+  default_prompt: "Use $single-md-task-log to execute this task with one Markdown file only, read the existing log before acting, append one new record after each completed node, and keep every record readable and complete enough for another agent to resume from it."
