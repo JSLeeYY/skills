@@ -206,3 +206,15 @@
 具体执行方式：先执行 `git rm --cached` 将该视频从索引中移出但保留本地文件，再把它加入 [.gitignore](/d:/DevelopmentLocation/agent%20skill/skills/.gitignore)，删除 `.gitattributes`，并通过 `git commit --amend --no-edit` 将这些调整合并进最后一条全量同步提交，生成新的提交 `15bf5e9`；随后复核 `git lfs ls-files` 为空、`git status --ignored` 中该视频仅作为忽略文件存在，最后执行 `git push origin main`，远端返回 `5128e18..15bf5e9  main -> main`，推送成功。
 当前完成进度：已完成。当前远端 `JSLeeYY/skills` 已收到本地其余内容；被排除的只有该 `mp4` 视频文件，本地文件本身仍保留在原位置。
 存在的问题与待处理事项：如果后续用户还要把这个视频也纳入版本管理，需要改用支持该大文件上传策略的仓库方案，或改为仓库外附件/网盘分发；当前这个仓库里该文件已被显式忽略，不会再被普通 `git add -A` 自动纳入。
+
+## 记录 35
+任务内容：按用户要求，将 `https://github.com/XiaoYu0128/skills.git` 拉取到 `D:\DevelopmentLocation` 目录下。
+具体执行方式：先按本地记忆规则检索历史案例，未命中与本次克隆直接相关的可复用方案；随后确认 `D:\DevelopmentLocation` 当前不存在目标子目录 `skills`，并验证远端仓库可访问、`HEAD` 为 `ed89ebe17ac976df659d6e8249a9b43d2991f091`。接下来将直接在 `D:\DevelopmentLocation` 下执行 `git clone`。
+当前完成进度：已完成前置检查与日志记录，下一步是执行仓库克隆并核对落地目录。
+存在的问题与待处理事项：若目标目录在克隆前被外部进程创建，或远端仓库在执行时变更访问权限，需要根据实时返回结果调整处理。
+
+## 记录 36
+任务内容：确认 `https://github.com/XiaoYu0128/skills.git` 已成功拉取到 `D:\DevelopmentLocation\skills`。
+具体执行方式：执行 `git clone https://github.com/XiaoYu0128/skills.git D:\DevelopmentLocation\skills`；随后检查目标目录内容，确认已生成 `.git`、`delivery`、`README.md`，并通过 `git rev-parse HEAD` 验证当前提交为 `ed89ebe17ac976df659d6e8249a9b43d2991f091`，`git remote -v` 显示 `origin` 指向该 GitHub 仓库。
+当前完成进度：已完成。本次实际变更为新建仓库目录 `D:\DevelopmentLocation\skills`，并补充更新工作日志文件 `D:\DevelopmentLocation\agent skill\skills\skills\single-md-task-log-worklog.md`。
+存在的问题与待处理事项：当前未发现阻塞；如果后续需要切分支、更新子模块或拉取 LFS 内容，需要基于该新目录继续操作。
