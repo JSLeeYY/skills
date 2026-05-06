@@ -902,21 +902,21 @@
         <p class="eyebrow">Reverse Geocoding Studio</p>
         <h1>经纬度转换</h1>
         <p class="hero-desc">
-          现在这页不只支持把百度坐标或高德坐标转成具体地址，也支持把结构化地址反查成经纬度。
-          整个工具仍然只有一个 <span class="mono">HTML</span> 文件，界面、样式、逻辑全部写在里面。
+          这页现在聚焦“地址转经纬度”，适合本地双击直接使用。
+          高德模式直接输出 GCJ-02；百度模式使用高德地址解析结果，再在本地算法中转换成百度 BD-09 坐标。
         </p>
         <div class="hero-meta">
           <div class="meta-pill">
-            <strong>双向</strong>
-            <span>支持正向与逆向地理编码</span>
+            <strong>本地可用</strong>
+            <span>单 HTML 文件，双击即可打开</span>
           </div>
           <div class="meta-pill">
             <strong>批量</strong>
             <span>支持多行输入连续转换</span>
           </div>
           <div class="meta-pill">
-            <strong>自动识别</strong>
-            <span>坐标顺序异常会自动纠正</span>
+            <strong>双输出</strong>
+            <span>支持高德 GCJ-02 与百度 BD-09</span>
           </div>
         </div>
       </div>
@@ -927,7 +927,7 @@
         </div>
         <div class="floating-note">
           <strong>输入格式</strong>
-          <span>默认按“经度,纬度”输入，例如：<span class="mono">116.404,39.915</span></span>
+          <span>一行一个地址，例如：<span class="mono">四川省成都市武侯区武科西四路8号</span></span>
         </div>
       </div>
     </section>
@@ -937,7 +937,7 @@
         <p class="section-kicker">Conversion Setup</p>
         <h2 class="section-title">转换设置</h2>
         <p class="section-desc">
-          先选转换模式，再选地图服务并填写对应密钥，最后输入坐标或地址。页面会自动保存你填过的密钥到本地浏览器，方便下次继续使用。
+          当前页面已锁定为“地址转经纬度”。密钥已经写死在页面里：高德模式直接调用高德接口；百度模式使用高德接口解析地址，再本地转换为百度坐标。
         </p>
 
         <div class="provider-switch" id="modeSwitch">
@@ -966,7 +966,7 @@
           <label class="field">
             <div class="field-label">
               <strong>高德 Web 服务 Key</strong>
-              <span>仅切到高德坐标时必须</span>
+              <span>已写死，仅展示；高德/百度两种模式的地址解析都依赖它</span>
             </div>
             <input id="amapKey" type="text" placeholder="请输入高德 Web 服务 Key">
           </label>
@@ -974,14 +974,14 @@
           <label class="field">
             <div class="field-label">
               <strong>百度 AK</strong>
-              <span>仅切到百度坐标时必须</span>
+              <span>已写死，仅展示；当前页面不再直接调用百度地址解析接口</span>
             </div>
             <input id="baiduKey" type="text" placeholder="请输入百度地图 AK">
           </label>
 
           <div class="active-key-hint" id="activeKeyHint">
-            <span>当前模式：<strong>经纬度转地址</strong>，当前服务：<strong>高德地图</strong>，将使用 <strong>高德 Web 服务 Key</strong> 发起请求。</span>
-            <span class="mono">GCJ-02</span>
+            <span>当前模式：<strong>地址转经纬度</strong>（已锁定），当前服务：<strong>高德地图</strong>，将使用已写死的 <strong>高德 Web 服务 Key</strong> 进行 <strong>地址解析</strong>。</span>
+            <span class="mono">GCJ-02 / GeoCode</span>
           </div>
 
           <label class="field">
@@ -1025,7 +1025,7 @@
         <p class="section-kicker">Guide & History</p>
         <h2 class="section-title">坐标说明</h2>
         <p class="section-desc">
-          你最需要注意的是平台来源和坐标体系。高德与百度本身不是同一个坐标体系，做逆地理编码时选错类型会直接导致地址偏移；做正向地理编码时建议补充城市限定提高精度。
+          你最需要注意的是坐标体系。高德使用 GCJ-02，百度使用 BD-09；当前页面统一用高德做地址解析，百度模式是在本地把 GCJ-02 转成 BD-09 后输出。
         </p>
 
         <div class="notes-grid">
@@ -1033,27 +1033,27 @@
             <div class="type-block">
               <span class="badge">高德 / GCJ-02</span>
               <strong>高德地图服务</strong>
-              <p>支持高德逆地理编码和地理编码。逆向时适合 GCJ-02 坐标，正向时可直接把中文地址转成经纬度。</p>
+              <p>直接调用高德地址解析接口，输出 GCJ-02 坐标，适合高德地图、天地图纠偏后场景等使用。</p>
             </div>
             <div class="type-block">
               <span class="badge">百度 / BD-09</span>
               <strong>百度地图服务</strong>
-              <p>支持百度逆地理编码和地理编码。逆向时适合 BD-09 坐标，正向时适合百度地址解析场景。</p>
+              <p>当前不直接调用百度地址解析接口，而是先走高德地址解析，再在本地转换成百度 BD-09 坐标，适合本地双击场景。</p>
             </div>
           </div>
 
           <div class="note-card">
             <strong>使用顺序</strong>
             <ul>
-              <li>先选“经纬度转地址”或“地址转经纬度”。</li>
-              <li>再确认你使用的是百度服务还是高德服务，并填写对应密钥。</li>
-              <li>逆向时按“经度,纬度”输入；正向时一行一个地址，必要时补充城市限定。</li>
+              <li>先选要输出“高德坐标”还是“百度坐标”。</li>
+              <li>直接输入地址，一行一个；必要时补充城市限定提升匹配精度。</li>
+              <li>点击“开始转换”后，高德模式直接返回 GCJ-02，百度模式返回本地换算后的 BD-09。</li>
             </ul>
           </div>
 
           <div class="note-card">
             <strong>本地说明</strong>
-            <p>密钥和最近记录仅保存在你当前浏览器本地，不会写到其他文件里。如果接口被平台限制，可改成在本地服务器环境打开这个页面再试。</p>
+            <p>页面适合本地双击直接使用。最近记录只保存在当前浏览器本地；由于百度模式不再直接请求百度地理编码接口，本地可用性会比之前更稳定。</p>
           </div>
 
           <div class="note-card">
@@ -1078,18 +1078,18 @@
         <div>
           <p class="section-kicker">Results</p>
           <h2 class="section-title">转换结果</h2>
-          <p class="section-desc">逆向时返回结构化地址；正向时返回经纬度和匹配信息；失败时会明确显示原因。</p>
+          <p class="section-desc">当前固定为地址转经纬度：高德模式输出 GCJ-02，百度模式输出由高德结果本地转换后的 BD-09；失败时会明确显示原因。</p>
         </div>
         <button class="copy-btn hidden" type="button" id="copyAllBtn">复制全部结果</button>
       </div>
 
-      <div class="status-strip" id="statusStrip">等待输入。页面现在支持“经纬度转地址”和“地址转经纬度”两种模式。</div>
+      <div class="status-strip" id="statusStrip">等待输入。页面当前固定为“地址转经纬度”，支持输出高德 GCJ-02 或百度 BD-09。</div>
 
       <div class="results-grid" id="resultsGrid">
         <div class="placeholder">
           <div>
             <strong>还没有结果</strong>
-            <div>选好转换模式和地图服务，填入密钥与内容后，点击“开始转换”。</div>
+            <div>选好输出坐标类型，输入地址后点击“开始转换”。</div>
           </div>
         </div>
       </div>
@@ -1098,11 +1098,21 @@
     <p class="footer-note">
       单文件页面名称：<span class="mono">经纬度转换.html</span>
       <br>
-      解析逻辑基于高德地理/逆地理编码和百度地理/逆地理编码接口。
+      当前解析逻辑基于高德地址解析接口，并支持在本地把 GCJ-02 坐标转换为百度 BD-09。
     </p>
   </div>
 
   <script>
+    // 按用户要求：本地双击使用，密钥写死在页面里（不再依赖输入框/本地存储）。
+    // 注意：如果百度/高德控制台对 AK/Key 配置了严格的 Referer/IP 白名单，
+    // 用 file:// 打开可能仍会被拒绝；页面会把接口返回原因直接展示出来。
+    const HARD_CODED_KEYS = {
+      amap: "22851884c6f03145a928c15c218022de",
+      baidu: "oY0ahHW7DD41QDmDCajt5Bb8hHcCzIJC"
+    };
+
+    const X_PI = Math.PI * 3000.0 / 180.0;
+
     const STORAGE_KEYS = {
       amapKey: "lnglat-converter-amap-key",
       baiduKey: "lnglat-converter-baidu-key",
@@ -1321,7 +1331,8 @@
           },
           parseResponse(data) {
             if (!data || Number(data.status) !== 0) {
-              throw new Error(data && data.msg ? data.msg : "百度接口返回失败");
+              const msg = (data && (data.msg || data.message)) ? (data.msg || data.message) : "百度接口返回失败";
+              throw new Error(msg);
             }
 
             const result = data.result || {};
@@ -1368,7 +1379,8 @@
           },
           parseResponse(data, inputText) {
             if (!data || Number(data.status) !== 0) {
-              throw new Error(data && data.msg ? data.msg : "百度接口返回失败");
+              const msg = (data && (data.msg || data.message)) ? (data.msg || data.message) : "百度接口返回失败";
+              throw new Error(msg);
             }
 
             const result = data.result || {};
@@ -1424,7 +1436,8 @@
     };
 
     let activeProvider = "amap";
-    let activeOperation = "reverse";
+    // 本次需求：输入地址 -> 输出经纬度，因此锁定为 forward（地址转经纬度）
+    let activeOperation = "forward";
     let latestCopiedLines = [];
 
     function init() {
@@ -1436,17 +1449,10 @@
     }
 
     function bindEvents() {
-      elements.modeSwitch.addEventListener("click", event => {
-        const button = event.target.closest("[data-mode]");
-        if (!button) {
-          return;
-        }
-
-        activeOperation = button.dataset.mode;
-        renderState();
-        renderPlaceholder();
-        setStatus(`已切换到“${MODE_CONFIG[activeOperation].label}”模式。`, "");
-      });
+      // 锁定为 forward 模式：隐藏模式切换并阻止切换
+      if (elements.modeSwitch) {
+        elements.modeSwitch.classList.add("hidden");
+      }
 
       elements.providerSwitch.addEventListener("click", event => {
         const button = event.target.closest("[data-provider]");
@@ -1494,19 +1500,17 @@
       });
 
       elements.convertBtn.addEventListener("click", handleConvert);
-
-      elements.amapKey.addEventListener("input", () => {
-        localStorage.setItem(STORAGE_KEYS.amapKey, elements.amapKey.value.trim());
-      });
-
-      elements.baiduKey.addEventListener("input", () => {
-        localStorage.setItem(STORAGE_KEYS.baiduKey, elements.baiduKey.value.trim());
-      });
     }
 
     function restoreStoredValues() {
-      elements.amapKey.value = localStorage.getItem(STORAGE_KEYS.amapKey) || "";
-      elements.baiduKey.value = localStorage.getItem(STORAGE_KEYS.baiduKey) || "";
+      // 写死密钥并禁用输入（避免误改，也不再写入 localStorage）
+      elements.amapKey.value = HARD_CODED_KEYS.amap;
+      elements.baiduKey.value = HARD_CODED_KEYS.baidu;
+      elements.amapKey.disabled = true;
+      elements.baiduKey.disabled = true;
+      // 仍显示输入框便于用户复制/核对，但标记为只读态
+      elements.amapKey.title = "已写死在页面里（只读）";
+      elements.baiduKey.title = "已写死在页面里（只读）";
     }
 
     function renderState() {
@@ -1528,8 +1532,15 @@
 
       const provider = PROVIDERS[activeProvider];
       const mode = MODE_CONFIG[activeOperation];
+      const requestProvider = getForwardRequestProvider();
+      const keyLabel = activeOperation === "forward" && activeProvider === "baidu"
+        ? `${requestProvider.keyLabel}（用于地址解析）`
+        : provider.keyLabel;
+      const actionDesc = activeOperation === "forward" && activeProvider === "baidu"
+        ? "高德地址解析 + 本地算法转换为百度坐标"
+        : mode.actionText;
       elements.activeKeyHint.innerHTML = `
-        <span>当前模式：<strong>${mode.label}</strong>，当前服务：<strong>${provider.short}地图</strong>，将使用 <strong>${provider.keyLabel}</strong> 发起${mode.actionText}。</span>
+        <span>当前模式：<strong>${mode.label}</strong>（已锁定），当前服务：<strong>${provider.short}地图</strong>，将使用已写死的 <strong>${keyLabel}</strong> 进行 <strong>${actionDesc}</strong>。</span>
         <span class="mono">${activeOperation === "reverse" ? provider.coordType : `${provider.coordType} / GeoCode`}</span>
       `;
     }
@@ -1564,13 +1575,53 @@
     }
 
     function getActiveKey() {
-      return activeProvider === "amap"
-        ? elements.amapKey.value.trim()
-        : elements.baiduKey.value.trim();
+      const requestProvider = getForwardRequestProvider();
+      return requestProvider.id === "amap" ? HARD_CODED_KEYS.amap : HARD_CODED_KEYS.baidu;
     }
 
     function getActiveHandler() {
       return PROVIDERS[activeProvider][activeOperation];
+    }
+
+    function getForwardRequestProvider() {
+      if (activeOperation === "forward" && activeProvider === "baidu") {
+        return PROVIDERS.amap;
+      }
+      return PROVIDERS[activeProvider];
+    }
+
+    function gcj02ToBd09(lng, lat) {
+      const z = Math.sqrt(lng * lng + lat * lat) + 0.00002 * Math.sin(lat * X_PI);
+      const theta = Math.atan2(lat, lng) + 0.000003 * Math.cos(lng * X_PI);
+      return {
+        lng: z * Math.cos(theta) + 0.0065,
+        lat: z * Math.sin(theta) + 0.006
+      };
+    }
+
+    function convertAmapForwardResultToBaidu(amapResult, inputText) {
+      const coords = String(amapResult.coords || "");
+      const [lngRaw = "", latRaw = ""] = coords.split(",");
+      const lng = Number(lngRaw);
+      const lat = Number(latRaw);
+
+      if (!Number.isFinite(lng) || !Number.isFinite(lat)) {
+        throw new Error("高德地址解析成功，但未返回有效坐标，无法转换为百度坐标");
+      }
+
+      const bd09 = gcj02ToBd09(lng, lat);
+      return {
+        ...amapResult,
+        title: amapResult.title || inputText || "匹配结果",
+        address: amapResult.address || inputText || "未返回地址",
+        coords: `${bd09.lng.toFixed(6)},${bd09.lat.toFixed(6)}`,
+        semantic: [amapResult.semantic, "由高德地址解析后转换为百度 BD-09 坐标"].filter(Boolean).join(" / "),
+        business: [
+          ...(Array.isArray(amapResult.business) ? amapResult.business : []),
+          "源坐标 GCJ-02",
+          "目标坐标 BD-09"
+        ]
+      };
     }
 
     function normalizeCoordinateLine(line) {
@@ -1613,7 +1664,7 @@
 
         const timer = window.setTimeout(() => {
           cleanup();
-          reject(new Error("请求超时，请检查网络或密钥配置"));
+          reject(new Error(`请求超时（JSONP Script 未返回）。\nURL: ${url}\n可能原因：网络/DNS/被拦截/接口不可达`));
         }, timeout);
 
         function cleanup() {
@@ -1633,7 +1684,7 @@
 
         script.onerror = () => {
           cleanup();
-          reject(new Error("接口请求失败，请检查网络、密钥或浏览器环境"));
+          reject(new Error(`接口脚本加载失败（JSONP Script onerror）。\nURL: ${script.src || url}\n可能原因：网络/DNS/被安全软件或浏览器扩展拦截/HTTPS 策略阻断`));
         };
 
         const separator = url.includes("?") ? "&" : "?";
@@ -1840,7 +1891,8 @@
       const key = getActiveKey();
       const provider = PROVIDERS[activeProvider];
       const mode = MODE_CONFIG[activeOperation];
-      const handler = getActiveHandler();
+      const requestProvider = getForwardRequestProvider();
+      const handler = requestProvider[activeOperation];
       const raw = elements.mainInput.value.trim();
       const city = elements.cityInput.value.trim();
 
@@ -1867,7 +1919,10 @@
       }
 
       elements.convertBtn.disabled = true;
-      setStatus(`正在使用${provider.short}进行${mode.actionText}，共 ${lines.length} 条。`, "busy");
+      const busyAction = activeProvider === "baidu" && activeOperation === "forward"
+        ? "高德地址解析并转换为百度坐标"
+        : `${provider.short}${mode.actionText}`;
+      setStatus(`正在执行${busyAction}，共 ${lines.length} 条。`, "busy");
 
       const results = [];
 
@@ -1907,12 +1962,16 @@
             });
           } else {
             setStatus(`正在处理第 ${index + 1} / ${lines.length} 条地址：${originalLine}`, "busy");
-            const data = await jsonp(handler.buildUrl({
+            const requestUrl = handler.buildUrl({
               key,
               address: originalLine,
               city
-            }));
-            const parsed = handler.parseResponse(data, originalLine);
+            });
+            const data = await jsonp(requestUrl);
+            const upstreamParsed = handler.parseResponse(data, originalLine);
+            const parsed = activeProvider === "baidu"
+              ? convertAmapForwardResultToBaidu(upstreamParsed, originalLine)
+              : upstreamParsed;
 
             results.push({
               ok: true,
@@ -1938,7 +1997,7 @@
         } catch (error) {
           let referenceText = originalLine;
           let swapped = false;
-          let errorHint = "请检查输入内容、坐标类型或密钥配置";
+          let errorHint = "请检查输入内容、密钥配置，或百度/高德控制台的白名单限制";
 
           if (activeOperation === "reverse") {
             try {
@@ -1953,9 +2012,13 @@
               errorHint = "坐标格式无法识别，请按“经度,纬度”输入";
             }
           } else {
-            errorHint = city
-              ? `已带城市限定“${city}”查询，仍未成功`
-              : "可尝试补充更完整地址或填写城市限定";
+            errorHint = activeProvider === "baidu"
+              ? (city
+                ? `百度模式当前使用“高德解析 + 本地转百度坐标”；已带城市限定“${city}”查询，仍未成功`
+                : "百度模式当前使用“高德解析 + 本地转百度坐标”；可尝试补充更完整地址或填写城市限定")
+              : (city
+                ? `已带城市限定“${city}”查询，仍未成功`
+                : "可尝试补充更完整地址或填写城市限定");
           }
 
           results.push({
@@ -1969,7 +2032,7 @@
             swapped,
             originalLine,
             errorHint,
-            error: error.message || "转换失败"
+            error: error && error.message ? error.message : "转换失败"
           });
         }
       }
