@@ -1,0 +1,40 @@
+-- 周报查询sql
+select p.name as pname,t.id as zid,t.czr,t.docid,t.deviceid,o.name,o.tag_no,o.production_no,t.recorddate,t.dxh,t.brands,t.standards,t.conclusion,t.remarks,t.rq,
+u2.name as jlry,
+case when t.conclusion is null then null when u2.sign is null then '/opt/apphome/iipFile/attach/file/2022/05/28/b274f2965b396689dd9231ed5baa7bd8.png' else 
+CONCAT('/opt/apphome/iipFile',SUBSTRING(u2.sign,9)) end as czrimage,
+l.id,cast(l.xh as signed) as xh,l.testitems,l.requirements,l.testingdata,l.jysj,l.czdate
+from 
+(select id,max(recorddate) as recorddate from view_rep_xcrcjyjzjlb_daily_newest where rq>='2026-05-08' and rq<='2026-05-14' group by id) s
+left join rep_incoming_profile_daily t on s.id = t.id and s.recorddate = t.recorddate
+left join rep_incoming_profile a on a.docid = t.docid and a.recorddate = t.recorddate
+LEFT JOIN project_device_management o ON t.deviceid = o.id
+left join yw_supervision_file f on t.docid= f.id
+left join yw_supervision_file_parent p on f.parent_id = p.id
+left join (select t.id,t.pid,t.xh,t.testitems,t.requirements,t.testingdata,t.jysj,t.czdate from
+(select id,pid,max(czdate) as czdate from view_rep_xcrcjyjzjlb_list_daily_newest where jysj >='2026-05-08' and jysj <='2026-05-14' group by id,pid) s
+left join rep_incoming_profile_list_daily t on s.id=t.id and s.pid = t.pid and s.czdate = t.czdate) l on t.id = l.pid
+left join (SELECT	id,	pid,max(czdate) as czdate FROM rep_incoming_profile_list_daily 
+WHERE date_format( czdate, '%Y-%m-%d' ) >= '2026-05-08' 
+AND date_format( czdate, '%Y-%m-%d' ) <= '2026-05-14'
+group by id,pid) x on l.id =x.id and l.pid = x.pid and l.czdate = x.czdate 
+left join sys_user u2 on t.czr = u2.id
+where t.docid in (SELECT id FROM yw_supervision_file WHERE parent_id in (select id from yw_supervision_file_parent where dispatch_id='2048979220370722818'
+and yw_catalogue_type = '3') and yw_catalogue_id = '1585654754288156674')
+and a.rq is not null and l.id is not null and x.id is not null
+order by t.docid,t.id,t.dxh,l.xh
+
+
+
+-- 细则查询sql
+SELECT
+ a.id AS zid,a.czr,a.docid,a.deviceid,a.recorddate,b.NAME,b.tag_no,b.production_no,a.dxh,a.brands,a.standards,a.conclusion,a.remarks,a.rq,
+case when a.conclusion is null then null when u2.sign is null then '/opt/apphome/iipFile/attach/file/2022/05/28/b274f2965b396689dd9231ed5baa7bd8.png' else
+CONCAT('/opt/apphome/iipFile/attach',u2.sign) end as czrimage,
+ c.id,cast(c.xh as signed) as xh,c.testitems,c.requirements,c.testingdata,c.jysj
+FROM
+ rep_incoming_profile a
+ LEFT JOIN project_device_management b ON a.deviceid = b.id
+ LEFT JOIN rep_incoming_profile_list c ON a.id = c.pid
+ left join sys_user u2 on a.czr = u2.id
+ WHERE a.docid = '2054131874778976256' order by a.dxh,cast(c.xh as signed)

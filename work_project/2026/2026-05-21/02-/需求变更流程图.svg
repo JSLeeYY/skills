@@ -1,0 +1,244 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="2520" viewBox="0 0 1440 2520">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#9d72e7"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#11151b" flood-opacity="0.35"/>
+    </filter>
+    <linearGradient id="nodeFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ddecff"/>
+      <stop offset="100%" stop-color="#cfe3fb"/>
+    </linearGradient>
+    <style>
+      .bg { fill: #333941; }
+      .lane-panel {
+        fill: #2d333a;
+        stroke: #596371;
+        stroke-width: 2;
+        rx: 18;
+      }
+      .lane-header {
+        fill: #293038;
+        stroke: #6b7788;
+        stroke-width: 1.8;
+        rx: 12;
+      }
+      .flow-box {
+        fill: url(#nodeFill);
+        stroke: #a8c4e8;
+        stroke-width: 2.4;
+        rx: 17;
+        filter: url(#shadow);
+      }
+      .decision {
+        fill: #f8fbff;
+        stroke: #a8c4e8;
+        stroke-width: 2.4;
+        filter: url(#shadow);
+      }
+      .title {
+        fill: #ffffff;
+        font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+        font-size: 44px;
+        font-weight: 800;
+        text-anchor: middle;
+      }
+      .lane-title {
+        fill: #ffffff;
+        font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+        font-size: 34px;
+        font-weight: 800;
+        text-anchor: middle;
+      }
+      .lane-note {
+        fill: #d9e1ea;
+        font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+        font-size: 21px;
+        font-weight: 600;
+        text-anchor: middle;
+      }
+      .node-text {
+        fill: #243447;
+        font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+        font-size: 34px;
+        font-weight: 800;
+        text-anchor: middle;
+      }
+      .node-subtext {
+        fill: #243447;
+        font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+        font-size: 25px;
+        font-weight: 600;
+        text-anchor: middle;
+      }
+      .node-subtext-small {
+        fill: #243447;
+        font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+        font-size: 23px;
+        font-weight: 600;
+        text-anchor: middle;
+      }
+      .decision-text {
+        fill: #243447;
+        font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+        font-size: 32px;
+        font-weight: 800;
+        text-anchor: middle;
+      }
+      .decision-subtext {
+        fill: #243447;
+        font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+        font-size: 24px;
+        font-weight: 600;
+        text-anchor: middle;
+      }
+      .label-box {
+        fill: #ffffff;
+        stroke: #d7dbe2;
+        stroke-width: 1.5;
+        rx: 8;
+      }
+      .label-text {
+        fill: #2d2d2d;
+        font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+        font-size: 22px;
+        font-weight: 700;
+        text-anchor: middle;
+      }
+      .arrow {
+        fill: none;
+        stroke: #9d72e7;
+        stroke-width: 4.6;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        marker-end: url(#arrow);
+      }
+      .start-end-outer {
+        fill: #d7ddff;
+        stroke: #9d72e7;
+        stroke-width: 4.5;
+      }
+      .start-end-inner { fill: #9d72e7; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="24" y="24" width="1392" height="2472" rx="16"/>
+  <text class="title" x="720" y="86">需求变更流程图</text>
+
+  <rect class="lane-panel" x="50" y="120" width="380" height="2300" rx="18"/>
+  <rect class="lane-panel" x="530" y="120" width="380" height="2300" rx="18"/>
+  <rect class="lane-panel" x="1010" y="120" width="380" height="2300" rx="18"/>
+
+  <rect class="lane-header" x="78" y="145" width="324" height="78" rx="12"/>
+  <text class="lane-title" x="240" y="181">甲方</text>
+  <text class="lane-note" x="240" y="211">提出需求 / 确认 / 验收</text>
+
+  <rect class="lane-header" x="558" y="145" width="324" height="78" rx="12"/>
+  <text class="lane-title" x="720" y="181">CCB / 联合审批</text>
+  <text class="lane-note" x="720" y="211">甲乙双方共同评审决策</text>
+
+  <rect class="lane-header" x="1038" y="145" width="324" height="78" rx="12"/>
+  <text class="lane-title" x="1200" y="181">乙方</text>
+  <text class="lane-note" x="1200" y="211">评估 / 实施 / 提测归档</text>
+
+  <g id="arrows">
+    <path class="arrow" d="M240 267 L240 282"/>
+    <path class="arrow" d="M400 340 C610 340 820 480 1024 480"/>
+    <path class="arrow" d="M1200 530 C1200 545 1200 558 1200 572"/>
+    <path class="arrow" d="M1030 642 C920 650 820 720 760 762"/>
+    <path class="arrow" d="M720 900 C720 918 720 936 720 952"/>
+    <path class="arrow" d="M540 1050 C490 1050 450 1050 408 1050"/>
+    <path class="arrow" d="M86 1040 C22 930 24 470 72 340"/>
+    <path class="arrow" d="M720 1140 C720 1192 1010 1200 1200 1232"/>
+    <path class="arrow" d="M1200 1360 C1170 1400 520 1378 240 1392"/>
+    <path class="arrow" d="M240 1520 C260 1565 850 1558 1200 1572"/>
+    <path class="arrow" d="M1200 1710 C1200 1728 1200 1740 1200 1752"/>
+    <path class="arrow" d="M1030 1810 C850 1820 560 1890 240 1902"/>
+    <path class="arrow" d="M240 2010 C240 2028 240 2040 240 2052"/>
+    <path class="arrow" d="M420 2145 C660 2145 850 2145 1022 2145"/>
+    <path class="arrow" d="M1376 2145 C1428 2045 1428 1875 1378 1810"/>
+    <path class="arrow" d="M240 2230 C240 2248 240 2260 240 2272"/>
+    <path class="arrow" d="M400 2340 C620 2340 840 2324 1022 2340"/>
+    <path class="arrow" d="M1200 2400 C1200 2416 1200 2434 1200 2452"/>
+  </g>
+
+  <circle class="start-end-outer" cx="240" cy="245" r="18"/>
+  <circle class="start-end-inner" cx="240" cy="245" r="9"/>
+
+  <rect class="flow-box" x="80" y="290" width="320" height="100" rx="17"/>
+  <text class="node-text" x="240" y="334">甲方提出变更申请</text>
+  <text class="node-subtext" x="240" y="368">填写变更单</text>
+
+  <rect class="flow-box" x="1030" y="430" width="340" height="100" rx="17"/>
+  <text class="node-text" x="1200" y="474">乙方登记变更需求</text>
+  <text class="node-subtext" x="1200" y="508">澄清范围与影响点</text>
+
+  <rect class="flow-box" x="1030" y="580" width="340" height="120" rx="17"/>
+  <text class="node-text" x="1200" y="628">乙方评估变更影响</text>
+  <text class="node-subtext" x="1200" y="664">进度 / 成本 / 质量 / 工作量</text>
+
+  <rect class="flow-box" x="550" y="770" width="340" height="130" rx="17"/>
+  <text class="node-text" x="720" y="816">CCB 联合评审</text>
+  <text class="node-subtext-small" x="720" y="852">甲方负责人 / 乙方项目经理</text>
+  <text class="node-subtext-small" x="720" y="882">技术负责人联合评审</text>
+
+  <polygon class="decision" points="720,960 900,1050 720,1140 540,1050"/>
+  <text class="decision-text" x="720" y="1038">是否批准变更</text>
+  <text class="decision-subtext" x="720" y="1074">进入实施阶段</text>
+
+  <rect class="flow-box" x="80" y="1000" width="320" height="100" rx="17"/>
+  <text class="node-text" x="240" y="1042">甲方补充材料</text>
+  <text class="node-subtext" x="240" y="1076">调整诉求后重新提交</text>
+
+  <rect class="flow-box" x="1030" y="1240" width="340" height="120" rx="17"/>
+  <text class="node-text" x="1200" y="1288">乙方制定变更方案</text>
+  <text class="node-subtext" x="1200" y="1324">排期 / 工时 / 成本 / 资源</text>
+
+  <rect class="flow-box" x="80" y="1400" width="320" height="120" rx="17"/>
+  <text class="node-text" x="240" y="1448">甲方确认变更方案</text>
+  <text class="node-subtext" x="240" y="1484">范围 / 工期 / 费用</text>
+
+  <rect class="flow-box" x="1020" y="1580" width="360" height="130" rx="17"/>
+  <text class="node-text" x="1200" y="1628">乙方实施变更并自测</text>
+  <text class="node-subtext" x="1200" y="1664">开发 / 配置 / 联调 / 监控</text>
+
+  <rect class="flow-box" x="1030" y="1760" width="340" height="100" rx="17"/>
+  <text class="node-text" x="1200" y="1804">乙方提请甲方验收</text>
+  <text class="node-subtext" x="1200" y="1838">提交测试结果</text>
+
+  <rect class="flow-box" x="80" y="1910" width="320" height="100" rx="17"/>
+  <text class="node-text" x="240" y="1954">甲方验收测试</text>
+  <text class="node-subtext" x="240" y="1988">确认是否满足目标</text>
+
+  <polygon class="decision" points="240,2060 420,2145 240,2230 60,2145"/>
+  <text class="decision-text" x="240" y="2134">是否验收通过</text>
+  <text class="decision-subtext" x="240" y="2168">甲方结果确认</text>
+
+  <rect class="flow-box" x="1030" y="2090" width="340" height="110" rx="17"/>
+  <text class="node-text" x="1200" y="2136">乙方整改 / 返工</text>
+  <text class="node-subtext" x="1200" y="2172">修改后再次提测</text>
+
+  <rect class="flow-box" x="80" y="2280" width="320" height="100" rx="17"/>
+  <text class="node-text" x="240" y="2324">甲方书面验收确认</text>
+  <text class="node-subtext" x="240" y="2358">确认变更闭环</text>
+
+  <rect class="flow-box" x="1030" y="2280" width="340" height="120" rx="17"/>
+  <text class="node-text" x="1200" y="2328">乙方更新变更记录</text>
+  <text class="node-subtext" x="1200" y="2364">并归档 / 关闭流程</text>
+
+  <circle class="start-end-outer" cx="1200" cy="2478" r="18"/>
+  <circle cx="1200" cy="2478" r="9" fill="#f9fafb"/>
+
+  <rect class="label-box" x="410" y="912" width="230" height="48" rx="8"/>
+  <text class="label-text" x="525" y="944">未批准 / 信息不足</text>
+
+  <rect class="label-box" x="58" y="622" width="225" height="50" rx="8"/>
+  <text class="label-text" x="170" y="655">补充后重新提交</text>
+
+  <rect class="label-box" x="585" y="2118" width="160" height="46" rx="8"/>
+  <text class="label-text" x="665" y="2149">验收未通过</text>
+
+  <rect class="label-box" x="1185" y="1905" width="205" height="50" rx="8"/>
+  <text class="label-text" x="1288" y="1938">整改后再次提测</text>
+</svg>

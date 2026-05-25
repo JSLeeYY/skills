@@ -1,0 +1,1787 @@
+
+[root@ecs-93244365 export]# time ./huayi-export-v2.sh export 26caef398e74418da2f91e83e8458b31
+========================================
+Export project ID: 26caef398e74418da2f91e83e8458b31
+Dir: ./广西华谊能源化工有限公司甲醇制烯烃及下游深加工一体化项目VAC装置_20260508154909
+========================================
+→ 导出表：project_management
+→ 导出表：project_apparatus
+→ 导出表：project_dispatch
+→ 导出表：project_dispatch_user
+→ 导出表：dispatch_change
+→ 导出表：dispatch_history_user
+  -> 无数据，删除空文件：dispatch_history_user.sql
+→ 导出表：dispatch_signin
+  -> 无数据，删除空文件：dispatch_signin.sql
+→ 导出表：review_dispatch
+  -> 无数据，删除空文件：review_dispatch.sql
+→ 导出表：project_disclose
+  -> 无数据，删除空文件：project_disclose.sql
+→ 导出表：project_device_management
+→ 导出表：project_device_management_temp
+→ 导出表：dispatch_change_device
+  -> 无数据，删除空文件：dispatch_change_device.sql
+→ 导出表：dispatch_remarks
+→ 导出表：dispatch_change_remarks
+  -> 无数据，删除空文件：dispatch_change_remarks.sql
+→ 导出表：project_dispatch_requirements
+→ 导出表：dispatch_change_requirements
+  -> 无数据，删除空文件：dispatch_change_requirements.sql
+→ 导出表：sys_work_contact
+→ 导出表：sys_rep_notice
+→ 导出表：major_equipment_problems
+  -> 无数据，删除空文件：major_equipment_problems.sql
+→ 导出表：rep_sbjlbg
+→ 导出表：rep_sbjlbg_his
+  -> 无数据，删除空文件：rep_sbjlbg_his.sql
+→ 导出表：rep_zyjlxm
+→ 导出表：rep_zyjlxm_his
+  -> 无数据，删除空文件：rep_zyjlxm_his.sql
+→ 导出表：yw_supervision_summary
+→ 导出表：yw_supervision_summary_his
+  -> 无数据，删除空文件：yw_supervision_summary_his.sql
+→ 导出表：rep_supervision_summary
+→ 导出表：rep_supervision_summary_his
+  -> 无数据，删除空文件：rep_supervision_summary_his.sql
+→ 导出表：rep_supervision_summary_sblist
+→ 导出表：rep_supervision_summary_sblist_his
+  -> 无数据，删除空文件：rep_supervision_summary_sblist_his.sql
+→ 导出表：yw_ralated_files
+→ 导出表：yw_ralated_files_list
+→ 导出表：yw_supervision_weekly
+→ 导出表：sys_weekly
+→ 导出表：sys_weekly_equipment
+→ 导出表：sys_weekly_img
+→ 导出表：sys_weekly_production_processing_assembly
+→ 导出表：dispatch_execution
+  -> 无数据，删除空文件：dispatch_execution.sql
+→ 导出表：dispatch_execution_time
+  -> 无数据，删除空文件：dispatch_execution_time.sql
+→ 导出表：yw_handover_main
+→ 导出表：yw_handover_data
+→ 导出表：yw_handover_devicesdata
+→ 导出表：yw_handover_problemsdata
+  -> 无数据，删除空文件：yw_handover_problemsdata.sql
+→ 导出表：yw_supervision_file_parent
+→ 导出表：yw_supervision_file_parent_his
+→ 导出表：yw_supervision_file
+→ 导出表：yw_supervision_file_his
+→ 导出表：yw_supervision_catalogue
+→ 导出表：rep_write_explain
+→ 导出表：rep_write_explain_his
+→ 导出表：rep_sbzyjscsjg_zdsb
+→ 导出表：rep_sbzyjscsjg_zdsb_his
+  -> 无数据，删除空文件：rep_sbzyjscsjg_zdsb_his.sql
+→ 导出表：rep_sbzyjscsjg_zdsb_list
+→ 导出表：rep_sbzyjscsjg_zdsb_list_his
+  -> 无数据，删除空文件：rep_sbzyjscsjg_zdsb_list_his.sql
+→ 导出表：rep_sbzyjscsjg_jsb
+→ 导出表：rep_sbzyjscsjg_jsb_his
+→ 导出表：rep_sbzyjscsjg_jsb_gckc_list
+→ 导出表：rep_sbzyjscsjg_jsb_gckc_list_his
+→ 导出表：rep_sbzyjscsjg_jsb_xm_list
+→ 导出表：rep_sbzyjscsjg_jsb_xm_list_his
+→ 导出表：rep_zyjscsjg_sb
+  -> 无数据，删除空文件：rep_zyjscsjg_sb.sql
+→ 导出表：rep_zyjscsjg_sb_his
+  -> 无数据，删除空文件：rep_zyjscsjg_sb_his.sql
+→ 导出表：rep_zyjscsjg_sb_data
+  -> 无数据，删除空文件：rep_zyjscsjg_sb_data.sql
+→ 导出表：rep_zyjscsjg_sb_data_his
+  -> 无数据，删除空文件：rep_zyjscsjg_sb_data_his.sql
+→ 导出表：rep_zyjscsjg_sb_list
+  -> 无数据，删除空文件：rep_zyjscsjg_sb_list.sql
+→ 导出表：rep_zyjscsjg_sb_list_his
+  -> 无数据，删除空文件：rep_zyjscsjg_sb_list_his.sql
+→ 导出表：rep_jlyj
+→ 导出表：rep_jlyj_his
+→ 导出表：rep_control_points
+→ 导出表：rep_control_points_his
+→ 导出表：rep_control_points_list
+→ 导出表：rep_control_points_list_his
+→ 导出表：rep_jldg_fm
+→ 导出表：rep_jldg_fm_his
+  -> 无数据，删除空文件：rep_jldg_fm_his.sql
+→ 导出表：rep_jldg_ztnr
+→ 导出表：rep_jldg_ztnr_his
+  -> 无数据，删除空文件：rep_jldg_ztnr_his.sql
+→ 导出表：rep_jldg_ztnr_sbqd
+→ 导出表：rep_jldg_ztnr_sbqd_his
+  -> 无数据，删除空文件：rep_jldg_ztnr_sbqd_his.sql
+→ 导出表：rep_jzjsyjh
+→ 导出表：rep_jzjsyjh_his
+  -> 无数据，删除空文件：rep_jzjsyjh_his.sql
+→ 导出表：rep_jzjsyjh_list
+→ 导出表：rep_jzjsyjh_list_his
+  -> 无数据，删除空文件：rep_jzjsyjh_list_his.sql
+→ 导出表：yw_supervision_log
+→ 导出表：yw_supervision_log_job
+→ 导出表：yw_supervision_log_job_repair
+→ 导出表：yw_supervision_log_content_repair
+→ 导出表：yw_abnormal_problem
+→ 导出表：yw_abnormal_problem_his
+→ 导出表：yw_abnormal_problem_repair
+  -> 无数据，删除空文件：yw_abnormal_problem_repair.sql
+→ 导出表：yw_supervision_log_repair_bind
+→ 导出表：rep_ttfdjzyhxjyjzjlb_data_daily
+→ 导出表：rep_ttfdjzyhxjyjzjlb_data_list_daily
+→ 导出表：rep_tt_fd_jyjl_daily
+→ 导出表：rep_tt_fd_jyjl_list_daily
+→ 导出表：rep_tt_fd_jyjl_list_list_daily
+→ 导出表：rep_fdtqztzzjcjlb_data_daily
+  -> 无数据，删除空文件：rep_fdtqztzzjcjlb_data_daily.sql
+→ 导出表：rep_fdtqztzzjcjlb_data_list_daily
+  -> 无数据，删除空文件：rep_fdtqztzzjcjlb_data_list_daily.sql
+→ 导出表：rep_bzcbcx_dctjbz_data_daily
+  -> 无数据，删除空文件：rep_bzcbcx_dctjbz_data_daily.sql
+→ 导出表：rep_bzcbcx_dctjbz_data_list_daily
+  -> 无数据，删除空文件：rep_bzcbcx_dctjbz_data_list_daily.sql
+→ 导出表：rep_bzcbcx_dcztbz_data_daily
+  -> 无数据，删除空文件：rep_bzcbcx_dcztbz_data_daily.sql
+→ 导出表：rep_bzcbcx_dcztbz_data_list_daily
+  -> 无数据，删除空文件：rep_bzcbcx_dcztbz_data_list_daily.sql
+→ 导出表：rep_ecnjyzzccjcjl_daily
+  -> 无数据，删除空文件：rep_ecnjyzzccjcjl_daily.sql
+→ 导出表：rep_ecnjyzzccjcjl_list_daily
+  -> 无数据，删除空文件：rep_ecnjyzzccjcjl_list_daily.sql
+→ 导出表：rep_basics_test_daily
+→ 导出表：rep_basics_test_list_daily
+→ 导出表：rep_zzjyjzjlb_data_daily
+→ 导出表：rep_zzjyjzjlb_data_list_daily
+→ 导出表：rep_withstand_appearance_daily
+→ 导出表：rep_withstand_appearance_list_daily
+→ 导出表：rep_glbzjnysyjyjl_daily
+  -> 无数据，删除空文件：rep_glbzjnysyjyjl_daily.sql
+→ 导出表：rep_glbzjnysyjyjl_list_daily
+  -> 无数据，删除空文件：rep_glbzjnysyjyjl_list_daily.sql
+→ 导出表：rep_sand_blasting_paint_daily
+→ 导出表：rep_sand_blasting_paint_list_daily
+→ 导出表：rep_packing_record_daily
+→ 导出表：rep_packing_record_list_daily
+→ 导出表：rep_completion_data_daily
+→ 导出表：rep_completion_data_list_daily
+→ 导出表：rep_other_check_daily
+→ 导出表：rep_other_check_list_daily
+→ 导出表：rep_tzgywjscjl_daily
+→ 导出表：rep_tzgywjscjl_list_daily
+→ 导出表：rep_tzgywjscjl_list_list_daily
+→ 导出表：rep_welding_technology_daily
+→ 导出表：rep_weld_technology_list_daily
+→ 导出表：rep_material_quality_daily
+→ 导出表：rep_material_quality_list_daily
+→ 导出表：rep_incoming_plate_daily
+→ 导出表：rep_incoming_plate_list_daily
+→ 导出表：rep_incoming_plate_list_list_daily
+→ 导出表：rep_incoming_pipe_daily
+→ 导出表：rep_incoming_pipe_list_daily
+→ 导出表：rep_incoming_pipe_list_list_daily
+→ 导出表：rep_incoming_forging_daily
+→ 导出表：rep_incoming_forging_list_daily
+→ 导出表：rep_incoming_forging_list_list_daily
+→ 导出表：rep_incoming_hc_daily
+  -> 无数据，删除空文件：rep_incoming_hc_daily.sql
+→ 导出表：rep_incoming_hc_list_daily
+  -> 无数据，删除空文件：rep_incoming_hc_list_daily.sql
+→ 导出表：rep_incoming_hc_list_list_daily
+  -> 无数据，删除空文件：rep_incoming_hc_list_list_daily.sql
+→ 导出表：rep_retest_material_daily
+→ 导出表：rep_retest_material_list_daily
+→ 导出表：rep_retest_material_list_list_daily
+→ 导出表：rep_xljyjl_daily
+→ 导出表：rep_xljyjl_list_daily
+→ 导出表：rep_xljyjl_list_jyxm_daily
+→ 导出表：rep_tjjyjzjl_daily
+→ 导出表：rep_tjjyjzjl_list_daily
+→ 导出表：rep_tjjyjzjl_list_jyxm_daily
+→ 导出表：rep_cxftjyjzjl_daily
+→ 导出表：rep_cxftjyjzjl_list_daily
+→ 导出表：rep_cxztjyjzjl_daily
+→ 导出表：rep_cxztjyjzjl_list_daily
+→ 导出表：rep_flange_check_daily
+→ 导出表：rep_flange_check_list_daily
+→ 导出表：rep_cxgjjyjzjlb_daily
+  -> 无数据，删除空文件：rep_cxgjjyjzjlb_daily.sql
+→ 导出表：rep_cxgjjyjzjlb_list_daily
+  -> 无数据，删除空文件：rep_cxgjjyjzjlb_list_daily.sql
+→ 导出表：rep_cxgjjyjzjlb_list_list_daily
+  -> 无数据，删除空文件：rep_cxgjjyjzjlb_list_list_daily.sql
+→ 导出表：rep_uxhrgcpjyjzjl_daily
+→ 导出表：rep_uxhrgcpjyjzjl_list_daily
+→ 导出表：rep_uxhrgcpjyjzjl_list_list_daily
+→ 导出表：rep_gbcpjyjzjl_daily
+→ 导出表：rep_gbcpjyjzjl_list_daily
+→ 导出表：rep_gbcpjyjzjl_list_list_daily
+→ 导出表：rep_zlbcpjyjzjl_daily
+→ 导出表：rep_zlbcpjyjzjl_list_daily
+→ 导出表：rep_zlbcpjyjzjl_list_list_daily
+→ 导出表：rep_fbftjyjzjlb_data_daily
+  -> 无数据，删除空文件：rep_fbftjyjzjlb_data_daily.sql
+→ 导出表：rep_fbftjyjzjlb_data_list_daily
+  -> 无数据，删除空文件：rep_fbftjyjzjlb_data_list_daily.sql
+→ 导出表：rep_fpztjyjzjlb_data_daily
+  -> 无数据，删除空文件：rep_fpztjyjzjlb_data_daily.sql
+→ 导出表：rep_fpztjyjzjlb_data_list_daily
+  -> 无数据，删除空文件：rep_fpztjyjzjlb_data_list_daily.sql
+→ 导出表：rep_ylrqjyjlb_daily
+  -> 无数据，删除空文件：rep_ylrqjyjlb_daily.sql
+→ 导出表：rep_ylrqjyjlb_list_daily
+  -> 无数据，删除空文件：rep_ylrqjyjlb_list_daily.sql
+→ 导出表：rep_wxwgjrcjyjlb_daily
+→ 导出表：rep_wxwgjrcjyjlb_list_daily
+→ 导出表：rep_wxwgjrcjyjlb_list_list_daily
+→ 导出表：rep_wgjjcjz_daily
+→ 导出表：rep_wgjjcjz_list_daily
+→ 导出表：rep_hjjyjl_daily
+→ 导出表：rep_hjjyjl_list_daily
+→ 导出表：rep_jkhxkkjzjk_daily
+→ 导出表：rep_jkhxkkjzjk_list_daily
+→ 导出表：rep_jgzzjyjzjl_daily
+→ 导出表：rep_jgzzjyjzjl_list_daily
+→ 导出表：rep_gszzjcxjyjzjl_data_daily
+→ 导出表：rep_gszzjcxjyjzjl_data_list_daily
+→ 导出表：rep_hrgygbzjjyjzjlb_data_daily
+→ 导出表：rep_hrgygbzjjyjzjlb_data_list_daily
+→ 导出表：rep_tnjccjcjl_daily
+→ 导出表：rep_tnjccjcjl_list_daily
+→ 导出表：rep_yhjjyjzjl_daily
+  -> 无数据，删除空文件：rep_yhjjyjzjl_daily.sql
+→ 导出表：rep_yhjjyjzjl_list_daily
+  -> 无数据，删除空文件：rep_yhjjyjzjl_list_daily.sql
+→ 导出表：rep_zzjcjz_daily
+→ 导出表：rep_zzjcjz_list_daily
+→ 导出表：rep_wgjccjcjl_daily
+→ 导出表：rep_wgjccjcjl_list_daily
+→ 导出表：rep_wgjccjcjl_list_list_daily
+→ 导出表：rep_sjjyjl_daily
+→ 导出表：rep_sjjyjl_list_daily
+→ 导出表：rep_sjjyjl_list_list_daily
+→ 导出表：rep_radial_daily
+  -> 无数据，删除空文件：rep_radial_daily.sql
+→ 导出表：rep_radial_list_daily
+  -> 无数据，删除空文件：rep_radial_list_daily.sql
+→ 导出表：rep_ultrasonic_daily
+  -> 无数据，删除空文件：rep_ultrasonic_daily.sql
+→ 导出表：rep_ultrasonic_list_daily
+  -> 无数据，删除空文件：rep_ultrasonic_list_daily.sql
+→ 导出表：rep_infiltration_daily
+  -> 无数据，删除空文件：rep_infiltration_daily.sql
+→ 导出表：rep_infiltration_list_daily
+  -> 无数据，删除空文件：rep_infiltration_list_daily.sql
+→ 导出表：rep_wsjcjl_daily
+→ 导出表：rep_wsjcjl_list_daily
+→ 导出表：rep_rcljyjla_daily
+→ 导出表：rep_rcljyjla_list_daily
+→ 导出表：rep_heat_treatment_daily
+→ 导出表：rep_heat_treatment_list_daily
+→ 导出表：rep_slsyjyjlb_daily
+  -> 无数据，删除空文件：rep_slsyjyjlb_daily.sql
+→ 导出表：rep_slsyjyjlb_list_daily
+  -> 无数据，删除空文件：rep_slsyjyjlb_list_daily.sql
+→ 导出表：rep_ydjyjlb_check_daily
+  -> 无数据，删除空文件：rep_ydjyjlb_check_daily.sql
+→ 导出表：rep_ydjyjlb_check_list_daily
+  -> 无数据，删除空文件：rep_ydjyjlb_check_list_daily.sql
+→ 导出表：rep_rotor_runout_daily
+  -> 无数据，删除空文件：rep_rotor_runout_daily.sql
+→ 导出表：rep_rotor_runout_list_daily
+  -> 无数据，删除空文件：rep_rotor_runout_list_daily.sql
+→ 导出表：rep_djphsyjz_b_daily
+  -> 无数据，删除空文件：rep_djphsyjz_b_daily.sql
+→ 导出表：rep_djphsyjz_b_list_daily
+  -> 无数据，删除空文件：rep_djphsyjz_b_list_daily.sql
+→ 导出表：rep_zzdphjcssyjz_daily
+  -> 无数据，删除空文件：rep_zzdphjcssyjz_daily.sql
+→ 导出表：rep_scjdtljcb_daily
+  -> 无数据，删除空文件：rep_scjdtljcb_daily.sql
+→ 导出表：rep_scjdtljcb_list_daily
+  -> 无数据，删除空文件：rep_scjdtljcb_list_daily.sql
+→ 导出表：rep_ylcssyjzjl_daily
+  -> 无数据，删除空文件：rep_ylcssyjzjl_daily.sql
+→ 导出表：rep_ylcssyjzjl_list_daily
+  -> 无数据，删除空文件：rep_ylcssyjzjl_list_daily.sql
+→ 导出表：rep_incoming_casting_daily
+  -> 无数据，删除空文件：rep_incoming_casting_daily.sql
+→ 导出表：rep_incoming_casting_list_daily
+  -> 无数据，删除空文件：rep_incoming_casting_list_daily.sql
+→ 导出表：rep_incoming_casting_list_list_daily
+  -> 无数据，删除空文件：rep_incoming_casting_list_list_daily.sql
+→ 导出表：rep_incoming_profile_daily
+  -> 无数据，删除空文件：rep_incoming_profile_daily.sql
+→ 导出表：rep_incoming_profile_list_daily
+  -> 无数据，删除空文件：rep_incoming_profile_list_daily.sql
+→ 导出表：rep_bxpzjcpjyjlb_daily
+  -> 无数据，删除空文件：rep_bxpzjcpjyjlb_daily.sql
+→ 导出表：rep_bxpzjcpjyjlb_list_daily
+  -> 无数据，删除空文件：rep_bxpzjcpjyjlb_list_daily.sql
+→ 导出表：rep_bxpzjcpjyjlb_list_list_daily
+  -> 无数据，删除空文件：rep_bxpzjcpjyjlb_list_list_daily.sql
+→ 导出表：rep_gsbcpjyjzjlb_daily
+  -> 无数据，删除空文件：rep_gsbcpjyjzjlb_daily.sql
+→ 导出表：rep_gsbcpjyjzjlb_list_daily
+  -> 无数据，删除空文件：rep_gsbcpjyjzjlb_list_daily.sql
+→ 导出表：rep_gsbcpjyjzjlb_list_list_daily
+  -> 无数据，删除空文件：rep_gsbcpjyjzjlb_list_list_daily.sql
+→ 导出表：rep_cpgcpjyjzjlb_daily
+  -> 无数据，删除空文件：rep_cpgcpjyjzjlb_daily.sql
+→ 导出表：rep_cpgcpjyjzjlb_list_daily
+  -> 无数据，删除空文件：rep_cpgcpjyjzjlb_list_daily.sql
+→ 导出表：rep_cpgcpjyjzjlb_list_list_daily
+  -> 无数据，删除空文件：rep_cpgcpjyjzjlb_list_list_daily.sql
+→ 导出表：rep_bpjyjzjlb_daily
+  -> 无数据，删除空文件：rep_bpjyjzjlb_daily.sql
+→ 导出表：rep_bpjyjzjlb_list_daily
+  -> 无数据，删除空文件：rep_bpjyjzjlb_list_daily.sql
+→ 导出表：rep_bpjyjzjlb_list_list_daily
+  -> 无数据，删除空文件：rep_bpjyjzjlb_list_list_daily.sql
+→ 导出表：rep_dygjyjzjlb_daily
+  -> 无数据，删除空文件：rep_dygjyjzjlb_daily.sql
+→ 导出表：rep_dygjyjzjlb_list_daily
+  -> 无数据，删除空文件：rep_dygjyjzjlb_list_daily.sql
+→ 导出表：rep_dygjyjzjlb_list_list_daily
+  -> 无数据，删除空文件：rep_dygjyjzjlb_list_list_daily.sql
+→ 导出表：rep_dygjyjzjlb_daily
+  -> 无数据，删除空文件：rep_dygjyjzjlb_daily.sql
+→ 导出表：rep_fpcxjyjzjlb_list_daily
+  -> 无数据，删除空文件：rep_fpcxjyjzjlb_list_daily.sql
+→ 导出表：rep_fpcxjyjzjlb_list_list_daily
+  -> 无数据，删除空文件：rep_fpcxjyjzjlb_list_list_daily.sql
+→ 导出表：rep_fpzzjyjzjlb_daily
+  -> 无数据，删除空文件：rep_fpzzjyjzjlb_daily.sql
+→ 导出表：rep_fpzzjyjzjlb_list_daily
+  -> 无数据，删除空文件：rep_fpzzjyjzjlb_list_daily.sql
+→ 导出表：rep_fpzzjyjzjlb_list_list_daily
+  -> 无数据，删除空文件：rep_fpzzjyjzjlb_list_list_daily.sql
+→ 导出表：rep_pgjyjzjlb_daily
+  -> 无数据，删除空文件：rep_pgjyjzjlb_daily.sql
+→ 导出表：rep_pgjyjzjlb_list_daily
+  -> 无数据，删除空文件：rep_pgjyjzjlb_list_daily.sql
+→ 导出表：rep_pgjyjzjlb_list_list_daily
+  -> 无数据，删除空文件：rep_pgjyjzjlb_list_list_daily.sql
+→ 导出表：rep_lxjzgjyjzjl_daily
+  -> 无数据，删除空文件：rep_lxjzgjyjzjl_daily.sql
+→ 导出表：rep_lxjzgjyjzjl_list_daily
+  -> 无数据，删除空文件：rep_lxjzgjyjzjl_list_daily.sql
+→ 导出表：rep_lxjzgjyjzjl_list_list_daily
+  -> 无数据，删除空文件：rep_lxjzgjyjzjl_list_list_daily.sql
+→ 导出表：rep_zxtssjjyjzjl_daily
+  -> 无数据，删除空文件：rep_zxtssjjyjzjl_daily.sql
+→ 导出表：rep_zxtssjjyjzjl_list_daily
+  -> 无数据，删除空文件：rep_zxtssjjyjzjl_list_daily.sql
+→ 导出表：rep_zxtssjjyjzjl_list_list_daily
+  -> 无数据，删除空文件：rep_zxtssjjyjzjl_list_list_daily.sql
+→ 导出表：rep_zzypcpjyjzjl_daily
+  -> 无数据，删除空文件：rep_zzypcpjyjzjl_daily.sql
+→ 导出表：rep_zzypcpjyjzjl_list_daily
+  -> 无数据，删除空文件：rep_zzypcpjyjzjl_list_daily.sql
+→ 导出表：rep_zzypcpjyjzjl_list_list_daily
+  -> 无数据，删除空文件：rep_zzypcpjyjzjl_list_list_daily.sql
+→ 导出表：rep_fsddpjyjzjl_daily
+  -> 无数据，删除空文件：rep_fsddpjyjzjl_daily.sql
+→ 导出表：rep_fsddpjyjzjl_list_daily
+  -> 无数据，删除空文件：rep_fsddpjyjzjl_list_daily.sql
+→ 导出表：rep_fsdyzzjyjzjl_daily
+  -> 无数据，删除空文件：rep_fsdyzzjyjzjl_daily.sql
+→ 导出表：rep_fsdyzzjyjzjl_list_daily
+  -> 无数据，删除空文件：rep_fsdyzzjyjzjl_list_daily.sql
+→ 导出表：rep_dldmkjyjzjl_daily
+  -> 无数据，删除空文件：rep_dldmkjyjzjl_daily.sql
+→ 导出表：rep_dldmkjyjzjl_list_daily
+  -> 无数据，删除空文件：rep_dldmkjyjzjl_list_daily.sql
+→ 导出表：rep_dldyzzjyjzjl_daily
+  -> 无数据，删除空文件：rep_dldyzzjyjzjl_daily.sql
+→ 导出表：rep_dldyzzjyjzjl_list_daily
+  -> 无数据，删除空文件：rep_dldyzzjyjzjl_list_daily.sql
+→ 导出表：rep_ydycfdjyjzjl_daily
+  -> 无数据，删除空文件：rep_ydycfdjyjzjl_daily.sql
+→ 导出表：rep_ydycfdjyjzjl_list_daily
+  -> 无数据，删除空文件：rep_ydycfdjyjzjl_list_daily.sql
+→ 导出表：rep_zcljcjl_daily
+  -> 无数据，删除空文件：rep_zcljcjl_daily.sql
+→ 导出表：rep_zcljcjl_list_daily
+  -> 无数据，删除空文件：rep_zcljcjl_list_daily.sql
+→ 导出表：rep_tcqwlcljcjl_daily
+  -> 无数据，删除空文件：rep_tcqwlcljcjl_daily.sql
+→ 导出表：rep_tcqwlcljcjl_list_daily
+  -> 无数据，删除空文件：rep_tcqwlcljcjl_list_daily.sql
+→ 导出表：rep_zxjyjzjl_daily
+  -> 无数据，删除空文件：rep_zxjyjzjl_daily.sql
+→ 导出表：rep_zxjyjzjl_list_daily
+  -> 无数据，删除空文件：rep_zxjyjzjl_list_daily.sql
+→ 导出表：rep_zxjyjzjl_list_list_daily
+  -> 无数据，删除空文件：rep_zxjyjzjl_list_list_daily.sql
+→ 导出表：rep_zfzzjyjzjl_daily
+  -> 无数据，删除空文件：rep_zfzzjyjzjl_daily.sql
+→ 导出表：rep_zfzzjyjzjl_list_daily
+  -> 无数据，删除空文件：rep_zfzzjyjzjl_list_daily.sql
+→ 导出表：rep_zfzzjyjzjl_list_list_daily
+  -> 无数据，删除空文件：rep_zfzzjyjzjl_list_list_daily.sql
+→ 导出表：rep_rgtjyjzjl_daily
+  -> 无数据，删除空文件：rep_rgtjyjzjl_daily.sql
+→ 导出表：rep_rgtjyjzjl_list_daily
+  -> 无数据，删除空文件：rep_rgtjyjzjl_list_daily.sql
+→ 导出表：rep_rgtjyjzjl_list_list_daily
+  -> 无数据，删除空文件：rep_rgtjyjzjl_list_list_daily.sql
+→ 导出表：rep_jxlxjyjzjl_daily
+  -> 无数据，删除空文件：rep_jxlxjyjzjl_daily.sql
+→ 导出表：rep_jxlxjyjzjl_list_daily
+  -> 无数据，删除空文件：rep_jxlxjyjzjl_list_daily.sql
+→ 导出表：rep_jxlxjyjzjl_list_list_daily
+  -> 无数据，删除空文件：rep_jxlxjyjzjl_list_list_daily.sql
+→ 导出表：rep_fdsbzzjyjzjl_daily
+  -> 无数据，删除空文件：rep_fdsbzzjyjzjl_daily.sql
+→ 导出表：rep_fdsbzzjyjzjl_list_daily
+  -> 无数据，删除空文件：rep_fdsbzzjyjzjl_list_daily.sql
+→ 导出表：rep_fdsbzzjyjzjl_list_list_daily
+  -> 无数据，删除空文件：rep_fdsbzzjyjzjl_list_list_daily.sql
+→ 导出表：rep_jtzlzjzzzzjy_daily
+  -> 无数据，删除空文件：rep_jtzlzjzzzzjy_daily.sql
+→ 导出表：rep_jtzlzjzzzzjy_list_daily
+  -> 无数据，删除空文件：rep_jtzlzjzzzzjy_list_daily.sql
+→ 导出表：rep_mbjyjzjl_daily
+  -> 无数据，删除空文件：rep_mbjyjzjl_daily.sql
+→ 导出表：rep_mbjyjzjl_list_daily
+  -> 无数据，删除空文件：rep_mbjyjzjl_list_daily.sql
+→ 导出表：rep_mbjyjzjl_list_list_daily
+  -> 无数据，删除空文件：rep_mbjyjzjl_list_list_daily.sql
+→ 导出表：rep_qkbzzjyjzjl_daily
+  -> 无数据，删除空文件：rep_qkbzzjyjzjl_daily.sql
+→ 导出表：rep_qkbzzjyjzjl_list_daily
+  -> 无数据，删除空文件：rep_qkbzzjyjzjl_list_daily.sql
+→ 导出表：rep_qgzzjyjz_daily
+  -> 无数据，删除空文件：rep_qgzzjyjz_daily.sql
+→ 导出表：rep_qgzzjyjz_list_daily
+  -> 无数据，删除空文件：rep_qgzzjyjz_list_daily.sql
+→ 导出表：rep_qgzzjyjz_list_list_daily
+  -> 无数据，删除空文件：rep_qgzzjyjz_list_list_daily.sql
+→ 导出表：rep_zzjyjzjl_daily
+  -> 无数据，删除空文件：rep_zzjyjzjl_daily.sql
+→ 导出表：rep_zzjyjzjl_list_daily
+  -> 无数据，删除空文件：rep_zzjyjzjl_list_daily.sql
+→ 导出表：rep_zzjyjzjl_list_list_daily
+  -> 无数据，删除空文件：rep_zzjyjzjl_list_list_daily.sql
+→ 导出表：rep_qgrcl_daily
+  -> 无数据，删除空文件：rep_qgrcl_daily.sql
+→ 导出表：rep_qgrcl_list_daily
+  -> 无数据，删除空文件：rep_qgrcl_list_daily.sql
+→ 导出表：rep_ztyzzjcjzjl_daily
+  -> 无数据，删除空文件：rep_ztyzzjcjzjl_daily.sql
+→ 导出表：rep_ztyzzjcjzjl_list_daily
+  -> 无数据，删除空文件：rep_ztyzzjcjzjl_list_daily.sql
+→ 导出表：rep_ztyzzjcjzjl_list_list_daily
+  -> 无数据，删除空文件：rep_ztyzzjcjzjl_list_list_daily.sql
+→ 导出表：rep_zongzjyjzjl_daily
+→ 导出表：rep_zongzjyjzjl_list_daily
+→ 导出表：rep_zongzjyjzjl_list_list_daily
+→ 导出表：rep_ltrtzk_daily
+  -> 无数据，删除空文件：rep_ltrtzk_daily.sql
+→ 导出表：rep_ltrtzk_list_daily
+  -> 无数据，删除空文件：rep_ltrtzk_list_daily.sql
+→ 导出表：rep_rtsyjz_daily
+  -> 无数据，删除空文件：rep_rtsyjz_daily.sql
+→ 导出表：rep_rtsyjz_list_daily
+  -> 无数据，删除空文件：rep_rtsyjz_list_daily.sql
+→ 导出表：rep_qgnysy_daily
+  -> 无数据，删除空文件：rep_qgnysy_daily.sql
+→ 导出表：rep_qgnysy_list1_daily
+  -> 无数据，删除空文件：rep_qgnysy_list1_daily.sql
+→ 导出表：rep_qgnysy_list2_daily
+  -> 无数据，删除空文件：rep_qgnysy_list2_daily.sql
+→ 导出表：rep_qgnysy_list3_daily
+  -> 无数据，删除空文件：rep_qgnysy_list3_daily.sql
+→ 导出表：rep_jbzzyzzjkzscjcjz_daily
+  -> 无数据，删除空文件：rep_jbzzyzzjkzscjcjz_daily.sql
+→ 导出表：rep_jbzzyzzjkzscjcjz_list_daily
+  -> 无数据，删除空文件：rep_jbzzyzzjkzscjcjz_list_daily.sql
+→ 导出表：rep_jbzzyzzjkzscjcjz_list_list_daily
+  -> 无数据，删除空文件：rep_jbzzyzzjkzscjcjz_list_list_daily.sql
+→ 导出表：rep_pgjyjzjl_daily
+  -> 无数据，删除空文件：rep_pgjyjzjl_daily.sql
+→ 导出表：rep_pgjyjzjl_list_daily
+  -> 无数据，删除空文件：rep_pgjyjzjl_list_daily.sql
+→ 导出表：rep_pgjyjzjl_list_list_daily
+  -> 无数据，删除空文件：rep_pgjyjzjl_list_list_daily.sql
+→ 导出表：rep_psptjcjzjl_daily
+  -> 无数据，删除空文件：rep_psptjcjzjl_daily.sql
+→ 导出表：rep_psptjcjzjl_list_daily
+  -> 无数据，删除空文件：rep_psptjcjzjl_list_daily.sql
+→ 导出表：rep_psptjcjzjl_list_list_daily
+  -> 无数据，删除空文件：rep_psptjcjzjl_list_list_daily.sql
+→ 导出表：rep_jgjrcjyjzjlb_daily
+  -> 无数据，删除空文件：rep_jgjrcjyjzjlb_daily.sql
+→ 导出表：rep_jgjrcjyjzjlb_list_daily
+  -> 无数据，删除空文件：rep_jgjrcjyjzjlb_list_daily.sql
+→ 导出表：rep_jgjrcjyjzjlb_list_list_daily
+  -> 无数据，删除空文件：rep_jgjrcjyjzjlb_list_list_daily.sql
+→ 导出表：rep_ftyzjyjzjlb_daily
+  -> 无数据，删除空文件：rep_ftyzjyjzjlb_daily.sql
+→ 导出表：rep_ftyzjyjzjlb_list_daily
+  -> 无数据，删除空文件：rep_ftyzjyjzjlb_list_daily.sql
+→ 导出表：rep_ftyzjyjzjlb_list_list_daily
+  -> 无数据，删除空文件：rep_ftyzjyjzjlb_list_list_daily.sql
+→ 导出表：rep_tjjjgjyjzjl_daily
+  -> 无数据，删除空文件：rep_tjjjgjyjzjl_daily.sql
+→ 导出表：rep_tjjjgjyjzjl_list_daily
+  -> 无数据，删除空文件：rep_tjjjgjyjzjl_list_daily.sql
+→ 导出表：rep_tjjjgjyjzjl_list_list_daily
+  -> 无数据，删除空文件：rep_tjjjgjyjzjl_list_list_daily.sql
+→ 导出表：rep_ttjjgjyjzjl_daily
+  -> 无数据，删除空文件：rep_ttjjgjyjzjl_daily.sql
+→ 导出表：rep_ttjjgjyjzjl_list_daily
+  -> 无数据，删除空文件：rep_ttjjgjyjzjl_list_daily.sql
+→ 导出表：rep_ttjjgjyjzjl_list_list_daily
+  -> 无数据，删除空文件：rep_ttjjgjyjzjl_list_list_daily.sql
+→ 导出表：rep_ysdjyjzjl_daily
+  -> 无数据，删除空文件：rep_ysdjyjzjl_daily.sql
+→ 导出表：rep_ysdjyjzjl_list_daily
+  -> 无数据，删除空文件：rep_ysdjyjzjl_list_daily.sql
+→ 导出表：rep_ysdjyjzjl_list_list_daily
+  -> 无数据，删除空文件：rep_ysdjyjzjl_list_list_daily.sql
+→ 导出表：rep_gxjyjzjlb_daily
+  -> 无数据，删除空文件：rep_gxjyjzjlb_daily.sql
+→ 导出表：rep_gxjyjzjlb_list_daily
+  -> 无数据，删除空文件：rep_gxjyjzjlb_list_daily.sql
+→ 导出表：rep_gxjyjzjlb_list_list_daily
+  -> 无数据，删除空文件：rep_gxjyjzjlb_list_list_daily.sql
+→ 导出表：rep_byccpjyjzjlb_daily
+  -> 无数据，删除空文件：rep_byccpjyjzjlb_daily.sql
+→ 导出表：rep_byccpjyjzjlb_list_daily
+  -> 无数据，删除空文件：rep_byccpjyjzjlb_list_daily.sql
+→ 导出表：rep_byccpjyjzjlb_list_list_daily
+  -> 无数据，删除空文件：rep_byccpjyjzjlb_list_list_daily.sql
+→ 导出表：rep_jgcpjyjzjlb_daily
+  -> 无数据，删除空文件：rep_jgcpjyjzjlb_daily.sql
+→ 导出表：rep_jgcpjyjzjlb_list_daily
+  -> 无数据，删除空文件：rep_jgcpjyjzjlb_list_daily.sql
+→ 导出表：rep_jgcpjyjzjlb_list_list_daily
+  -> 无数据，删除空文件：rep_jgcpjyjzjlb_list_list_daily.sql
+→ 导出表：rep_fjjyjzjlb_daily
+  -> 无数据，删除空文件：rep_fjjyjzjlb_daily.sql
+→ 导出表：rep_fjjyjzjlb_list_daily
+  -> 无数据，删除空文件：rep_fjjyjzjlb_list_daily.sql
+→ 导出表：rep_fjjyjzjlb_list_list_daily
+  -> 无数据，删除空文件：rep_fjjyjzjlb_list_list_daily.sql
+→ 导出表：rep_txthljyjl_daily
+  -> 无数据，删除空文件：rep_txthljyjl_daily.sql
+→ 导出表：rep_txthljyjl_list_daily
+  -> 无数据，删除空文件：rep_txthljyjl_list_daily.sql
+→ 导出表：rep_jrgjyjlb_daily
+  -> 无数据，删除空文件：rep_jrgjyjlb_daily.sql
+→ 导出表：rep_jrgjyjlb_list_daily
+  -> 无数据，删除空文件：rep_jrgjyjlb_list_daily.sql
+→ 导出表：rep_jrgjyjlb_list_list_daily
+  -> 无数据，删除空文件：rep_jrgjyjlb_list_list_daily.sql
+→ 导出表：rep_dhchdjyjl_daily
+  -> 无数据，删除空文件：rep_dhchdjyjl_daily.sql
+→ 导出表：rep_dhchdjyjl_list_daily
+  -> 无数据，删除空文件：rep_dhchdjyjl_list_daily.sql
+→ 导出表：rep_sxgfyjyjlb_daily
+  -> 无数据，删除空文件：rep_sxgfyjyjlb_daily.sql
+→ 导出表：rep_sxgfyjyjlb_list_daily
+  -> 无数据，删除空文件：rep_sxgfyjyjlb_list_daily.sql
+→ 导出表：rep_sxgfyjyjlb_list_list_daily
+  -> 无数据，删除空文件：rep_sxgfyjyjlb_list_list_daily.sql
+→ 导出表：rep_sxgccwgjyjlb_daily
+  -> 无数据，删除空文件：rep_sxgccwgjyjlb_daily.sql
+→ 导出表：rep_sxgccwgjyjlb_list_daily
+  -> 无数据，删除空文件：rep_sxgccwgjyjlb_list_daily.sql
+→ 导出表：rep_sxgccwgjyjlb_list_list_daily
+  -> 无数据，删除空文件：rep_sxgccwgjyjlb_list_list_daily.sql
+→ 导出表：rep_wgccwgjyjl_daily
+  -> 无数据，删除空文件：rep_wgccwgjyjl_daily.sql
+→ 导出表：rep_wgccwgjyjl_list_daily
+  -> 无数据，删除空文件：rep_wgccwgjyjl_list_daily.sql
+→ 导出表：rep_sxgjgptqsyjzjl_daily
+  -> 无数据，删除空文件：rep_sxgjgptqsyjzjl_daily.sql
+→ 导出表：rep_sxgjgptqsyjzjl_list_daily
+  -> 无数据，删除空文件：rep_sxgjgptqsyjzjl_list_daily.sql
+→ 导出表：rep_sxgjgpnyjzjl_daily
+  -> 无数据，删除空文件：rep_sxgjgpnyjzjl_daily.sql
+→ 导出表：rep_sxgjgpnyjzjl_list_daily
+  -> 无数据，删除空文件：rep_sxgjgpnyjzjl_list_daily.sql
+→ 导出表：rep_gjglzccwgjyjlb_daily
+  -> 无数据，删除空文件：rep_gjglzccwgjyjlb_daily.sql
+→ 导出表：rep_gjglzccwgjyjlb_list_daily
+  -> 无数据，删除空文件：rep_gjglzccwgjyjlb_list_daily.sql
+→ 导出表：rep_gjglzccwgjyjlb_list_list_daily
+  -> 无数据，删除空文件：rep_gjglzccwgjyjlb_list_list_daily.sql
+→ 导出表：rep_gjgdblccwgjyjlb_daily
+  -> 无数据，删除空文件：rep_gjgdblccwgjyjlb_daily.sql
+→ 导出表：rep_gjgdblccwgjyjlb_list_daily
+  -> 无数据，删除空文件：rep_gjgdblccwgjyjlb_list_daily.sql
+→ 导出表：rep_gjgdblccwgjyjlb_list_list_daily
+  -> 无数据，删除空文件：rep_gjgdblccwgjyjlb_list_list_daily.sql
+→ 导出表：rep_mkkjccwgjyjlb_daily
+  -> 无数据，删除空文件：rep_mkkjccwgjyjlb_daily.sql
+→ 导出表：rep_mkkjccwgjyjlb_list_daily
+  -> 无数据，删除空文件：rep_mkkjccwgjyjlb_list_daily.sql
+→ 导出表：rep_mkkjccwgjyjlb_list_list_daily
+  -> 无数据，删除空文件：rep_mkkjccwgjyjlb_list_list_daily.sql
+→ 导出表：rep_clhljyjlb_daily
+  -> 无数据，删除空文件：rep_clhljyjlb_daily.sql
+→ 导出表：rep_clhljyjlb_list_daily
+  -> 无数据，删除空文件：rep_clhljyjlb_list_daily.sql
+→ 导出表：rep_clhljyjlb_list_list_daily
+  -> 无数据，删除空文件：rep_clhljyjlb_list_list_daily.sql
+→ 导出表：rep_cljzjyjlb_daily
+  -> 无数据，删除空文件：rep_cljzjyjlb_daily.sql
+→ 导出表：rep_cljzjyjlb_list_daily
+  -> 无数据，删除空文件：rep_cljzjyjlb_list_daily.sql
+→ 导出表：rep_cljzjyjlb_list_list_daily
+  -> 无数据，删除空文件：rep_cljzjyjlb_list_list_daily.sql
+→ 导出表：rep_bzhbpbjjyjlba_daily
+→ 导出表：rep_bzhbpbjjyjlba_list_daily
+→ 导出表：rep_bzhbpbjjyjlba_list_list_daily
+→ 导出表：rep_bzjjgjyjzb_daily
+  -> 无数据，删除空文件：rep_bzjjgjyjzb_daily.sql
+→ 导出表：rep_bzjjgjyjzb_list_daily
+  -> 无数据，删除空文件：rep_bzjjgjyjzb_list_daily.sql
+→ 导出表：rep_bzjjgjyjzb_list_list_daily
+  -> 无数据，删除空文件：rep_bzjjgjyjzb_list_list_daily.sql
+→ 导出表：rep_ntyclrtjyjlb_daily
+  -> 无数据，删除空文件：rep_ntyclrtjyjlb_daily.sql
+→ 导出表：rep_ntyclrtjyjlb_list_daily
+  -> 无数据，删除空文件：rep_ntyclrtjyjlb_list_daily.sql
+→ 导出表：rep_ntyclrtjyjlb_list_list_daily
+  -> 无数据，删除空文件：rep_ntyclrtjyjlb_list_list_daily.sql
+→ 导出表：rep_hjgxjcjlb_daily
+  -> 无数据，删除空文件：rep_hjgxjcjlb_daily.sql
+→ 导出表：rep_hjgxjcjlb_list_daily
+  -> 无数据，删除空文件：rep_hjgxjcjlb_list_daily.sql
+→ 导出表：rep_hjgxjcjlb_list_list_daily
+  -> 无数据，删除空文件：rep_hjgxjcjlb_list_list_daily.sql
+→ 导出表：rep_sbjwjyjzjlb_daily
+  -> 无数据，删除空文件：rep_sbjwjyjzjlb_daily.sql
+→ 导出表：rep_sbjwjyjzjlb_list_daily
+  -> 无数据，删除空文件：rep_sbjwjyjzjlb_list_daily.sql
+→ 导出表：rep_sbjwjyjzjlb_list_list_daily
+  -> 无数据，删除空文件：rep_sbjwjyjzjlb_list_list_daily.sql
+→ 导出表：rep_kzxjyjl_daily
+  -> 无数据，删除空文件：rep_kzxjyjl_daily.sql
+→ 导出表：rep_kzxjyjl_list_daily
+  -> 无数据，删除空文件：rep_kzxjyjl_list_daily.sql
+→ 导出表：rep_jxjyjl_daily
+  -> 无数据，删除空文件：rep_jxjyjl_daily.sql
+→ 导出表：rep_jxjyjl_list_daily
+  -> 无数据，删除空文件：rep_jxjyjl_list_daily.sql
+→ 导出表：rep_pmijyjl_daily
+  -> 无数据，删除空文件：rep_pmijyjl_daily.sql
+→ 导出表：rep_pmijyjl_list_daily
+  -> 无数据，删除空文件：rep_pmijyjl_list_daily.sql
+→ 导出表：rep_rwdxsyjzb_daily
+  -> 无数据，删除空文件：rep_rwdxsyjzb_daily.sql
+→ 导出表：rep_rwdxsyjzb_list_daily
+  -> 无数据，删除空文件：rep_rwdxsyjzb_list_daily.sql
+→ 导出表：rep_jzlclsgqyjzjlb_daily
+  -> 无数据，删除空文件：rep_jzlclsgqyjzjlb_daily.sql
+→ 导出表：rep_jzlclsgqyjzjlb_list_daily
+  -> 无数据，删除空文件：rep_jzlclsgqyjzjlb_list_daily.sql
+→ 导出表：rep_jzlclsggcyjzjlb_daily
+  -> 无数据，删除空文件：rep_jzlclsggcyjzjlb_daily.sql
+→ 导出表：rep_jzlclsggcyjzjlb_list_daily
+  -> 无数据，删除空文件：rep_jzlclsggcyjzjlb_list_daily.sql
+→ 导出表：rep_jzlclsghyjzjlb_daily
+  -> 无数据，删除空文件：rep_jzlclsghyjzjlb_daily.sql
+→ 导出表：rep_jzlclsghyjzjlb_list_daily
+  -> 无数据，删除空文件：rep_jzlclsghyjzjlb_list_daily.sql
+→ 导出表：rep_rtjxyzsyjzb_daily
+  -> 无数据，删除空文件：rep_rtjxyzsyjzb_daily.sql
+→ 导出表：rep_rtjxyzsyjzb_list_daily
+  -> 无数据，删除空文件：rep_rtjxyzsyjzb_list_daily.sql
+→ 导出表：rep_rtjxyzsyjzb_imglist_daily
+  -> 无数据，删除空文件：rep_rtjxyzsyjzb_imglist_daily.sql
+→ 导出表：rep_cdjghqtsyjcjzb_daily
+  -> 无数据，删除空文件：rep_cdjghqtsyjcjzb_daily.sql
+→ 导出表：rep_cdjghqtsyjcjzb_list_daily
+  -> 无数据，删除空文件：rep_cdjghqtsyjcjzb_list_daily.sql
+→ 导出表：rep_ycllh_daily
+  -> 无数据，删除空文件：rep_ycllh_daily.sql
+→ 导出表：rep_ycllh_list_daily
+  -> 无数据，删除空文件：rep_ycllh_list_daily.sql
+→ 导出表：rep_ycllh_list_list_daily
+  -> 无数据，删除空文件：rep_ycllh_list_list_daily.sql
+→ 导出表：rep_yzsygzj_daily
+  -> 无数据，删除空文件：rep_yzsygzj_daily.sql
+→ 导出表：rep_yzsygzj_list1_daily
+  -> 无数据，删除空文件：rep_yzsygzj_list1_daily.sql
+→ 导出表：rep_yzsygzj_list2_daily
+  -> 无数据，删除空文件：rep_yzsygzj_list2_daily.sql
+→ 导出表：rep_yzsygzj_list3_daily
+  -> 无数据，删除空文件：rep_yzsygzj_list3_daily.sql
+→ 导出表：rep_sqcqzzxn_daily
+  -> 无数据，删除空文件：rep_sqcqzzxn_daily.sql
+→ 导出表：rep_jxyzsyjzb_daily
+  -> 无数据，删除空文件：rep_jxyzsyjzb_daily.sql
+→ 导出表：rep_wfsysjsc_daily
+  -> 无数据，删除空文件：rep_wfsysjsc_daily.sql
+→ 导出表：rep_wfsysjsc_list1_daily
+  -> 无数据，删除空文件：rep_wfsysjsc_list1_daily.sql
+→ 导出表：rep_wfsysjsc_list2_daily
+  -> 无数据，删除空文件：rep_wfsysjsc_list2_daily.sql
+→ 导出表：rep_wfsysjsc_list3_daily
+  -> 无数据，删除空文件：rep_wfsysjsc_list3_daily.sql
+→ 导出表：rep_wfsysj_daily
+  -> 无数据，删除空文件：rep_wfsysj_daily.sql
+→ 导出表：rep_wfsysj_list1_daily
+  -> 无数据，删除空文件：rep_wfsysj_list1_daily.sql
+→ 导出表：rep_wfsysj_list2_daily
+  -> 无数据，删除空文件：rep_wfsysj_list2_daily.sql
+→ 导出表：rep_wfsysj_list3_daily
+  -> 无数据，删除空文件：rep_wfsysj_list3_daily.sql
+→ 导出表：rep_dxfdj_daily
+  -> 无数据，删除空文件：rep_dxfdj_daily.sql
+→ 导出表：rep_dxfdj_list1_daily
+  -> 无数据，删除空文件：rep_dxfdj_list1_daily.sql
+→ 导出表：rep_dxfdj_list2_daily
+  -> 无数据，删除空文件：rep_dxfdj_list2_daily.sql
+→ 导出表：rep_dxfdj_list3_daily
+  -> 无数据，删除空文件：rep_dxfdj_list3_daily.sql
+→ 导出表：rep_dxfdj_list4_daily
+  -> 无数据，删除空文件：rep_dxfdj_list4_daily.sql
+→ 导出表：rep_lgysj_daily
+  -> 无数据，删除空文件：rep_lgysj_daily.sql
+→ 导出表：rep_lgysj_list1_daily
+  -> 无数据，删除空文件：rep_lgysj_list1_daily.sql
+→ 导出表：rep_lgysj_list2_daily
+  -> 无数据，删除空文件：rep_lgysj_list2_daily.sql
+→ 导出表：rep_lgysj_list3_daily
+  -> 无数据，删除空文件：rep_lgysj_list3_daily.sql
+→ 导出表：rep_lgysj_list4_daily
+  -> 无数据，删除空文件：rep_lgysj_list4_daily.sql
+→ 导出表：rep_gcjyjz_daily
+→ 导出表：rep_gcjyjz_list_daily
+→ 导出表：rep_lxsy_daily
+  -> 无数据，删除空文件：rep_lxsy_daily.sql
+→ 导出表：rep_lxsy_list_daily
+  -> 无数据，删除空文件：rep_lxsy_list_daily.sql
+→ 导出表：rep_lxsy_list_list_daily
+  -> 无数据，删除空文件：rep_lxsy_list_list_daily.sql
+→ 导出表：rep_tssyjz_daily
+  -> 无数据，删除空文件：rep_tssyjz_daily.sql
+→ 导出表：rep_tssyjz_list_daily
+  -> 无数据，删除空文件：rep_tssyjz_list_daily.sql
+→ 导出表：rep_xssyjz_daily
+  -> 无数据，删除空文件：rep_xssyjz_daily.sql
+→ 导出表：rep_xssyjz_list_daily
+  -> 无数据，删除空文件：rep_xssyjz_list_daily.sql
+→ 导出表：rep_ccjyjz_daily
+  -> 无数据，删除空文件：rep_ccjyjz_daily.sql
+→ 导出表：rep_ccjyjz_list_daily
+  -> 无数据，删除空文件：rep_ccjyjz_list_daily.sql
+→ 导出表：rep_ccjyjz_list_list_daily
+  -> 无数据，删除空文件：rep_ccjyjz_list_list_daily.sql
+→ 导出表：rep_hfhxcf_daily
+  -> 无数据，删除空文件：rep_hfhxcf_daily.sql
+→ 导出表：rep_hfhxcf_list_daily
+  -> 无数据，删除空文件：rep_hfhxcf_list_daily.sql
+→ 导出表：rep_hdchxcf_daily
+  -> 无数据，删除空文件：rep_hdchxcf_daily.sql
+→ 导出表：rep_hdchxcf_list_daily
+  -> 无数据，删除空文件：rep_hdchxcf_list_daily.sql
+→ 导出表：rep_cpwgjcjlb_daily
+  -> 无数据，删除空文件：rep_cpwgjcjlb_daily.sql
+→ 导出表：rep_cpwgjcjlb_list_daily
+  -> 无数据，删除空文件：rep_cpwgjcjlb_list_daily.sql
+→ 导出表：rep_cpwgjcjlb_list_list_daily
+  -> 无数据，删除空文件：rep_cpwgjcjlb_list_list_daily.sql
+→ 导出表：rep_raw_material_outsourcing_state_static_equipment
+→ 导出表：rep_raw_material_outsourcing_state_static_equipment_his
+→ 导出表：rep_raw_material_outsourcing_state_static_equipment_list
+→ 导出表：rep_raw_material_outsourcing_state_static_equipment_list_his
+→ 导出表：rep_raw_material_outsourcing_state_static_board
+→ 导出表：rep_raw_material_outsourcing_state_static_board_his
+→ 导出表：rep_raw_material_outsourcing_state_static_board_list
+→ 导出表：rep_raw_material_outsourcing_state_static_board_list_his
+  -> 无数据，删除空文件：rep_raw_material_outsourcing_state_static_board_list_his.sql
+→ 导出表：rep_raw_material_outsourcing_state_static_het
+→ 导出表：rep_raw_material_outsourcing_state_static_het_his
+→ 导出表：rep_raw_material_outsourcing_state_static_het_list
+→ 导出表：rep_raw_material_outsourcing_state_static_het_list_his
+  -> 无数据，删除空文件：rep_raw_material_outsourcing_state_static_het_list_his.sql
+→ 导出表：rep_raw_material_outsourcing_state_static_forging
+→ 导出表：rep_raw_material_outsourcing_state_static_forging_his
+→ 导出表：rep_raw_material_outsourcing_state_static_forging_list
+→ 导出表：rep_raw_material_outsourcing_state_static_forging_list_his
+  -> 无数据，删除空文件：rep_raw_material_outsourcing_state_static_forging_list_his.sql
+→ 导出表：rep_raw_material_outsourcing_state_static_weld
+→ 导出表：rep_raw_material_outsourcing_state_static_weld_his
+→ 导出表：rep_raw_material_outsourcing_state_static_weld_list
+→ 导出表：rep_raw_material_outsourcing_state_static_weld_list_his
+  -> 无数据，删除空文件：rep_raw_material_outsourcing_state_static_weld_list_his.sql
+→ 导出表：rep_drawing_state_static_equipment
+→ 导出表：rep_drawing_state_static_equipment_his
+→ 导出表：rep_fm_wxwg_equipment_wxwg
+  -> 无数据，删除空文件：rep_fm_wxwg_equipment_wxwg.sql
+→ 导出表：rep_fm_wxwg_equipment_wxwg_his
+  -> 无数据，删除空文件：rep_fm_wxwg_equipment_wxwg_his.sql
+→ 导出表：rep_fm_wxwg_equipment_wxwg_list
+  -> 无数据，删除空文件：rep_fm_wxwg_equipment_wxwg_list.sql
+→ 导出表：rep_fm_wxwg_equipment_wxwg_list_his
+  -> 无数据，删除空文件：rep_fm_wxwg_equipment_wxwg_list_his.sql
+→ 导出表：rep_fm_wxwg_equipment_bc
+  -> 无数据，删除空文件：rep_fm_wxwg_equipment_bc.sql
+→ 导出表：rep_fm_wxwg_equipment_bc_his
+  -> 无数据，删除空文件：rep_fm_wxwg_equipment_bc_his.sql
+→ 导出表：rep_fm_wxwg_equipment_bc_list
+  -> 无数据，删除空文件：rep_fm_wxwg_equipment_bc_list.sql
+→ 导出表：rep_fm_wxwg_equipment_bc_list_his
+  -> 无数据，删除空文件：rep_fm_wxwg_equipment_bc_list_his.sql
+→ 导出表：rep_fm_wxwg_equipment_cj
+  -> 无数据，删除空文件：rep_fm_wxwg_equipment_cj.sql
+→ 导出表：rep_fm_wxwg_equipment_cj_his
+  -> 无数据，删除空文件：rep_fm_wxwg_equipment_cj_his.sql
+→ 导出表：rep_fm_wxwg_equipment_cj_list
+  -> 无数据，删除空文件：rep_fm_wxwg_equipment_cj_list.sql
+→ 导出表：rep_fm_wxwg_equipment_cj_list_his
+  -> 无数据，删除空文件：rep_fm_wxwg_equipment_cj_list_his.sql
+→ 导出表：rep_fm_wxwg_equipment_dj
+  -> 无数据，删除空文件：rep_fm_wxwg_equipment_dj.sql
+→ 导出表：rep_fm_wxwg_equipment_dj_his
+  -> 无数据，删除空文件：rep_fm_wxwg_equipment_dj_his.sql
+→ 导出表：rep_fm_wxwg_equipment_dj_list
+  -> 无数据，删除空文件：rep_fm_wxwg_equipment_dj_list.sql
+→ 导出表：rep_fm_wxwg_equipment_dj_list_his
+  -> 无数据，删除空文件：rep_fm_wxwg_equipment_dj_list_his.sql
+→ 导出表：rep_drawing_fm_equipment
+  -> 无数据，删除空文件：rep_drawing_fm_equipment.sql
+→ 导出表：rep_drawing_fm_equipment_his
+  -> 无数据，删除空文件：rep_drawing_fm_equipment_his.sql
+→ 导出表：rep_raw_material_outsourcing_state_rotating_equipment
+  -> 无数据，删除空文件：rep_raw_material_outsourcing_state_rotating_equipment.sql
+→ 导出表：rep_raw_material_outsourcing_state_rotating_equipment_his
+  -> 无数据，删除空文件：rep_raw_material_outsourcing_state_rotating_equipment_his.sql
+→ 导出表：rep_raw_material_outsourcing_state_rotating_equipment_list
+  -> 无数据，删除空文件：rep_raw_material_outsourcing_state_rotating_equipment_list.sql
+→ 导出表：rep_raw_material_outsourcing_state_rotating_equipment_list_his
+  -> 无数据，删除空文件：rep_raw_material_outsourcing_state_rotating_equipment_list_his.sql
+→ 导出表：rep_raw_material_outsourcing_state_rotating_mainparts
+  -> 无数据，删除空文件：rep_raw_material_outsourcing_state_rotating_mainparts.sql
+→ 导出表：rep_raw_material_outsourcing_state_rotating_mainparts_his
+  -> 无数据，删除空文件：rep_raw_material_outsourcing_state_rotating_mainparts_his.sql
+→ 导出表：rep_raw_material_outsourcing_state_rotating_mainparts_list
+  -> 无数据，删除空文件：rep_raw_material_outsourcing_state_rotating_mainparts_list.sql
+→ 导出表：rep_raw_material_outsourcing_state_rotating_mainparts_list_his
+  -> 无数据，删除空文件：rep_raw_material_outsourcing_state_rotating_mainparts_list_his.sql
+→ 导出表：rep_drawing_state_rotating_equipment
+  -> 无数据，删除空文件：rep_drawing_state_rotating_equipment.sql
+→ 导出表：rep_drawing_state_rotating_equipment_his
+  -> 无数据，删除空文件：rep_drawing_state_rotating_equipment_his.sql
+→ 导出表：rep_wxwg_equipment
+  -> 无数据，删除空文件：rep_wxwg_equipment.sql
+→ 导出表：rep_wxwg_equipment_his
+  -> 无数据，删除空文件：rep_wxwg_equipment_his.sql
+→ 导出表：rep_wxwg_equipment_list
+  -> 无数据，删除空文件：rep_wxwg_equipment_list.sql
+→ 导出表：rep_wxwg_equipment_list_his
+  -> 无数据，删除空文件：rep_wxwg_equipment_list_his.sql
+→ 导出表：rep_lg_wxwg_equipment
+  -> 无数据，删除空文件：rep_lg_wxwg_equipment.sql
+→ 导出表：rep_lg_wxwg_equipment_his
+  -> 无数据，删除空文件：rep_lg_wxwg_equipment_his.sql
+→ 导出表：rep_lg_wxwg_equipment_list
+  -> 无数据，删除空文件：rep_lg_wxwg_equipment_list.sql
+→ 导出表：rep_lg_wxwg_equipment_list_his
+  -> 无数据，删除空文件：rep_lg_wxwg_equipment_list_his.sql
+→ 导出表：rep_cl_equipment
+  -> 无数据，删除空文件：rep_cl_equipment.sql
+→ 导出表：rep_cl_equipment_his
+  -> 无数据，删除空文件：rep_cl_equipment_his.sql
+→ 导出表：rep_cl_equipment_list
+  -> 无数据，删除空文件：rep_cl_equipment_list.sql
+→ 导出表：rep_cl_equipment_list_his
+  -> 无数据，删除空文件：rep_cl_equipment_list_his.sql
+→ 导出表：rep_gjg_equipment
+  -> 无数据，删除空文件：rep_gjg_equipment.sql
+→ 导出表：rep_gjg_equipment_his
+  -> 无数据，删除空文件：rep_gjg_equipment_his.sql
+→ 导出表：rep_gjg_equipment_list
+  -> 无数据，删除空文件：rep_gjg_equipment_list.sql
+→ 导出表：rep_gjg_equipment_list_his
+  -> 无数据，删除空文件：rep_gjg_equipment_list_his.sql
+→ 导出表：rep_jhg_wxwg_equipment
+  -> 无数据，删除空文件：rep_jhg_wxwg_equipment.sql
+→ 导出表：rep_jhg_wxwg_equipment_his
+  -> 无数据，删除空文件：rep_jhg_wxwg_equipment_his.sql
+→ 导出表：rep_jhg_wxwg_equipment_list
+  -> 无数据，删除空文件：rep_jhg_wxwg_equipment_list.sql
+→ 导出表：rep_jhg_wxwg_equipment_list_his
+  -> 无数据，删除空文件：rep_jhg_wxwg_equipment_list_his.sql
+→ 导出表：rep_drawing_ll_equipment
+  -> 无数据，删除空文件：rep_drawing_ll_equipment.sql
+→ 导出表：rep_drawing_ll_equipment_his
+  -> 无数据，删除空文件：rep_drawing_ll_equipment_his.sql
+→ 导出表：rep_dq_wxwg_equipment
+  -> 无数据，删除空文件：rep_dq_wxwg_equipment.sql
+→ 导出表：rep_dq_wxwg_equipment_his
+  -> 无数据，删除空文件：rep_dq_wxwg_equipment_his.sql
+→ 导出表：rep_dq_wxwg_equipment_list
+  -> 无数据，删除空文件：rep_dq_wxwg_equipment_list.sql
+→ 导出表：rep_dq_wxwg_equipment_list_his
+  -> 无数据，删除空文件：rep_dq_wxwg_equipment_list_his.sql
+→ 导出表：rep_dq_lbj_equipment
+  -> 无数据，删除空文件：rep_dq_lbj_equipment.sql
+→ 导出表：rep_dq_lbj_equipment_his
+  -> 无数据，删除空文件：rep_dq_lbj_equipment_his.sql
+→ 导出表：rep_dq_lbj_equipment_list
+  -> 无数据，删除空文件：rep_dq_lbj_equipment_list.sql
+→ 导出表：rep_dq_lbj_equipment_list_his
+  -> 无数据，删除空文件：rep_dq_lbj_equipment_list_his.sql
+→ 导出表：rep_drawing_dqsb_equipment
+  -> 无数据，删除空文件：rep_drawing_dqsb_equipment.sql
+→ 导出表：rep_drawing_dqsb_equipment_his
+  -> 无数据，删除空文件：rep_drawing_dqsb_equipment_his.sql
+→ 导出表：plan_list
+→ 导出表：plan_list_history
+→ 导出表：plan_list_submit
+→ 导出表：project_inspection_file
+  -> 无数据，删除空文件：project_inspection_file.sql
+→ 导出表：sys_release_note
+→ 导出表：sys_release_note_list
+→ 导出表：sys_release_note_equipment
+→ 导出表：rep_jxyzsyjzb
+  -> 无数据，删除空文件：rep_jxyzsyjzb.sql
+→ 导出表：rep_myslsyjzjl
+  -> 无数据，删除空文件：rep_myslsyjzjl.sql
+→ 导出表：rep_sqcqzzxn
+  -> 无数据，删除空文件：rep_sqcqzzxn.sql
+→ 导出表：rep_yzsygzj1
+  -> 无数据，删除空文件：rep_yzsygzj1.sql
+→ 导出表：rep_zyjlxm
+→ 导出表：rep_zzdphjcssyjz
+  -> 无数据，删除空文件：rep_zzdphjcssyjz.sql
+→ 导出表：rep_wfsysj1
+  -> 无数据，删除空文件：rep_wfsysj1.sql
+→ 导出表：rep_wfsysj2
+  -> 无数据，删除空文件：rep_wfsysj2.sql
+→ 导出表：rep_wfsysjsc1
+  -> 无数据，删除空文件：rep_wfsysjsc1.sql
+→ 导出表：rep_wfsysjsc2
+  -> 无数据，删除空文件：rep_wfsysjsc2.sql
+→ 导出表：rep_cone_inspection
+  -> 无数据，删除空文件：rep_cone_inspection.sql
+→ 导出表：rep_dxfdj1
+  -> 无数据，删除空文件：rep_dxfdj1.sql
+→ 导出表：rep_syjz_b_tp1
+  -> 无数据，删除空文件：rep_syjz_b_tp1.sql
+→ 导出表：rep_yxtyzsyjz_tp1
+  -> 无数据，删除空文件：rep_yxtyzsyjz_tp1.sql
+→ 导出表：rep_yxtyzsyjz_tp2
+  -> 无数据，删除空文件：rep_yxtyzsyjz_tp2.sql
+→ 导出表：rep_basics_test
+→ 导出表：rep_basics_test_list
+→ 导出表：rep_welding_technology
+→ 导出表：rep_weld_technology_list
+→ 导出表：rep_bzcbcx_dctjbz_data
+  -> 无数据，删除空文件：rep_bzcbcx_dctjbz_data.sql
+→ 导出表：rep_bzcbcx_dctjbz_data_list
+  -> 无数据，删除空文件：rep_bzcbcx_dctjbz_data_list.sql
+→ 导出表：rep_bzcbcx_dcztbz_data
+  -> 无数据，删除空文件：rep_bzcbcx_dcztbz_data.sql
+→ 导出表：rep_bzcbcx_dcztbz_data_list
+  -> 无数据，删除空文件：rep_bzcbcx_dcztbz_data_list.sql
+→ 导出表：rep_cdjghqtsyjcjzb
+  -> 无数据，删除空文件：rep_cdjghqtsyjcjzb.sql
+→ 导出表：rep_cdjghqtsyjcjzb_list
+  -> 无数据，删除空文件：rep_cdjghqtsyjcjzb_list.sql
+→ 导出表：rep_cxftjyjzjl
+→ 导出表：rep_cxftjyjzjl_list
+→ 导出表：rep_cxztjyjzjl
+→ 导出表：rep_cxztjyjzjl_list
+→ 导出表：rep_djphsyjz_b
+  -> 无数据，删除空文件：rep_djphsyjz_b.sql
+→ 导出表：rep_djphsyjz_b_list
+  -> 无数据，删除空文件：rep_djphsyjz_b_list.sql
+→ 导出表：rep_djtjjyjl_ptsb
+  -> 无数据，删除空文件：rep_djtjjyjl_ptsb.sql
+→ 导出表：rep_djtjjyjl_ptsb_list
+  -> 无数据，删除空文件：rep_djtjjyjl_ptsb_list.sql
+→ 导出表：rep_djtjjyjl_zysb
+  -> 无数据，删除空文件：rep_djtjjyjl_zysb.sql
+→ 导出表：rep_djtjjyjl_zysb_list
+  -> 无数据，删除空文件：rep_djtjjyjl_zysb_list.sql
+→ 导出表：rep_dldmkjyjzjl
+  -> 无数据，删除空文件：rep_dldmkjyjzjl.sql
+→ 导出表：rep_dldmkjyjzjl_list
+  -> 无数据，删除空文件：rep_dldmkjyjzjl_list.sql
+→ 导出表：rep_dldyzzjyjzjl
+  -> 无数据，删除空文件：rep_dldyzzjyjzjl.sql
+→ 导出表：rep_dldyzzjyjzjl_list
+  -> 无数据，删除空文件：rep_dldyzzjyjzjl_list.sql
+→ 导出表：rep_ecnjyzzccjcjl
+  -> 无数据，删除空文件：rep_ecnjyzzccjcjl.sql
+→ 导出表：rep_ecnjyzzccjcjl_list
+  -> 无数据，删除空文件：rep_ecnjyzzccjcjl_list.sql
+→ 导出表：rep_fbftjyjzjlb_data
+  -> 无数据，删除空文件：rep_fbftjyjzjlb_data.sql
+→ 导出表：rep_fbftjyjzjlb_data_list
+  -> 无数据，删除空文件：rep_fbftjyjzjlb_data_list.sql
+→ 导出表：rep_fdtqztzzjcjlb_data
+  -> 无数据，删除空文件：rep_fdtqztzzjcjlb_data.sql
+→ 导出表：rep_fdtqztzzjcjlb_data_list
+  -> 无数据，删除空文件：rep_fdtqztzzjcjlb_data_list.sql
+→ 导出表：rep_flange_check
+→ 导出表：rep_flange_check_list
+→ 导出表：rep_fpzthhjyjlb
+  -> 无数据，删除空文件：rep_fpzthhjyjlb.sql
+→ 导出表：rep_fpzthhjyjlb_list
+  -> 无数据，删除空文件：rep_fpzthhjyjlb_list.sql
+→ 导出表：rep_fpztjyjzjlb_data
+  -> 无数据，删除空文件：rep_fpztjyjzjlb_data.sql
+→ 导出表：rep_fpztjyjzjlb_data_list
+  -> 无数据，删除空文件：rep_fpztjyjzjlb_data_list.sql
+→ 导出表：rep_fpztzzjyjzjlb
+  -> 无数据，删除空文件：rep_fpztzzjyjzjlb.sql
+→ 导出表：rep_fpztzzjyjzjlb_list
+  -> 无数据，删除空文件：rep_fpztzzjyjzjlb_list.sql
+→ 导出表：rep_fsddpjyjzjl
+  -> 无数据，删除空文件：rep_fsddpjyjzjl.sql
+→ 导出表：rep_fsddpjyjzjl_list
+  -> 无数据，删除空文件：rep_fsddpjyjzjl_list.sql
+→ 导出表：rep_fsdyzzjyjzjl
+  -> 无数据，删除空文件：rep_fsdyzzjyjzjl.sql
+→ 导出表：rep_fsdyzzjyjzjl_list
+  -> 无数据，删除空文件：rep_fsdyzzjyjzjl_list.sql
+→ 导出表：rep_ftxljyjl
+  -> 无数据，删除空文件：rep_ftxljyjl.sql
+→ 导出表：rep_ftxljyjl_list
+  -> 无数据，删除空文件：rep_ftxljyjl_list.sql
+→ 导出表：rep_gcjyjz
+→ 导出表：rep_gcjyjz_list
+→ 导出表：rep_general_purpose
+  -> 无数据，删除空文件：rep_general_purpose.sql
+→ 导出表：rep_general_purpose_list
+  -> 无数据，删除空文件：rep_general_purpose_list.sql
+→ 导出表：rep_glbzjnysyjyjl
+  -> 无数据，删除空文件：rep_glbzjnysyjyjl.sql
+→ 导出表：rep_glbzjnysyjyjl_list
+  -> 无数据，删除空文件：rep_glbzjnysyjyjl_list.sql
+→ 导出表：rep_gqmfszjqmsyjz
+  -> 无数据，删除空文件：rep_gqmfszjqmsyjz.sql
+→ 导出表：rep_gqmfszjqmsyjz_list
+  -> 无数据，删除空文件：rep_gqmfszjqmsyjz_list.sql
+→ 导出表：rep_gszzjcxjyjzjl_data
+→ 导出表：rep_gszzjcxjyjzjl_data_list
+→ 导出表：rep_hdchxcf
+  -> 无数据，删除空文件：rep_hdchxcf.sql
+→ 导出表：rep_hdchxcf_list
+  -> 无数据，删除空文件：rep_hdchxcf_list.sql
+→ 导出表：rep_head_group
+  -> 无数据，删除空文件：rep_head_group.sql
+→ 导出表：rep_head_group_list
+  -> 无数据，删除空文件：rep_head_group_list.sql
+→ 导出表：rep_head_group_after
+  -> 无数据，删除空文件：rep_head_group_after.sql
+→ 导出表：rep_head_group_after_list
+  -> 无数据，删除空文件：rep_head_group_after_list.sql
+→ 导出表：rep_heat_treatment
+→ 导出表：rep_heat_treatment_list
+→ 导出表：rep_hfbzhhfbht
+→ 导出表：rep_hfbzhhfbht_list
+→ 导出表：rep_hfhxcf
+  -> 无数据，删除空文件：rep_hfhxcf.sql
+→ 导出表：rep_hfhxcf_list
+  -> 无数据，删除空文件：rep_hfhxcf_list.sql
+→ 导出表：rep_hjjyjl
+→ 导出表：rep_hjjyjl_list
+→ 导出表：rep_hrgygbzjjyjzjlb_data
+→ 导出表：rep_hrgygbzjjyjzjlb_data_list
+→ 导出表：rep_incoming_profile
+  -> 无数据，删除空文件：rep_incoming_profile.sql
+→ 导出表：rep_incoming_profile_list
+  -> 无数据，删除空文件：rep_incoming_profile_list.sql
+→ 导出表：rep_infiltration
+  -> 无数据，删除空文件：rep_infiltration.sql
+→ 导出表：rep_infiltration_list
+  -> 无数据，删除空文件：rep_infiltration_list.sql
+→ 导出表：rep_jgzzjyjzjl
+→ 导出表：rep_jgzzjyjzjl_list
+→ 导出表：rep_jkhxkkjzjk
+→ 导出表：rep_jkhxkkjzjk_list
+→ 导出表：rep_jtzlzjzzzzjy
+  -> 无数据，删除空文件：rep_jtzlzjzzzzjy.sql
+→ 导出表：rep_jtzlzjzzzzjy_list
+  -> 无数据，删除空文件：rep_jtzlzjzzzzjy_list.sql
+→ 导出表：rep_jzlclsggcyjzjlb
+  -> 无数据，删除空文件：rep_jzlclsggcyjzjlb.sql
+→ 导出表：rep_jzlclsggcyjzjlb_list
+  -> 无数据，删除空文件：rep_jzlclsggcyjzjlb_list.sql
+→ 导出表：rep_jzlclsghyjzjlb
+  -> 无数据，删除空文件：rep_jzlclsghyjzjlb.sql
+→ 导出表：rep_jzlclsghyjzjlb_list
+  -> 无数据，删除空文件：rep_jzlclsghyjzjlb_list.sql
+→ 导出表：rep_jzlclsgqyjzjlb
+  -> 无数据，删除空文件：rep_jzlclsgqyjzjlb.sql
+→ 导出表：rep_jzlclsgqyjzjlb_list
+  -> 无数据，删除空文件：rep_jzlclsgqyjzjlb_list.sql
+→ 导出表：rep_kzxjyjl
+  -> 无数据，删除空文件：rep_kzxjyjl.sql
+→ 导出表：rep_kzxjyjl_list
+  -> 无数据，删除空文件：rep_kzxjyjl_list.sql
+→ 导出表：rep_ltrtzk
+  -> 无数据，删除空文件：rep_ltrtzk.sql
+→ 导出表：rep_ltrtzk_list
+  -> 无数据，删除空文件：rep_ltrtzk_list.sql
+→ 导出表：rep_material_quality
+→ 导出表：rep_material_quality_list
+→ 导出表：rep_qgrcl
+  -> 无数据，删除空文件：rep_qgrcl.sql
+→ 导出表：rep_qgrcl_list
+  -> 无数据，删除空文件：rep_qgrcl_list.sql
+→ 导出表：rep_qkbzzjyjzjl
+  -> 无数据，删除空文件：rep_qkbzzjyjzjl.sql
+→ 导出表：rep_qkbzzjyjzjl_list
+  -> 无数据，删除空文件：rep_qkbzzjyjzjl_list.sql
+→ 导出表：rep_radial
+  -> 无数据，删除空文件：rep_radial.sql
+→ 导出表：rep_radial_list
+  -> 无数据，删除空文件：rep_radial_list.sql
+→ 导出表：rep_rcljyjla
+→ 导出表：rep_rcljyjla_list
+→ 导出表：rep_rotor_runout
+  -> 无数据，删除空文件：rep_rotor_runout.sql
+→ 导出表：rep_rotor_runout_list
+  -> 无数据，删除空文件：rep_rotor_runout_list.sql
+→ 导出表：rep_rtsyjz
+  -> 无数据，删除空文件：rep_rtsyjz.sql
+→ 导出表：rep_rtsyjz_list
+  -> 无数据，删除空文件：rep_rtsyjz_list.sql
+→ 导出表：rep_rwdxsyjzb
+  -> 无数据，删除空文件：rep_rwdxsyjzb.sql
+→ 导出表：rep_rwdxsyjzb_list
+  -> 无数据，删除空文件：rep_rwdxsyjzb_list.sql
+→ 导出表：rep_scjdtljcb
+  -> 无数据，删除空文件：rep_scjdtljcb.sql
+→ 导出表：rep_scjdtljcb_list
+  -> 无数据，删除空文件：rep_scjdtljcb_list.sql
+→ 导出表：rep_slsyjyjlb
+  -> 无数据，删除空文件：rep_slsyjyjlb.sql
+→ 导出表：rep_slsyjyjlb_list
+  -> 无数据，删除空文件：rep_slsyjyjlb_list.sql
+→ 导出表：rep_sxgjgpnyjzjl
+  -> 无数据，删除空文件：rep_sxgjgpnyjzjl.sql
+→ 导出表：rep_sxgjgpnyjzjl_list
+  -> 无数据，删除空文件：rep_sxgjgpnyjzjl_list.sql
+→ 导出表：rep_sxgjgptqsyjzjl
+  -> 无数据，删除空文件：rep_sxgjgptqsyjzjl.sql
+→ 导出表：rep_sxgjgptqsyjzjl_list
+  -> 无数据，删除空文件：rep_sxgjgptqsyjzjl_list.sql
+→ 导出表：rep_tcqwlcljcjl
+  -> 无数据，删除空文件：rep_tcqwlcljcjl.sql
+→ 导出表：rep_tcqwlcljcjl_list
+  -> 无数据，删除空文件：rep_tcqwlcljcjl_list.sql
+→ 导出表：rep_tjxljyjl_ptsb
+  -> 无数据，删除空文件：rep_tjxljyjl_ptsb.sql
+→ 导出表：rep_tjxljyjl_ptsb_list
+  -> 无数据，删除空文件：rep_tjxljyjl_ptsb_list.sql
+→ 导出表：rep_tjxljyjl_zysb
+  -> 无数据，删除空文件：rep_tjxljyjl_zysb.sql
+→ 导出表：rep_tjxljyjl_zysb_list
+  -> 无数据，删除空文件：rep_tjxljyjl_zysb_list.sql
+→ 导出表：rep_tnjccjcjl
+→ 导出表：rep_tnjccjcjl_list
+→ 导出表：rep_tssyjz
+  -> 无数据，删除空文件：rep_tssyjz.sql
+→ 导出表：rep_tssyjz_list
+  -> 无数据，删除空文件：rep_tssyjz_list.sql
+→ 导出表：rep_ttfdjzyhxjyjzjlb_data
+→ 导出表：rep_ttfdjzyhxjyjzjlb_data_list
+→ 导出表：rep_ultrasonic
+  -> 无数据，删除空文件：rep_ultrasonic.sql
+→ 导出表：rep_ultrasonic_list
+  -> 无数据，删除空文件：rep_ultrasonic_list.sql
+→ 导出表：rep_wgccwgjyjl
+  -> 无数据，删除空文件：rep_wgccwgjyjl.sql
+→ 导出表：rep_wgccwgjyjl_list
+  -> 无数据，删除空文件：rep_wgccwgjyjl_list.sql
+→ 导出表：rep_wgjjcjz
+→ 导出表：rep_wgjjcjz_list
+→ 导出表：rep_wsjcjl
+→ 导出表：rep_wsjcjl_list
+→ 导出表：rep_xssyjz
+  -> 无数据，删除空文件：rep_xssyjz.sql
+→ 导出表：rep_xssyjz_list
+  -> 无数据，删除空文件：rep_xssyjz_list.sql
+→ 导出表：rep_ydjyjlb_check
+  -> 无数据，删除空文件：rep_ydjyjlb_check.sql
+→ 导出表：rep_ydjyjlb_check_list
+  -> 无数据，删除空文件：rep_ydjyjlb_check_list.sql
+→ 导出表：rep_ydycfdjyjzjl
+  -> 无数据，删除空文件：rep_ydycfdjyjzjl.sql
+→ 导出表：rep_ydycfdjyjzjl_list
+  -> 无数据，删除空文件：rep_ydycfdjyjzjl_list.sql
+→ 导出表：rep_yhjjyjzjl
+  -> 无数据，删除空文件：rep_yhjjyjzjl.sql
+→ 导出表：rep_yhjjyjzjl_list
+  -> 无数据，删除空文件：rep_yhjjyjzjl_list.sql
+→ 导出表：rep_ylcssyjzjl
+  -> 无数据，删除空文件：rep_ylcssyjzjl.sql
+→ 导出表：rep_ylcssyjzjl_list
+  -> 无数据，删除空文件：rep_ylcssyjzjl_list.sql
+→ 导出表：rep_ylrqjyjlb
+  -> 无数据，删除空文件：rep_ylrqjyjlb.sql
+→ 导出表：rep_ylrqjyjlb_list
+  -> 无数据，删除空文件：rep_ylrqjyjlb_list.sql
+→ 导出表：rep_zcljcjl
+  -> 无数据，删除空文件：rep_zcljcjl.sql
+→ 导出表：rep_zcljcjl_list
+  -> 无数据，删除空文件：rep_zcljcjl_list.sql
+→ 导出表：rep_zjrcjyjzjl
+  -> 无数据，删除空文件：rep_zjrcjyjzjl.sql
+→ 导出表：rep_zjrcjyjzjl_list
+  -> 无数据，删除空文件：rep_zjrcjyjzjl_list.sql
+→ 导出表：rep_ztxljyjl
+  -> 无数据，删除空文件：rep_ztxljyjl.sql
+→ 导出表：rep_ztxljyjl_list
+  -> 无数据，删除空文件：rep_ztxljyjl_list.sql
+→ 导出表：rep_zzjcjz
+→ 导出表：rep_zzjcjz_list
+→ 导出表：rep_zzjyjzjlb_data
+→ 导出表：rep_zzjyjzjlb_data_list
+→ 导出表：rep_dwxnsyjzbdwfm
+  -> 无数据，删除空文件：rep_dwxnsyjzbdwfm.sql
+→ 导出表：rep_dwxnsyjzbdwfm_bh_list
+  -> 无数据，删除空文件：rep_dwxnsyjzbdwfm_bh_list.sql
+→ 导出表：rep_hcjyjzjlb_data
+  -> 无数据，删除空文件：rep_hcjyjzjlb_data.sql
+→ 导出表：rep_hcjyjzjlb_list
+  -> 无数据，删除空文件：rep_hcjyjzjlb_list.sql
+→ 导出表：rep_qzjyjzjlb_data
+  -> 无数据，删除空文件：rep_qzjyjzjlb_data.sql
+→ 导出表：rep_qzjyjzjlb_list
+  -> 无数据，删除空文件：rep_qzjyjzjlb_list.sql
+→ 导出表：rep_welding_quality
+  -> 无数据，删除空文件：rep_welding_quality.sql
+→ 导出表：rep_weld_quality_list
+  -> 无数据，删除空文件：rep_weld_quality_list.sql
+→ 导出表：rep_jxyzsyjlb
+  -> 无数据，删除空文件：rep_jxyzsyjlb.sql
+→ 导出表：rep_jxyzsyjlb_list
+  -> 无数据，删除空文件：rep_jxyzsyjlb_list.sql
+→ 导出表：rep_jxyzsyjlb_list_list
+  -> 无数据，删除空文件：rep_jxyzsyjlb_list_list.sql
+→ 导出表：rep_jxyzsyjlb_qlj
+  -> 无数据，删除空文件：rep_jxyzsyjlb_qlj.sql
+→ 导出表：rep_jxyzsyjlb_qlj_list
+  -> 无数据，删除空文件：rep_jxyzsyjlb_qlj_list.sql
+→ 导出表：rep_jxyzsyjlb_qlj_list_list
+  -> 无数据，删除空文件：rep_jxyzsyjlb_qlj_list_list.sql
+→ 导出表：rep_lgysj
+  -> 无数据，删除空文件：rep_lgysj.sql
+→ 导出表：rep_lgysj_list1
+  -> 无数据，删除空文件：rep_lgysj_list1.sql
+→ 导出表：rep_lgysj_list2
+  -> 无数据，删除空文件：rep_lgysj_list2.sql
+→ 导出表：rep_lgysj_list3
+  -> 无数据，删除空文件：rep_lgysj_list3.sql
+→ 导出表：rep_lgysj_list4
+  -> 无数据，删除空文件：rep_lgysj_list4.sql
+→ 导出表：rep_nyqmsyjz
+→ 导出表：rep_nyqmsyjz_bh_list
+→ 导出表：rep_nyqmsyjz_jcbw_list
+→ 导出表：rep_rtjxyzsyjzb
+  -> 无数据，删除空文件：rep_rtjxyzsyjzb.sql
+→ 导出表：rep_rtjxyzsyjzb_imglist
+  -> 无数据，删除空文件：rep_rtjxyzsyjzb_imglist.sql
+→ 导出表：rep_rtjxyzsyjzb_list
+  -> 无数据，删除空文件：rep_rtjxyzsyjzb_list.sql
+→ 导出表：rep_syjz_b
+  -> 无数据，删除空文件：rep_syjz_b.sql
+→ 导出表：rep_syjz_b_bxgcs_list
+  -> 无数据，删除空文件：rep_syjz_b_bxgcs_list.sql
+→ 导出表：rep_syjz_b_xljc_list
+  -> 无数据，删除空文件：rep_syjz_b_xljc_list.sql
+→ 导出表：rep_syjz_b_xnsy_hs_list
+  -> 无数据，删除空文件：rep_syjz_b_xnsy_hs_list.sql
+→ 导出表：rep_syjz_b_xnsy_list
+  -> 无数据，删除空文件：rep_syjz_b_xnsy_list.sql
+→ 导出表：rep_syjz_b_zcwd_list
+  -> 无数据，删除空文件：rep_syjz_b_zcwd_list.sql
+→ 导出表：rep_syjz_b_zdcs_list
+  -> 无数据，删除空文件：rep_syjz_b_zdcs_list.sql
+→ 导出表：rep_syjz_b_zycl_list
+  -> 无数据，删除空文件：rep_syjz_b_zycl_list.sql
+→ 导出表：rep_syjz_mjb
+  -> 无数据，删除空文件：rep_syjz_mjb.sql
+→ 导出表：rep_syjz_mjb_bxgcs_list
+  -> 无数据，删除空文件：rep_syjz_mjb_bxgcs_list.sql
+→ 导出表：rep_syjz_mjb_xnsy_list
+  -> 无数据，删除空文件：rep_syjz_mjb_xnsy_list.sql
+→ 导出表：rep_syjz_mjb_zcwd_list
+  -> 无数据，删除空文件：rep_syjz_mjb_zcwd_list.sql
+→ 导出表：rep_syjz_mjb_zdcs_list
+  -> 无数据，删除空文件：rep_syjz_mjb_zdcs_list.sql
+→ 导出表：rep_syjzjl
+→ 导出表：rep_syjzjl_tplist
+→ 导出表：rep_syjzjl_wzlist
+→ 导出表：rep_yxtyzsyjz
+  -> 无数据，删除空文件：rep_yxtyzsyjz.sql
+→ 导出表：rep_yxtyzsyjz_cszb_list
+  -> 无数据，删除空文件：rep_yxtyzsyjz_cszb_list.sql
+→ 导出表：rep_yxtyzsyjz_cx_list
+  -> 无数据，删除空文件：rep_yxtyzsyjz_cx_list.sql
+→ 导出表：rep_yxtyzsyjz_gncs_list
+  -> 无数据，删除空文件：rep_yxtyzsyjz_gncs_list.sql
+→ 导出表：rep_yxtyzsyjz_syjl_list
+  -> 无数据，删除空文件：rep_yxtyzsyjz_syjl_list.sql
+→ 导出表：rep_yxtyzsyjz_yxwj_list
+  -> 无数据，删除空文件：rep_yxtyzsyjz_yxwj_list.sql
+→ 导出表：rep_yzsygzj
+  -> 无数据，删除空文件：rep_yzsygzj.sql
+→ 导出表：rep_yzsygzj_list1
+  -> 无数据，删除空文件：rep_yzsygzj_list1.sql
+→ 导出表：rep_yzsygzj_list2
+  -> 无数据，删除空文件：rep_yzsygzj_list2.sql
+→ 导出表：rep_yzsygzj_list3
+  -> 无数据，删除空文件：rep_yzsygzj_list3.sql
+→ 导出表：rep_zzqjzjl
+  -> 无数据，删除空文件：rep_zzqjzjl.sql
+→ 导出表：rep_zzqjzjl_tplist
+  -> 无数据，删除空文件：rep_zzqjzjl_tplist.sql
+→ 导出表：rep_zzqjzjl_wzlist
+  -> 无数据，删除空文件：rep_zzqjzjl_wzlist.sql
+→ 导出表：rep_dxfdj
+  -> 无数据，删除空文件：rep_dxfdj.sql
+→ 导出表：rep_dxfdj_list1
+  -> 无数据，删除空文件：rep_dxfdj_list1.sql
+→ 导出表：rep_dxfdj_list2
+  -> 无数据，删除空文件：rep_dxfdj_list2.sql
+→ 导出表：rep_dxfdj_list3
+  -> 无数据，删除空文件：rep_dxfdj_list3.sql
+→ 导出表：rep_dxfdj_list4
+  -> 无数据，删除空文件：rep_dxfdj_list4.sql
+→ 导出表：rep_dhchdjyjl
+  -> 无数据，删除空文件：rep_dhchdjyjl.sql
+→ 导出表：rep_dhchdjyjl_list
+  -> 无数据，删除空文件：rep_dhchdjyjl_list.sql
+→ 导出表：rep_wfsysj
+  -> 无数据，删除空文件：rep_wfsysj.sql
+→ 导出表：rep_wfsysj_list1
+  -> 无数据，删除空文件：rep_wfsysj_list1.sql
+→ 导出表：rep_wfsysj_list2
+  -> 无数据，删除空文件：rep_wfsysj_list2.sql
+→ 导出表：rep_wfsysj_list3
+  -> 无数据，删除空文件：rep_wfsysj_list3.sql
+→ 导出表：rep_wfsysjsc
+  -> 无数据，删除空文件：rep_wfsysjsc.sql
+→ 导出表：rep_wfsysjsc_list1
+  -> 无数据，删除空文件：rep_wfsysjsc_list1.sql
+→ 导出表：rep_wfsysjsc_list2
+  -> 无数据，删除空文件：rep_wfsysjsc_list2.sql
+→ 导出表：rep_wfsysjsc_list3
+  -> 无数据，删除空文件：rep_wfsysjsc_list3.sql
+→ 导出表：rep_completion_data
+→ 导出表：rep_completion_data_list
+→ 导出表：rep_jxjyjl
+  -> 无数据，删除空文件：rep_jxjyjl.sql
+→ 导出表：rep_jxjyjl_list
+  -> 无数据，删除空文件：rep_jxjyjl_list.sql
+→ 导出表：rep_other_check
+→ 导出表：rep_other_check_list
+→ 导出表：rep_packing_record
+→ 导出表：rep_packing_record_list
+→ 导出表：rep_pmijyjl
+  -> 无数据，删除空文件：rep_pmijyjl.sql
+→ 导出表：rep_pmijyjl_list
+  -> 无数据，删除空文件：rep_pmijyjl_list.sql
+→ 导出表：rep_sand_blasting_paint
+→ 导出表：rep_sand_blasting_paint_list
+→ 导出表：rep_txthljyjl
+  -> 无数据，删除空文件：rep_txthljyjl.sql
+→ 导出表：rep_txthljyjl_list
+  -> 无数据，删除空文件：rep_txthljyjl_list.sql
+→ 导出表：rep_withstand_appearance
+→ 导出表：rep_withstand_appearance_list
+→ 导出表：rep_zyrcljyjzjl
+  -> 无数据，删除空文件：rep_zyrcljyjzjl.sql
+→ 导出表：rep_zyrcljyjzjl_list
+  -> 无数据，删除空文件：rep_zyrcljyjzjl_list.sql
+→ 导出表：rep_qgnysy
+  -> 无数据，删除空文件：rep_qgnysy.sql
+→ 导出表：rep_qgnysy_list1
+  -> 无数据，删除空文件：rep_qgnysy_list1.sql
+→ 导出表：rep_qgnysy_list2
+  -> 无数据，删除空文件：rep_qgnysy_list2.sql
+→ 导出表：rep_qgnysy_list3
+  -> 无数据，删除空文件：rep_qgnysy_list3.sql
+→ 导出表：rep_clhljyjlb
+  -> 无数据，删除空文件：rep_clhljyjlb.sql
+→ 导出表：rep_clhljyjlb_list
+  -> 无数据，删除空文件：rep_clhljyjlb_list.sql
+→ 导出表：rep_clhljyjlb_list_list
+  -> 无数据，删除空文件：rep_clhljyjlb_list_list.sql
+→ 导出表：rep_retest_material
+→ 导出表：rep_retest_material_list
+→ 导出表：rep_retest_material_list_list
+→ 导出表：rep_bpjyjzjlb
+  -> 无数据，删除空文件：rep_bpjyjzjlb.sql
+→ 导出表：rep_bpjyjzjlb_list
+  -> 无数据，删除空文件：rep_bpjyjzjlb_list.sql
+→ 导出表：rep_bpjyjzjlb_list_list
+  -> 无数据，删除空文件：rep_bpjyjzjlb_list_list.sql
+→ 导出表：rep_bxpzjcpjyjlb
+  -> 无数据，删除空文件：rep_bxpzjcpjyjlb.sql
+→ 导出表：rep_bxpzjcpjyjlb_list
+  -> 无数据，删除空文件：rep_bxpzjcpjyjlb_list.sql
+→ 导出表：rep_bxpzjcpjyjlb_list_list
+  -> 无数据，删除空文件：rep_bxpzjcpjyjlb_list_list.sql
+→ 导出表：rep_byccpjyjzjlb
+  -> 无数据，删除空文件：rep_byccpjyjzjlb.sql
+→ 导出表：rep_byccpjyjzjlb_list
+  -> 无数据，删除空文件：rep_byccpjyjzjlb_list.sql
+→ 导出表：rep_byccpjyjzjlb_list_list
+  -> 无数据，删除空文件：rep_byccpjyjzjlb_list_list.sql
+→ 导出表：rep_bzhbpbjjyjlba
+→ 导出表：rep_bzhbpbjjyjlba_list
+→ 导出表：rep_bzhbpbjjyjlba_list_list
+→ 导出表：rep_bzjjgjyjzb
+  -> 无数据，删除空文件：rep_bzjjgjyjzb.sql
+→ 导出表：rep_bzjjgjyjzb_list
+  -> 无数据，删除空文件：rep_bzjjgjyjzb_list.sql
+→ 导出表：rep_bzjjgjyjzb_list_list
+  -> 无数据，删除空文件：rep_bzjjgjyjzb_list_list.sql
+→ 导出表：rep_ccjyjz
+  -> 无数据，删除空文件：rep_ccjyjz.sql
+→ 导出表：rep_ccjyjz_list
+  -> 无数据，删除空文件：rep_ccjyjz_list.sql
+→ 导出表：rep_ccjyjz_list_list
+  -> 无数据，删除空文件：rep_ccjyjz_list_list.sql
+→ 导出表：rep_cljzjyjlb
+  -> 无数据，删除空文件：rep_cljzjyjlb.sql
+→ 导出表：rep_cljzjyjlb_list
+  -> 无数据，删除空文件：rep_cljzjyjlb_list.sql
+→ 导出表：rep_cljzjyjlb_list_list
+  -> 无数据，删除空文件：rep_cljzjyjlb_list_list.sql
+→ 导出表：rep_cpgcpjyjzjlb
+  -> 无数据，删除空文件：rep_cpgcpjyjzjlb.sql
+→ 导出表：rep_cpgcpjyjzjlb_list
+  -> 无数据，删除空文件：rep_cpgcpjyjzjlb_list.sql
+→ 导出表：rep_cpgcpjyjzjlb_list_list
+  -> 无数据，删除空文件：rep_cpgcpjyjzjlb_list_list.sql
+→ 导出表：rep_cpwgjcjlb
+  -> 无数据，删除空文件：rep_cpwgjcjlb.sql
+→ 导出表：rep_cpwgjcjlb_list
+  -> 无数据，删除空文件：rep_cpwgjcjlb_list.sql
+→ 导出表：rep_cpwgjcjlb_list_list
+  -> 无数据，删除空文件：rep_cpwgjcjlb_list_list.sql
+→ 导出表：rep_cxgjjyjzjlb
+  -> 无数据，删除空文件：rep_cxgjjyjzjlb.sql
+→ 导出表：rep_cxgjjyjzjlb_list
+  -> 无数据，删除空文件：rep_cxgjjyjzjlb_list.sql
+→ 导出表：rep_cxgjjyjzjlb_list_list
+  -> 无数据，删除空文件：rep_cxgjjyjzjlb_list_list.sql
+→ 导出表：rep_dygjyjzjlb
+  -> 无数据，删除空文件：rep_dygjyjzjlb.sql
+→ 导出表：rep_dygjyjzjlb_list
+  -> 无数据，删除空文件：rep_dygjyjzjlb_list.sql
+→ 导出表：rep_dygjyjzjlb_list_list
+  -> 无数据，删除空文件：rep_dygjyjzjlb_list_list.sql
+→ 导出表：rep_fdsbzzjyjzjl
+  -> 无数据，删除空文件：rep_fdsbzzjyjzjl.sql
+→ 导出表：rep_fdsbzzjyjzjl_list
+  -> 无数据，删除空文件：rep_fdsbzzjyjzjl_list.sql
+→ 导出表：rep_fdsbzzjyjzjl_list_list
+  -> 无数据，删除空文件：rep_fdsbzzjyjzjl_list_list.sql
+→ 导出表：rep_fdtqztzzjcjlb
+  -> 无数据，删除空文件：rep_fdtqztzzjcjlb.sql
+→ 导出表：rep_fdtqztzzjcjlb_list
+  -> 无数据，删除空文件：rep_fdtqztzzjcjlb_list.sql
+→ 导出表：rep_fdtqztzzjcjlb_list_list
+  -> 无数据，删除空文件：rep_fdtqztzzjcjlb_list_list.sql
+→ 导出表：rep_fjjyjzjlb
+  -> 无数据，删除空文件：rep_fjjyjzjlb.sql
+→ 导出表：rep_fjjyjzjlb_list
+  -> 无数据，删除空文件：rep_fjjyjzjlb_list.sql
+→ 导出表：rep_fjjyjzjlb_list_list
+  -> 无数据，删除空文件：rep_fjjyjzjlb_list_list.sql
+→ 导出表：rep_fpcxjyjzjlb
+  -> 无数据，删除空文件：rep_fpcxjyjzjlb.sql
+→ 导出表：rep_fpcxjyjzjlb_list
+  -> 无数据，删除空文件：rep_fpcxjyjzjlb_list.sql
+→ 导出表：rep_fpcxjyjzjlb_list_list
+  -> 无数据，删除空文件：rep_fpcxjyjzjlb_list_list.sql
+→ 导出表：rep_fpzzjyjzjlb
+  -> 无数据，删除空文件：rep_fpzzjyjzjlb.sql
+→ 导出表：rep_fpzzjyjzjlb_list
+  -> 无数据，删除空文件：rep_fpzzjyjzjlb_list.sql
+→ 导出表：rep_fpzzjyjzjlb_list_list
+  -> 无数据，删除空文件：rep_fpzzjyjzjlb_list_list.sql
+→ 导出表：rep_ftyzjyjzjlb
+  -> 无数据，删除空文件：rep_ftyzjyjzjlb.sql
+→ 导出表：rep_ftyzjyjzjlb_list
+  -> 无数据，删除空文件：rep_ftyzjyjzjlb_list.sql
+→ 导出表：rep_ftyzjyjzjlb_list_list
+  -> 无数据，删除空文件：rep_ftyzjyjzjlb_list_list.sql
+→ 导出表：rep_gbcpjyjzjl
+→ 导出表：rep_gbcpjyjzjl_list
+→ 导出表：rep_gbcpjyjzjl_list_list
+→ 导出表：rep_gjgdblccwgjyjlb
+  -> 无数据，删除空文件：rep_gjgdblccwgjyjlb.sql
+→ 导出表：rep_gjgdblccwgjyjlb_list
+  -> 无数据，删除空文件：rep_gjgdblccwgjyjlb_list.sql
+→ 导出表：rep_gjgdblccwgjyjlb_list_list
+  -> 无数据，删除空文件：rep_gjgdblccwgjyjlb_list_list.sql
+→ 导出表：rep_gjglzccwgjyjlb
+  -> 无数据，删除空文件：rep_gjglzccwgjyjlb.sql
+→ 导出表：rep_gjglzccwgjyjlb_list
+  -> 无数据，删除空文件：rep_gjglzccwgjyjlb_list.sql
+→ 导出表：rep_gjglzccwgjyjlb_list_list
+  -> 无数据，删除空文件：rep_gjglzccwgjyjlb_list_list.sql
+→ 导出表：rep_gsbcpjyjzjlb
+  -> 无数据，删除空文件：rep_gsbcpjyjzjlb.sql
+→ 导出表：rep_gsbcpjyjzjlb_list
+  -> 无数据，删除空文件：rep_gsbcpjyjzjlb_list.sql
+→ 导出表：rep_gsbcpjyjzjlb_list_list
+  -> 无数据，删除空文件：rep_gsbcpjyjzjlb_list_list.sql
+→ 导出表：rep_gxjyjzjlb
+  -> 无数据，删除空文件：rep_gxjyjzjlb.sql
+→ 导出表：rep_gxjyjzjlb_list
+  -> 无数据，删除空文件：rep_gxjyjzjlb_list.sql
+→ 导出表：rep_gxjyjzjlb_list_list
+  -> 无数据，删除空文件：rep_gxjyjzjlb_list_list.sql
+→ 导出表：rep_hjgxjcjlb
+  -> 无数据，删除空文件：rep_hjgxjcjlb.sql
+→ 导出表：rep_hjgxjcjlb_list
+  -> 无数据，删除空文件：rep_hjgxjcjlb_list.sql
+→ 导出表：rep_hjgxjcjlb_list_list
+  -> 无数据，删除空文件：rep_hjgxjcjlb_list_list.sql
+→ 导出表：rep_incoming_casting
+  -> 无数据，删除空文件：rep_incoming_casting.sql
+→ 导出表：rep_incoming_casting_list
+  -> 无数据，删除空文件：rep_incoming_casting_list.sql
+→ 导出表：rep_incoming_casting_list_list
+  -> 无数据，删除空文件：rep_incoming_casting_list_list.sql
+→ 导出表：rep_incoming_forging
+→ 导出表：rep_incoming_forging_list
+→ 导出表：rep_incoming_forging_list_list
+→ 导出表：rep_incoming_hc
+  -> 无数据，删除空文件：rep_incoming_hc.sql
+→ 导出表：rep_incoming_hc_list
+  -> 无数据，删除空文件：rep_incoming_hc_list.sql
+→ 导出表：rep_incoming_hc_list_list
+  -> 无数据，删除空文件：rep_incoming_hc_list_list.sql
+→ 导出表：rep_incoming_pipe
+→ 导出表：rep_incoming_pipe_list
+→ 导出表：rep_incoming_pipe_list_list
+→ 导出表：rep_incoming_plate
+→ 导出表：rep_incoming_plate_list
+→ 导出表：rep_incoming_plate_list_list
+→ 导出表：rep_jbzzyzzjkzscjcjz
+  -> 无数据，删除空文件：rep_jbzzyzzjkzscjcjz.sql
+→ 导出表：rep_jbzzyzzjkzscjcjz_list
+  -> 无数据，删除空文件：rep_jbzzyzzjkzscjcjz_list.sql
+→ 导出表：rep_jbzzyzzjkzscjcjz_list_list
+  -> 无数据，删除空文件：rep_jbzzyzzjkzscjcjz_list_list.sql
+→ 导出表：rep_jgcpjyjzjlb
+  -> 无数据，删除空文件：rep_jgcpjyjzjlb.sql
+→ 导出表：rep_jgcpjyjzjlb_list
+  -> 无数据，删除空文件：rep_jgcpjyjzjlb_list.sql
+→ 导出表：rep_jgcpjyjzjlb_list_list
+  -> 无数据，删除空文件：rep_jgcpjyjzjlb_list_list.sql
+→ 导出表：rep_jgjrcjyjzjlb
+  -> 无数据，删除空文件：rep_jgjrcjyjzjlb.sql
+→ 导出表：rep_jgjrcjyjzjlb_list
+  -> 无数据，删除空文件：rep_jgjrcjyjzjlb_list.sql
+→ 导出表：rep_jgjrcjyjzjlb_list_list
+  -> 无数据，删除空文件：rep_jgjrcjyjzjlb_list_list.sql
+→ 导出表：rep_jrgjyjlb
+  -> 无数据，删除空文件：rep_jrgjyjlb.sql
+→ 导出表：rep_jrgjyjlb_list
+  -> 无数据，删除空文件：rep_jrgjyjlb_list.sql
+→ 导出表：rep_jrgjyjlb_list_list
+  -> 无数据，删除空文件：rep_jrgjyjlb_list_list.sql
+→ 导出表：rep_jxlxjyjzjl
+  -> 无数据，删除空文件：rep_jxlxjyjzjl.sql
+→ 导出表：rep_jxlxjyjzjl_list
+  -> 无数据，删除空文件：rep_jxlxjyjzjl_list.sql
+→ 导出表：rep_jxlxjyjzjl_list_list
+  -> 无数据，删除空文件：rep_jxlxjyjzjl_list_list.sql
+→ 导出表：rep_lxjzgjyjzjl
+  -> 无数据，删除空文件：rep_lxjzgjyjzjl.sql
+→ 导出表：rep_lxjzgjyjzjl_list
+  -> 无数据，删除空文件：rep_lxjzgjyjzjl_list.sql
+→ 导出表：rep_lxjzgjyjzjl_list_list
+  -> 无数据，删除空文件：rep_lxjzgjyjzjl_list_list.sql
+→ 导出表：rep_lxsy
+  -> 无数据，删除空文件：rep_lxsy.sql
+→ 导出表：rep_lxsy_list
+  -> 无数据，删除空文件：rep_lxsy_list.sql
+→ 导出表：rep_lxsy_list_list
+  -> 无数据，删除空文件：rep_lxsy_list_list.sql
+→ 导出表：rep_mbjyjzjl
+  -> 无数据，删除空文件：rep_mbjyjzjl.sql
+→ 导出表：rep_mbjyjzjl_list
+  -> 无数据，删除空文件：rep_mbjyjzjl_list.sql
+→ 导出表：rep_mbjyjzjl_list_list
+  -> 无数据，删除空文件：rep_mbjyjzjl_list_list.sql
+→ 导出表：rep_mbjyjzjlb
+  -> 无数据，删除空文件：rep_mbjyjzjlb.sql
+→ 导出表：rep_mbjyjzjlb_list
+  -> 无数据，删除空文件：rep_mbjyjzjlb_list.sql
+→ 导出表：rep_mbjyjzjlb_list_list
+  -> 无数据，删除空文件：rep_mbjyjzjlb_list_list.sql
+→ 导出表：rep_mkkjccwgjyjlb
+  -> 无数据，删除空文件：rep_mkkjccwgjyjlb.sql
+→ 导出表：rep_mkkjccwgjyjlb_list
+  -> 无数据，删除空文件：rep_mkkjccwgjyjlb_list.sql
+→ 导出表：rep_mkkjccwgjyjlb_list_list
+  -> 无数据，删除空文件：rep_mkkjccwgjyjlb_list_list.sql
+→ 导出表：rep_ntyclrtjyjlb
+  -> 无数据，删除空文件：rep_ntyclrtjyjlb.sql
+→ 导出表：rep_ntyclrtjyjlb_list
+  -> 无数据，删除空文件：rep_ntyclrtjyjlb_list.sql
+→ 导出表：rep_ntyclrtjyjlb_list_list
+  -> 无数据，删除空文件：rep_ntyclrtjyjlb_list_list.sql
+→ 导出表：rep_pgjyjzjl
+  -> 无数据，删除空文件：rep_pgjyjzjl.sql
+→ 导出表：rep_pgjyjzjl_list
+  -> 无数据，删除空文件：rep_pgjyjzjl_list.sql
+→ 导出表：rep_pgjyjzjl_list_list
+  -> 无数据，删除空文件：rep_pgjyjzjl_list_list.sql
+→ 导出表：rep_pgjyjzjlb
+  -> 无数据，删除空文件：rep_pgjyjzjlb.sql
+→ 导出表：rep_pgjyjzjlb_list
+  -> 无数据，删除空文件：rep_pgjyjzjlb_list.sql
+→ 导出表：rep_pgjyjzjlb_list_list
+  -> 无数据，删除空文件：rep_pgjyjzjlb_list_list.sql
+→ 导出表：rep_psptjcjzjl
+  -> 无数据，删除空文件：rep_psptjcjzjl.sql
+→ 导出表：rep_psptjcjzjl_list
+  -> 无数据，删除空文件：rep_psptjcjzjl_list.sql
+→ 导出表：rep_psptjcjzjl_list_list
+  -> 无数据，删除空文件：rep_psptjcjzjl_list_list.sql
+→ 导出表：rep_qgzzjyjz
+  -> 无数据，删除空文件：rep_qgzzjyjz.sql
+→ 导出表：rep_qgzzjyjz_list
+  -> 无数据，删除空文件：rep_qgzzjyjz_list.sql
+→ 导出表：rep_qgzzjyjz_list_list
+  -> 无数据，删除空文件：rep_qgzzjyjz_list_list.sql
+→ 导出表：rep_relevant_material
+→ 导出表：rep_relevant_material_list
+→ 导出表：rep_relevant_material_list_list
+→ 导出表：rep_rgtjyjzjl
+  -> 无数据，删除空文件：rep_rgtjyjzjl.sql
+→ 导出表：rep_rgtjyjzjl_list
+  -> 无数据，删除空文件：rep_rgtjyjzjl_list.sql
+→ 导出表：rep_rgtjyjzjl_list_list
+  -> 无数据，删除空文件：rep_rgtjyjzjl_list_list.sql
+→ 导出表：rep_sbjwjyjzjlb
+  -> 无数据，删除空文件：rep_sbjwjyjzjlb.sql
+→ 导出表：rep_sbjwjyjzjlb_list
+  -> 无数据，删除空文件：rep_sbjwjyjzjlb_list.sql
+→ 导出表：rep_sbjwjyjzjlb_list_list
+  -> 无数据，删除空文件：rep_sbjwjyjzjlb_list_list.sql
+→ 导出表：rep_sjjyjl
+→ 导出表：rep_sjjyjl_list
+→ 导出表：rep_sjjyjl_list_list
+→ 导出表：rep_sxgccwgjyjlb
+  -> 无数据，删除空文件：rep_sxgccwgjyjlb.sql
+→ 导出表：rep_sxgccwgjyjlb_list
+  -> 无数据，删除空文件：rep_sxgccwgjyjlb_list.sql
+→ 导出表：rep_sxgccwgjyjlb_list_list
+  -> 无数据，删除空文件：rep_sxgccwgjyjlb_list_list.sql
+→ 导出表：rep_sxgfyjyjlb
+  -> 无数据，删除空文件：rep_sxgfyjyjlb.sql
+→ 导出表：rep_sxgfyjyjlb_list
+  -> 无数据，删除空文件：rep_sxgfyjyjlb_list.sql
+→ 导出表：rep_sxgfyjyjlb_list_list
+  -> 无数据，删除空文件：rep_sxgfyjyjlb_list_list.sql
+→ 导出表：rep_tjjjgjyjzjl
+  -> 无数据，删除空文件：rep_tjjjgjyjzjl.sql
+→ 导出表：rep_tjjjgjyjzjl_list
+  -> 无数据，删除空文件：rep_tjjjgjyjzjl_list.sql
+→ 导出表：rep_tjjjgjyjzjl_list_list
+  -> 无数据，删除空文件：rep_tjjjgjyjzjl_list_list.sql
+→ 导出表：rep_tt_fd_jyjl
+→ 导出表：rep_tt_fd_jyjl_list
+→ 导出表：rep_tt_fd_jyjl_list_list
+→ 导出表：rep_ttjjgjyjzjl
+  -> 无数据，删除空文件：rep_ttjjgjyjzjl.sql
+→ 导出表：rep_ttjjgjyjzjl_list
+  -> 无数据，删除空文件：rep_ttjjgjyjzjl_list.sql
+→ 导出表：rep_ttjjgjyjzjl_list_list
+  -> 无数据，删除空文件：rep_ttjjgjyjzjl_list_list.sql
+→ 导出表：rep_tzgywjscjl
+→ 导出表：rep_tzgywjscjl_list
+→ 导出表：rep_tzgywjscjl_list_list
+→ 导出表：rep_uxhrgcpjyjzjl
+→ 导出表：rep_uxhrgcpjyjzjl_list
+→ 导出表：rep_uxhrgcpjyjzjl_list_list
+→ 导出表：rep_wgjccjcjl
+→ 导出表：rep_wgjccjcjl_list
+→ 导出表：rep_wgjccjcjl_list_list
+→ 导出表：rep_wxwgjrcjyjlb
+→ 导出表：rep_wxwgjrcjyjlb_list
+→ 导出表：rep_wxwgjrcjyjlb_list_list
+→ 导出表：rep_ycllh
+  -> 无数据，删除空文件：rep_ycllh.sql
+→ 导出表：rep_ycllh_list
+  -> 无数据，删除空文件：rep_ycllh_list.sql
+→ 导出表：rep_ycllh_list_list
+  -> 无数据，删除空文件：rep_ycllh_list_list.sql
+→ 导出表：rep_ysdjyjzjl
+  -> 无数据，删除空文件：rep_ysdjyjzjl.sql
+→ 导出表：rep_ysdjyjzjl_list
+  -> 无数据，删除空文件：rep_ysdjyjzjl_list.sql
+→ 导出表：rep_ysdjyjzjl_list_list
+  -> 无数据，删除空文件：rep_ysdjyjzjl_list_list.sql
+→ 导出表：rep_zfzzjyjzjl
+  -> 无数据，删除空文件：rep_zfzzjyjzjl.sql
+→ 导出表：rep_zfzzjyjzjl_list
+  -> 无数据，删除空文件：rep_zfzzjyjzjl_list.sql
+→ 导出表：rep_zfzzjyjzjl_list_list
+  -> 无数据，删除空文件：rep_zfzzjyjzjl_list_list.sql
+→ 导出表：rep_zlbcpjyjzjl
+→ 导出表：rep_zlbcpjyjzjl_list
+→ 导出表：rep_zlbcpjyjzjl_list_list
+→ 导出表：rep_zongzjyjzjl
+→ 导出表：rep_zongzjyjzjl_list
+→ 导出表：rep_zongzjyjzjl_list_list
+→ 导出表：rep_ztyzzjcjzjl
+  -> 无数据，删除空文件：rep_ztyzzjcjzjl.sql
+→ 导出表：rep_ztyzzjcjzjl_list
+  -> 无数据，删除空文件：rep_ztyzzjcjzjl_list.sql
+→ 导出表：rep_ztyzzjcjzjl_list_list
+  -> 无数据，删除空文件：rep_ztyzzjcjzjl_list_list.sql
+→ 导出表：rep_zxjyjzjl
+  -> 无数据，删除空文件：rep_zxjyjzjl.sql
+→ 导出表：rep_zxjyjzjl_list
+  -> 无数据，删除空文件：rep_zxjyjzjl_list.sql
+→ 导出表：rep_zxjyjzjl_list_list
+  -> 无数据，删除空文件：rep_zxjyjzjl_list_list.sql
+→ 导出表：rep_zxtssjjyjzjl
+  -> 无数据，删除空文件：rep_zxtssjjyjzjl.sql
+→ 导出表：rep_zxtssjjyjzjl_list
+  -> 无数据，删除空文件：rep_zxtssjjyjzjl_list.sql
+→ 导出表：rep_zxtssjjyjzjl_list_list
+  -> 无数据，删除空文件：rep_zxtssjjyjzjl_list_list.sql
+→ 导出表：rep_zzjyjzjl
+  -> 无数据，删除空文件：rep_zzjyjzjl.sql
+→ 导出表：rep_zzjyjzjl_list
+  -> 无数据，删除空文件：rep_zzjyjzjl_list.sql
+→ 导出表：rep_zzjyjzjl_list_list
+  -> 无数据，删除空文件：rep_zzjyjzjl_list_list.sql
+→ 导出表：rep_zzypcpjyjzjl
+  -> 无数据，删除空文件：rep_zzypcpjyjzjl.sql
+→ 导出表：rep_zzypcpjyjzjl_list
+  -> 无数据，删除空文件：rep_zzypcpjyjzjl_list.sql
+→ 导出表：rep_zzypcpjyjzjl_list_list
+  -> 无数据，删除空文件：rep_zzypcpjyjzjl_list_list.sql
+→ 导出表：rep_xljyjl
+→ 导出表：rep_xljyjl_list
+→ 导出表：rep_xljyjl_list_jyxm
+→ 导出表：rep_tjjyjzjl
+→ 导出表：rep_tjjyjzjl_list
+→ 导出表：rep_tjjyjzjl_list_jyxm
+→ 导出表：rep_rlqdxnyzsyjz
+  -> 无数据，删除空文件：rep_rlqdxnyzsyjz.sql
+→ 导出表：rep_rlqdxnyzsyjz_edzs
+  -> 无数据，删除空文件：rep_rlqdxnyzsyjz_edzs.sql
+→ 导出表：rep_rlqdxnyzsyjz_xm
+  -> 无数据，删除空文件：rep_rlqdxnyzsyjz_xm.sql
+→ 导出表：rep_rlqdxnyzsyjz_edzs_list
+  -> 导出失败：rep_rlqdxnyzsyjz_edzs_list
+./huayi-export-v2.sh: line 28: /usr/bin/mysqldump: Argument list too long
+
+real    1m15.946s
+user    0m30.569s
+sys     0m15.897s
+[root@ecs-93244365 export]#

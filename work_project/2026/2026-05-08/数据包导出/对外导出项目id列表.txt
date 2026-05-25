@@ -1,0 +1,9 @@
+time ./huayi-export-v3.sh export 06426181eee542ea938eb2c66e363bbf	广西华谊能源化工有限公司甲醇制烯烃及下游深加工一体化项目（甲供设备） 1
+time ./huayi-export-v3.sh export 235fd4fd0ad344aba89cdf1b2200e7fe	广西华谊能源化工有限公司甲醇制烯烃及下游深加工一体化项目循环水场装置  1
+time ./huayi-export-v3.sh export 26caef398e74418da2f91e83e8458b31	广西华谊能源化工有限公司甲醇制烯烃及下游深加工一体化项目VAC装置        1
+time ./huayi-export-v3.sh export 2f414ce021d7409985cac8e05ab94bb8	广西华谊能源化工有限公司工业气体岛项目					              1
+time ./huayi-export-v3.sh export 7637bdc0191a4d51a16f64d950ecb8d0	广西华谊能源化工有限公司甲醇制烯烃及下游深加工一体化项目EVA装置
+time ./huayi-export-v3.sh export aead31d7d2c945489eab6b872cf3ebcb	广西华谊能源化工有限公司甲醇制烯烃及下游深加工一体化项目MTO装置
+
+
+
